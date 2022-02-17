@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\svg">
+      <UniqueIdentifier>{377300e1-05d8-4b75-b252-e73f7075f27f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ImGuiExt">
+      <UniqueIdentifier>{a5d49d4b-afb9-4c4f-93cc-2a5dbd83f4b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ImGuiExt\imgui">
+      <UniqueIdentifier>{2d14daef-6caf-4c6d-bb0e-bc3237054453}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\svg\nanosvg.cpp">
+      <Filter>src\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\svg\SVGSprite.cpp">
+      <Filter>src\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\svg\SVGSpritePath.cpp">
+      <Filter>src\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\CCIMGUI.cpp">
+      <Filter>src\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\CCImGuiLayer.cpp">
+      <Filter>src\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui\imgui.cpp">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui\imgui_demo.cpp">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui\imgui_draw.cpp">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui\imgui_widgets.cpp">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui_impl_glfw.cpp">
+      <Filter>src\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImGuiExt\imgui_impl_opengl2.cpp">
+      <Filter>src\ImGuiExt</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\svg\nanosvg.h">
+      <Filter>src\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\svg\nanosvgrast.h">
+      <Filter>src\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\svg\SVGSprite.h">
+      <Filter>src\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\svg\SVGSpritePath.h">
+      <Filter>src\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\CCIMGUI.h">
+      <Filter>src\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\CCImGuiLayer.h">
+      <Filter>src\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imconfig.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imgui.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imgui_internal.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imstb_rectpack.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imstb_textedit.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui\imstb_truetype.h">
+      <Filter>src\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui_impl_glfw.h">
+      <Filter>src\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImGuiExt\imgui_impl_opengl2.h">
+      <Filter>src\ImGuiExt</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\svg\README.md">
+      <Filter>src\svg</Filter>
+    </None>
+  </ItemGroup>
+</Project>
