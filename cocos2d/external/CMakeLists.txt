@@ -53,14 +53,12 @@ if(BUILD_JS_LIBS)
         CC_JS_DEPEND ext_spidermonkey
     )
 endif()
-if(BUILD_LUA_LIBS)
-    add_subdirectory(lua/luajit)
-    add_subdirectory(lua/tolua)
-    add_subdirectory(lua/luasocket)
-    set_property(TARGET external APPEND PROPERTY
-        CC_LUA_DEPEND ext_luajit ext_tolua ext_luasocket
-    )
-endif()
+
+#lua
+add_subdirectory(luajit)
+set_property(TARGET external APPEND PROPERTY
+        CC_LUA_DEPEND ext_luajit)
+target_link_libraries(external ext_luajit)
 
 if(NOT LINUX)
     add_subdirectory(curl)
