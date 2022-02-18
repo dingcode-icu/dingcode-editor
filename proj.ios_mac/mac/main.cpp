@@ -35,8 +35,8 @@ using namespace dan;
 
 int main(int argc, char *argv[])
 {
-    auto context = SmartSingleton<AppContext>::GetInstance();
-    context->load_parase(argc, argv);
+//    auto context = SmartSingleton<AppContext>::GetInstance();
+//    context->load_parase(argc, argv);
     AppDelegate app;
     return Application::getInstance()->run();
 }
