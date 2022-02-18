@@ -129,13 +129,11 @@ elseif(APPLE)
              )
     elseif(MACOSX)
         set(APP_UI_RES
-            proj.mac/Icon.icns
-            proj.mac/Info.plist
-            proj.mac/en.lproj/MainMenu.xib
-            proj.mac/en.lproj/InfoPlist.strings
+            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Info.plist
             )
         list(APPEND GAME_SOURCE
-             proj.mac/main.cpp
+             proj.ios_mac/mac/main.cpp
              ${APP_UI_RES}
              )
     endif()
@@ -167,7 +165,7 @@ if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
                               )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
