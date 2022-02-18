@@ -4,7 +4,7 @@ set(lib_name luajit)
 set(target_name ext_${lib_name})
 project(${lib_name})
 
-include(../../cmake/CocosExternalConfig.cmake)
+include(../cmake/CocosExternalConfig.cmake)
 
 if(WINDOWS)
   add_library(${target_name} SHARED IMPORTED GLOBAL)

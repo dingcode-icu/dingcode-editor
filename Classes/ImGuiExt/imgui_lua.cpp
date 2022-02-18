@@ -70,7 +70,8 @@ static int imgui_setNextWindowPos(lua_State *L) {
     return 0;
 }
 static int imgui_setNextWindowPosCenter(lua_State *L) {
-    ImGui::SetNextWindowPosCenter();
+//    ImGui::SetNextWindowPosCenter();
+    //TODO
     return 0;
 }
 static int imgui_setNextWindowSize(lua_State *L) {

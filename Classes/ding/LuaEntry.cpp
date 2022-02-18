@@ -4,8 +4,9 @@
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
 
-#include "SvgSprite.h"
+#include "svg/SvgSprite.h"
 #include "ImGuiExt/CCIMGUI.h"
+#include "lua.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"

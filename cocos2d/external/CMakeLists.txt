@@ -57,7 +57,7 @@ if(BUILD_LUA_LIBS)
     add_subdirectory(lua/luajit)
     add_subdirectory(lua/tolua)
     add_subdirectory(lua/luasocket)
-    set_property(TARGET external APPEND PROPERTY 
+    set_property(TARGET external APPEND PROPERTY
         CC_LUA_DEPEND ext_luajit ext_tolua ext_luasocket
     )
 endif()
