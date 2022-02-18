@@ -8,9 +8,8 @@ USING_NS_CC;
 //
 AppDelegate::AppDelegate() 
 {
-    freopen("/Users/dwb/Desktop/imguix.log", "w", stdout);
-    freopen("/Users/dwb/Desktop/imguix.log", "w+", stderr);
-
+//    freopen("/Users/dwb/Desktop/imguix.log", "w", stdout);
+//    freopen("/Users/dwb/Desktop/imguix.log", "w+", stderr);
 }
 
 AppDelegate::~AppDelegate() 
@@ -45,12 +44,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     #if TESTFUNC == 1
        TESTFUNC;
        return true;
-   #else
+    #else
     auto e = new dan::LuaEntry();
     bool ret = e->entry();
        
     return ret;
-   #endif
+    #endif
 
     // auto check when imGUI layer is not added yet.
     ImGuiLayer::createAndKeepOnTop();
