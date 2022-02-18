@@ -4,8 +4,9 @@
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
 
-#include "SvgSprite.h"
+#include "svg/SvgSprite.h"
 #include "ImGuiExt/CCIMGUI.h"
+#include "lua.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -81,9 +82,8 @@ namespace dan {
         sol_cocos2d::Init(luaView);
         //third
         lua_thirdmodule_register(luaView);
-        std::string entry("res/main_pcall.lua");
-        
-        _luaState.script_file(FileUtils::getInstance()->fullPathForFilename(entry));
+//        std::string entry("res/main.lua");
+//        _luaState.script_file(FileUtils::getInstance()->fullPathForFilename(entry));
         return true;
     }
 
