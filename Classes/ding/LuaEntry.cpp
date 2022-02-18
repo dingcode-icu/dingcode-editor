@@ -81,7 +81,8 @@ namespace dan {
         sol_cocos2d::Init(luaView);
         //third
         lua_thirdmodule_register(luaView);
-        std::string entry("res/main.lua");
+        std::string entry("res/main_pcall.lua");
+        
         _luaState.script_file(FileUtils::getInstance()->fullPathForFilename(entry));
         return true;
     }
