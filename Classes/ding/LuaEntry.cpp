@@ -70,6 +70,7 @@ namespace dan {
 
     bool LuaEntry::entry()
     {
+        FileUtils::getInstance()->setDefaultResourceRootPath("res");
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
