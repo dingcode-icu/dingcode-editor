@@ -82,12 +82,13 @@ namespace dan {
         sol_cocos2d::Init(luaView);
         //third
         lua_thirdmodule_register(luaView);
-
+        //load res/main.lua
         std::string name("main.lua");
         auto path = FileUtils::getInstance()->fullPathForFilename(name);
         auto workspace = path;
         workspace.replace(path.find(name), name.size(), "");
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
+        _luaState.script_file(path);
 
         ImGuiLayer::createAndKeepOnTop();
         return true;
