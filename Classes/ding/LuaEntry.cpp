@@ -7,6 +7,7 @@
 #include "svg/SvgSprite.h"
 #include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
+#include "ImGuiExt/CCIMGUI.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -90,6 +91,7 @@ namespace dan {
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
         _luaState.script_file(path);
 
+        test_imgui();
         ImGuiLayer::createAndKeepOnTop();
         return true;
     }
@@ -106,7 +108,11 @@ namespace dan {
     //---------------------------------
 
     void LuaEntry::test_imgui() {
-//        CCIMGUI::getInstance()->addImGUI([=]() {
+        auto scene = cocos2d::Scene::create();
+        Director::getInstance()->runWithScene(scene);
+        auto svgSprite = SVGSprite::create("tiger.svg");
+        scene->addChild(svgSprite);
+        CCIMGUI::getInstance()->addImGUI([=]() {
 //                // 1. Show a simple window
 //                // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
 //                {
@@ -127,13 +133,13 @@ namespace dan {
 //                        ImGui::PopFont();
 //                }
 //
-//                ImGui::ShowDemoWindow();
+                ImGui::ShowDemoWindow();
 //
-//                // 4. Can Lua function
-//                {
-//                    _luaState["ImGuiRenderer"]();
-//                }
-//                }, "demoid");
+                // 4. Can Lua function
+                {
+                    _luaState["ImGuiRenderer"]();
+                }
+                }, "demoid");
     }
     
     void LuaEntry::lua_dev_register(sol::state_view &lua){

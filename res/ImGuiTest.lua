@@ -22,10 +22,10 @@ local sc = cc.Scene.create()
 
 -- -- require('functions')
 
--- local function createDefaultWindow()
---     ImGui.Separator()
---     ImGui.Text('Hello from Lua')
--- end 
+ local function createDefaultWindow()
+     ImGui.Separator()
+     ImGui.Text('Hello from Lua')
+ end
 
 -- local f = 4.9
 -- local color = {100/255, 200/255, 300/255}
@@ -38,10 +38,10 @@ local sc = cc.Scene.create()
 --     ImGui.End()
 -- end
 
--- local _drawList = {}
--- function ImGuiDraw(func)
---     _drawList[func] = func
--- end
+ local _drawList = {}
+ function ImGuiDraw(func)
+     _drawList[func] = func
+ end
 
 -- function ImGuiRenderer()
 
@@ -51,7 +51,7 @@ local sc = cc.Scene.create()
 -- end
 
 
--- ImGuiDraw(createDefaultWindow)
+ ImGuiDraw(createDefaultWindow)
 -- ImGuiDraw(createToolWindow)
 -- ImGuiDraw(function ( )
 --     ImGui.Begin('Lua Window 222')
