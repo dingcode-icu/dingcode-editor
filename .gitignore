@@ -11,5 +11,5 @@ xcuserdata
 Debug.win32
 proj.win32/.vs/
 .idea/
-cmake-build-debug-visual-studio/
+cmake-build-*/
 ._*
