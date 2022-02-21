@@ -6,6 +6,7 @@
 
 #include "svg/SvgSprite.h"
 #include "lua.h"
+#include "ImGuiExt/CCImGuiLayer.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -81,11 +82,19 @@ namespace dan {
         sol_cocos2d::Init(luaView);
         //third
         lua_thirdmodule_register(luaView);
+
+        std::string name("main.lua");
+        auto path = FileUtils::getInstance()->fullPathForFilename(name);
+        auto workspace = path;
+        workspace.replace(path.find(name), name.size(), "");
+        FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
+
+        ImGuiLayer::createAndKeepOnTop();
         return true;
     }
 
     void LuaEntry::lua_thirdmodule_register(sol::state_view &lua){
-        sol::table d = lua.create_table("d");
+        sol::table d = lua.create_table("ding");
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );

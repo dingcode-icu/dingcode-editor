@@ -43,7 +43,7 @@ set(GAME_RES_FOLDER
     "${CMAKE_CURRENT_SOURCE_DIR}/res"
     )
 if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
+    cocos_mark_multi_resources(cc_common_res RES_TO "res" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
 #获取Classes目录下所有代码文件
