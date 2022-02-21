@@ -1,3 +1,4 @@
+#include <string>
 #include "LuaEntry.h"
 
 #define SOL_IMGUI_IMPLEMENTATION
@@ -89,6 +90,10 @@ namespace dan {
         auto workspace = path;
         workspace.replace(path.find(name), name.size(), "");
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
+
+        char l_append[512];
+        sprintf(l_append,"package.path = package.path..'%s?.lua;'", workspace.c_str());
+        _luaState.script(l_append);
         _luaState.script_file(path);
 
         test_imgui();
@@ -113,28 +118,7 @@ namespace dan {
         auto svgSprite = SVGSprite::create("tiger.svg");
         scene->addChild(svgSprite);
         CCIMGUI::getInstance()->addImGUI([=]() {
-//                // 1. Show a simple window
-//                // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
-//                {
-//                    static float f = 0.0f;
-//                    ImGui::Text("Hello, world!");
-//                    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-//                    ImGui::ColorEdit3("clear color", (float*)&clear_color);
-//                    if (ImGui::Button("Test Window")) show_test_window ^= 1;
-//                    if (ImGui::Button("Another Window")) show_another_window ^= 1;
-//                    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-//
-//                    //
-//                    if (CCIMGUI::getInstance()->chineseFont)
-//                        ImGui::PushFont(CCIMGUI::getInstance()->chineseFont);
-//                    static char buf[32] = "Hello";
-//                    ImGui::InputText("str中文ing", buf, IM_ARRAYSIZE(buf));
-//                    if (CCIMGUI::getInstance()->chineseFont)
-//                        ImGui::PopFont();
-//                }
-//
                 ImGui::ShowDemoWindow();
-//
                 // 4. Can Lua function
                 {
                     _luaState["ImGuiRenderer"]();
