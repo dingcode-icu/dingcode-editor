@@ -4,7 +4,7 @@ local Lang = require("res/lib/language/Lang")
 --上方主菜单
 local tabMenuMainBar = {
     data = {
-        _isShow = true,
+        _isShow = false,
         _posX = 0,
         _posY = 0,
     }
@@ -32,6 +32,14 @@ function tabMenuMainBar.render()
                 if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "new")) then
                     if ImGui.MenuItem(Lang:Lang("menu_mainbar", "proj")) then
                         print("click proj ")
+                    end
+
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
+                        local menu_node = require("res/imguix/menu/menu_node")
+                        menu_node:show({
+                            posX = math.random() * 300 + 100,
+                            posY = math.random() * 300 + 100,
+                        })
                     end
                     ImGui.EndMenu()
                 end

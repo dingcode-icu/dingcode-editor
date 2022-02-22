@@ -7,9 +7,10 @@ Lang:init({
 
 -- 全部菜单
 --上方主菜单
-local a = require("res/imguix/menu/menu_mainbar")
-a:show()
+local menu_mainbar = require("res/imguix/menu/menu_mainbar")
+menu_mainbar:show()
 
 --右键节点主菜单
-local a = require("res/imguix/menu/menu_node")
-a:show()
+local menu_node = require("res/imguix/menu/menu_node")
+menu_node:hide()
+

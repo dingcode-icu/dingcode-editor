@@ -11,4 +11,11 @@ return {
         setting = "设置",
         settAudio = "音频设置",
     },
+    menu_node = {
+        node = "节点",
+        addnode = "新建节点",
+        addnode_audio = "新建音频节点",
+
+        close = "关闭",
+    },
 }
