@@ -14,6 +14,9 @@ end
 
 function imguiUI:init()
     self._drawList = {}
+
+    local Event = require("res/lib/event")
+    Event:bind(self)
 end
 
 return imguiUI

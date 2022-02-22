@@ -1,5 +1,5 @@
 local Lang = require("res/lib/language/Lang")
-
+local Event = require("res/lib/event")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -35,12 +35,13 @@ function tabMenuMainBar.render()
                     end
 
                     if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
-                        local menu_node = require("res/imguix/menu/menu_node")
-                        menu_node:show({
+                        Event:dispatchEvent({
+                            name = "imgui_menu_node",
                             posX = math.random() * 300 + 100,
                             posY = math.random() * 300 + 100,
                         })
                     end
+
                     ImGui.EndMenu()
                 end
 
