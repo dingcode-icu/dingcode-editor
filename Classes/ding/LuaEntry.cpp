@@ -121,9 +121,13 @@ namespace dan {
         CCIMGUI::getInstance()->addImGUI([=]() {
                 ImGui::ShowDemoWindow();
                 // 4. Can Lua function
+                if (CCIMGUI::getInstance()->chineseFont)
+                    ImGui::PushFont(CCIMGUI::getInstance()->chineseFont);
                 {
                     _luaState["ImGuiRenderer"]();
                 }
+                if (CCIMGUI::getInstance()->chineseFont)
+                    ImGui::PopFont();
                 }, "demoid");
     }
     

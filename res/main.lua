@@ -1,7 +1,7 @@
 -- local lua_ex = require("ding")
 -- local config = require("config")
 
-require("path")
+--require("path")
 --require("imguix") //imgui
 
 
@@ -9,6 +9,9 @@ require("path")
 local function main()
     local sc = cc.Scene.create()
     cc.Director:getInstance():runWithScene(sc)
+    require("res/imguix/init"):init()
+    require("res/render/init"):init()
+    require("res/imguix/menu/menu_all")
 end
 
 ---打印报错及堆栈
