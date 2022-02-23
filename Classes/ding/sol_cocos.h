@@ -14,7 +14,7 @@ namespace sol_cocos2d {
 
     //sprite
     inline Sprite* spriteCreate1(const std::string& filename){ return Sprite::create(filename);}
-    inline Sprite* spriteCreate2(const std::string& filename, const Rect& rect){ return Sprite::create(filename, rect);}
+    inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
 
     //ccTypes
     static Color3B c3b_from_lua_table(sol::table t){
@@ -46,7 +46,7 @@ inline void Init(sol::state_view& lua){
     point["x"] = &Vec2::x;
     point["y"] = &Vec2::y;
 
-    auto rect = CC.new_usertype<Rect>("rect",
+    auto rect = CC.new_usertype<cocos2d::Rect>("rect",
                                       sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>());
 
 #pragma endregion ccTypes
@@ -62,7 +62,8 @@ inline void Init(sol::state_view& lua){
                               "getWinSize", &Director::getWinSize,
                               "getContentScaleFactor", &Director::getContentScaleFactor,
                               "replaceScene", &Director::runWithScene,
-                              "runWithScene", &Director::runWithScene
+                              "runWithScene", &Director::runWithScene,
+                              "getScheduler", &Director::getScheduler
                               );
     CC.new_usertype<FileUtils>(
         "FileUtils",
@@ -115,7 +116,7 @@ inline void Init(sol::state_view& lua){
      auto sp_tb =CC.new_usertype<Sprite>("Sprite");
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
-             sol::resolve<Sprite*(const std::string &, const Rect &)>(spriteCreate2)
+             sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(spriteCreate2)
              ));
 //     sp_tb.set_function()
 #pragma endregion Sprite

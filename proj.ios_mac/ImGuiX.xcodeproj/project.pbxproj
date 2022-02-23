@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0421401F279FA52B00C441DF /* res in Resources */ = {isa = PBXBuildFile; fileRef = 0421401D279FA52B00C441DF /* res */; };
 		04214026279FA70900C441DF /* LuaEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04214024279FA70900C441DF /* LuaEntry.cpp */; };
+		042DDE7027C62467004BCD5B /* FileDialogUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */; };
+		042DDE7C27C629DE004BCD5B /* libnfd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042DDE7B27C629DE004BCD5B /* libnfd.a */; };
+		042DDE8727C63063004BCD5B /* sol_cocos.h in Sources */ = {isa = PBXBuildFile; fileRef = 04D1568027A28E9E00672622 /* sol_cocos.h */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -75,6 +78,9 @@
 		0421401D279FA52B00C441DF /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../res; sourceTree = "<group>"; };
 		04214023279FA6E100C441DF /* LuaEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaEntry.h; sourceTree = "<group>"; };
 		04214024279FA70900C441DF /* LuaEntry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaEntry.cpp; sourceTree = "<group>"; };
+		042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileDialogUtils.cpp; sourceTree = "<group>"; };
+		042DDE6F27C62467004BCD5B /* FileDialogUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDialogUtils.h; sourceTree = "<group>"; };
+		042DDE7B27C629DE004BCD5B /* libnfd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnfd.a; path = ../third/libnfd/lib/mac/libnfd.a; sourceTree = "<group>"; };
 		04D1568027A28E9E00672622 /* sol_cocos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sol_cocos.h; sourceTree = "<group>"; };
 		04D1568527A2935D00672622 /* sol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sol.hpp; sourceTree = "<group>"; };
 		04D1568627A2935D00672622 /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
+				042DDE7C27C629DE004BCD5B /* libnfd.a in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
 				5087E78917EB974C00C73F5D /* AppKit.framework in Frameworks */,
@@ -170,6 +177,8 @@
 			children = (
 				04214023279FA6E100C441DF /* LuaEntry.h */,
 				04214024279FA70900C441DF /* LuaEntry.cpp */,
+				042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */,
+				042DDE6F27C62467004BCD5B /* FileDialogUtils.h */,
 				04D1568027A28E9E00672622 /* sol_cocos.h */,
 				C5DD8EF527BB96F1006BEE07 /* AppSetting.h */,
 				C5DD8EFA27BBCF98006BEE07 /* AppSetting.cpp */,
@@ -222,6 +231,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				042DDE7B27C629DE004BCD5B /* libnfd.a */,
 				84791724261033A0001E992A /* libluajit.a */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
@@ -442,6 +452,8 @@
 				84CE9B882504A6F2001E7BB1 /* SVGSpritePath.cpp in Sources */,
 				842EC6042612F69D00A2F118 /* imgui.cpp in Sources */,
 				842EC60B2612F69D00A2F118 /* CCImGuiLayer.cpp in Sources */,
+				042DDE7027C62467004BCD5B /* FileDialogUtils.cpp in Sources */,
+				042DDE8727C63063004BCD5B /* sol_cocos.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,11 +489,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../third/libnfd/include/",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../cocos2d/external/luajit/prebuilt/mac/",
 					/Users/mac/data0/private_work/imguix/exlib,
+					"$(SRCROOT)/../third/libnfd/lib/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
@@ -517,11 +531,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../third/libnfd/include/",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../cocos2d/external/luajit/prebuilt/mac/",
 					/Users/mac/data0/private_work/imguix/exlib,
+					"$(SRCROOT)/../third/libnfd/lib/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (

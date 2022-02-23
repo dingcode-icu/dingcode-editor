@@ -31,7 +31,7 @@ function tabMenuMainBar.render()
             if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "file")) then
                 if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "new")) then
                     if ImGui.MenuItem(Lang:Lang("menu_mainbar", "proj")) then
-                        print("click proj ")
+                        tabMenuMainBar:SaveFile()
                     end
 
                     if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
@@ -76,9 +76,23 @@ function tabMenuMainBar.render()
     end
 end
 
+-- 打开文件
+function tabMenuMainBar:OpenFile()
+    print(ding.FileDialogUtils.GetOpenFile())
+end
+
+-- 保存文件
+function tabMenuMainBar:SaveFile()
+    --print("111")
+    --print(ding.FileDialogUtils.GetSaveFile())
+    print(ding.FileDialogUtils.GetOpenFile())
+end
+
+
 if ImGuiDraw then
     print("注册 tabMenuMainBar")
     ImGuiDraw(tabMenuMainBar.render)
 end
+
 
 return tabMenuMainBar

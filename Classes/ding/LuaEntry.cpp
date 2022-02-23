@@ -8,6 +8,7 @@
 #include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
+#include "FileDialogUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -108,6 +109,8 @@ namespace dan {
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );
+        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile);
+        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetOpenFile", &FileDialogUtils::GetOpenFile);
     }
 
     //---------------------------------
