@@ -1,14 +1,14 @@
--- local lua_ex = require("ding")
--- local config = require("config")
+require("path")
+require("lib/lua_ex")
+require("lib/display")
 
---require("path")
---require("imguix") //imgui
 
 
 ---入口
 local function main()
     local sc = cc.Scene.create()
     cc.Director:getInstance():runWithScene(sc)
+    local bg = d.sp("texture/grid.png")
     require("res/imguix/init"):init()
     require("res/render/init"):init()
     require("res/imguix/menu/menu_all")

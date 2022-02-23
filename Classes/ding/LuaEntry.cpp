@@ -1,7 +1,6 @@
 #include <string>
 #include "LuaEntry.h"
 
-#define SOL_IMGUI_IMPLEMENTATION
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
 
@@ -70,7 +69,7 @@ namespace dan {
 
     bool LuaEntry::entry()
     {
-        FileUtils::getInstance()->setDefaultResourceRootPath("res");
+//        FileUtils::getInstance()->setDefaultResourceRootPath("res");
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
@@ -86,6 +85,8 @@ namespace dan {
         //third
         lua_thirdmodule_register(luaView);
         //load res/main.lua
+
+        auto def = FileUtils::getInstance()->getDefaultResourceRootPath();
         std::string name("main.lua");
         auto path = FileUtils::getInstance()->fullPathForFilename(name);
         auto workspace = path;

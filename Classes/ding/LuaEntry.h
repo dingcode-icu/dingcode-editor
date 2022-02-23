@@ -5,7 +5,6 @@
 /* lua脚本入口*/
 /************************************/
 #include <functional>
-#define SOL_ALL_SAFETIES_ON 1
 #include "sol/sol.hpp"
 
 extern "C" {

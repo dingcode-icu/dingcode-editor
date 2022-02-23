@@ -74,6 +74,10 @@ list(APPEND GAME_HEADER
      )
 
 message ("imguiext_h" ${IMGUIEXT_H_CLASSES})
+
+
+add_definitions(-DSOL_NO_EXCEPTIONS=1)
+
 list(APPEND GAME_SOURCE
         Classes/HelloWorldScene.cpp
         Classes/AppDelegate.cpp
@@ -181,5 +185,5 @@ endif()
 
 
 if(MSVC)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
 endif(MSVC)

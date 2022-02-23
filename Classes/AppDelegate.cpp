@@ -2,7 +2,6 @@
 #include "ding/LuaEntry.h"
 #include "platform/CCGLView.h"
 #include "ImGuiExt/CCImGuiLayer.h"
-#include "ImGuiExt/CCIMGUI.h"
 
 USING_NS_CC;
 //
