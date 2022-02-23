@@ -80,12 +80,23 @@ end
 function tabMenuMainBar:OpenFile()
     local filePath = ding.FileDialogUtils.GetOpenFile()
     print(filePath)
+    if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
+        local strDesc = io.readfile(filePath)
+        print(strDesc)
+    else
+        print("文件 不是 配置文件")
+    end
 end
 
 -- 保存文件
 function tabMenuMainBar:SaveFile()
     local filePath = ding.FileDialogUtils.GetSaveFile()
     print(filePath)
+    if filePath and string.len(filePath) > 0 then
+        local realFilePath = filePath .. ".ding"
+        local strDesc = io.writefile(realFilePath, "{}")
+    end
+
 end
 
 

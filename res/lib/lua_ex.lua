@@ -2,7 +2,7 @@
 -- 在funcitons.lua中已经扩展过 这里
 -- 是额外的
 --==================================
-require("lib/functions")
+require("res/lib/functions")
 
 --[[同functins.lua 中的handler]]
 --[[不同：参数通过了clone不篡改原参数；命名安全点]]
@@ -180,4 +180,11 @@ function try(blocktb)
     if ok then
         return errors
     end
+end
+
+function string.ends(String,End)
+   return End=='' or string.sub(String,-string.len(End))==End
+end
+function string.starts(String,Start)
+   return string.sub(String,1,string.len(Start))==Start
 end

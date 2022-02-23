@@ -1,5 +1,6 @@
 #include <string>
 #include "LuaEntry.h"
+#define SOL_IMGUI_IMPLEMENTATION
 
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
@@ -70,7 +71,9 @@ namespace dan {
 
     bool LuaEntry::entry()
     {
-//        FileUtils::getInstance()->setDefaultResourceRootPath("res");
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        FileUtils::getInstance()->setDefaultResourceRootPath("res");
+#endif
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
