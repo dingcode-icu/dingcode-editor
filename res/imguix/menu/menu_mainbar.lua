@@ -46,11 +46,11 @@ function tabMenuMainBar.render()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "import"), "") then
-                    print("click import ")
+                    tabMenuMainBar:OpenFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "export"), "") then
-                    print("click export ")
+                    tabMenuMainBar:SaveFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "save"), "ctrl+S") then
@@ -78,14 +78,14 @@ end
 
 -- 打开文件
 function tabMenuMainBar:OpenFile()
-    print(ding.FileDialogUtils.GetOpenFile())
+    local filePath = ding.FileDialogUtils.GetOpenFile()
+    print(filePath)
 end
 
 -- 保存文件
 function tabMenuMainBar:SaveFile()
-    --print("111")
-    --print(ding.FileDialogUtils.GetSaveFile())
-    print(ding.FileDialogUtils.GetOpenFile())
+    local filePath = ding.FileDialogUtils.GetSaveFile()
+    print(filePath)
 end
 
 

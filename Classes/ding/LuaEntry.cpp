@@ -109,8 +109,9 @@ namespace dan {
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );
-        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile);
-        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetOpenFile", &FileDialogUtils::GetOpenFile);
+        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile,
+                                        "GetOpenFile", &FileDialogUtils::GetOpenFile);
+//        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetOpenFile", &FileDialogUtils::GetOpenFile);
     }
 
     //---------------------------------
