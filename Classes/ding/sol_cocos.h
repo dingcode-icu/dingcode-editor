@@ -14,7 +14,7 @@ namespace sol_cocos2d {
 
     //sprite
     inline Sprite* spriteCreate1(const std::string& filename){ return Sprite::create(filename);}
-    inline Sprite* spriteCreate2(const std::string& filename, const Rect& rect){ return Sprite::create(filename, rect);}
+    inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
 
     //ccTypes
     static Color3B c3b_from_lua_table(sol::table t){
