@@ -98,7 +98,7 @@ namespace dan {
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
 
         char l_append[512];
-        sprintf(l_append,"package.path = package.path..'%s?.lua;'", workspace.c_str());
+        sprintf(l_append,"package.path = package.path..';%s?.lua;'", workspace.c_str());
         _luaState.script(l_append);
         _luaState.script_file(path);
 
