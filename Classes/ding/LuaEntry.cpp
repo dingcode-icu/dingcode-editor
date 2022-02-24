@@ -1,5 +1,6 @@
 #include <string>
 #include "LuaEntry.h"
+#define SOL_IMGUI_IMPLEMENTATION
 
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
@@ -8,6 +9,7 @@
 #include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
+#include "FileDialogUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -69,7 +71,9 @@ namespace dan {
 
     bool LuaEntry::entry()
     {
-//        FileUtils::getInstance()->setDefaultResourceRootPath("res");
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        FileUtils::getInstance()->setDefaultResourceRootPath("res");
+#endif
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
@@ -108,6 +112,9 @@ namespace dan {
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );
+        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile,
+                                        "GetOpenFile", &FileDialogUtils::GetOpenFile);
+//        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetOpenFile", &FileDialogUtils::GetOpenFile);
     }
 
     //---------------------------------

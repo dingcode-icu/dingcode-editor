@@ -1,5 +1,6 @@
 local Lang = require("res/lib/language/Lang")
 local Event = require("res/lib/event")
+local json = require("res/lib/json")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -31,7 +32,7 @@ function tabMenuMainBar.render()
             if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "file")) then
                 if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "new")) then
                     if ImGui.MenuItem(Lang:Lang("menu_mainbar", "proj")) then
-                        print("click proj ")
+                        tabMenuMainBar:SaveFile()
                     end
 
                     if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
@@ -46,11 +47,11 @@ function tabMenuMainBar.render()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "import"), "") then
-                    print("click import ")
+                    tabMenuMainBar:OpenFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "export"), "") then
-                    print("click export ")
+                    tabMenuMainBar:SaveFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "save"), "ctrl+S") then
@@ -76,9 +77,53 @@ function tabMenuMainBar.render()
     end
 end
 
+-- 打开文件
+function tabMenuMainBar:OpenFile()
+    local filePath = ding.FileDialogUtils.GetOpenFile()
+    print(filePath)
+    if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
+        local strDesc = io.readfile(filePath)
+
+        try {
+            function()
+                local jsonData = json.decode(strDesc)
+                print("============= open file")
+                dump(jsonData)
+            end, catch {
+                function ()
+                    print("请选择正确的配置文件")
+                end
+            }
+        }
+
+    else
+        print("文件 不是 配置文件")
+    end
+end
+
+-- 保存文件
+function tabMenuMainBar:SaveFile()
+    local filePath = ding.FileDialogUtils.GetSaveFile()
+    print(filePath)
+    if filePath and string.len(filePath) > 0 then
+        local realFilePath = filePath
+        if not string.ends(filePath, ".ding") then
+             realFilePath = filePath .. ".ding"
+        end
+        local data = { text = 111 }
+        local strData =  json.encode(data)
+        print("========== save file")
+        print(strData)
+        local strDesc = io.writefile(realFilePath, strData)
+    end
+
+end
+
+
 if ImGuiDraw then
     print("注册 tabMenuMainBar")
     ImGuiDraw(tabMenuMainBar.render)
 end
+
 
 return tabMenuMainBar
