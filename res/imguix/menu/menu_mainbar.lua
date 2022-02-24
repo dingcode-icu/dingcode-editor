@@ -1,5 +1,6 @@
 local Lang = require("res/lib/language/Lang")
 local Event = require("res/lib/event")
+local json = require("res/lib/json")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -82,7 +83,19 @@ function tabMenuMainBar:OpenFile()
     print(filePath)
     if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
         local strDesc = io.readfile(filePath)
-        print(strDesc)
+
+        try {
+            function()
+                local jsonData = json.decode(strDesc)
+                print("============= open file")
+                dump(jsonData)
+            end, catch {
+                function ()
+                    print("请选择正确的配置文件")
+                end
+            }
+        }
+
     else
         print("文件 不是 配置文件")
     end
@@ -93,8 +106,15 @@ function tabMenuMainBar:SaveFile()
     local filePath = ding.FileDialogUtils.GetSaveFile()
     print(filePath)
     if filePath and string.len(filePath) > 0 then
-        local realFilePath = filePath .. ".ding"
-        local strDesc = io.writefile(realFilePath, "{}")
+        local realFilePath = filePath
+        if not string.ends(filePath, ".ding") then
+             realFilePath = filePath .. ".ding"
+        end
+        local data = { text = 111 }
+        local strData =  json.encode(data)
+        print("========== save file")
+        print(strData)
+        local strDesc = io.writefile(realFilePath, strData)
     end
 
 end
