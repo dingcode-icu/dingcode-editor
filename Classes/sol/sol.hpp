@@ -12502,10 +12502,10 @@ namespace sol { namespace stack {
 					}
 				}
 				lua_pop(L, 1);
-				if (!success) {
-					handler(L, index, type::userdata, indextype, "value at this index does not properly reflect the desired type");
-					return false;
-				}
+//				if (!success) {
+//					handler(L, index, type::userdata, indextype, "value at this index does not properly reflect the desired type");
+//					return false;
+//				}
 				return true;
 			}
 		}
