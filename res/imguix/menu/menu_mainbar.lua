@@ -1,6 +1,7 @@
 local Lang = require("res/lib/language/Lang")
 local Event = require("res/lib/event")
 local json = require("res/lib/json")
+local DataManager = require("res/data/datamanager")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -88,7 +89,8 @@ function tabMenuMainBar:OpenFile()
             function()
                 local jsonData = json.decode(strDesc)
                 print("============= open file")
-                dump(jsonData)
+
+                DataManager:init(jsonData)
             end, catch {
                 function ()
                     print("请选择正确的配置文件")
@@ -110,11 +112,20 @@ function tabMenuMainBar:SaveFile()
         if not string.ends(filePath, ".ding") then
              realFilePath = filePath .. ".ding"
         end
-        local data = { text = 111 }
-        local strData =  json.encode(data)
-        print("========== save file")
-        print(strData)
-        local strDesc = io.writefile(realFilePath, strData)
+        try {
+            function()
+                local data = DataManager:get_alldata()
+                local strData =  json.encode(data)
+                print("========== save file")
+                --print(strData)
+                local strDesc = io.writefile(realFilePath, strData)
+            end, catch {
+                function ()
+                    print("保存文件出现错误")
+                end
+            }
+        }
+
     end
 
 end

@@ -1,5 +1,7 @@
 local Lang = require("res/lib/language/Lang")
-
+local DataManager = require("res/data/datamanager")
+local ViewManager = require("res/render/viewmanager")
+local enum = require("enum")
 
 -- node菜单
 local tabMenuNode = {
@@ -39,9 +41,49 @@ function tabMenuNode.render()
         ImGui.Begin(Lang:Lang("menu_node", "node"))
         ImGui.SetWindowPos(tabMenuNode.data._posX, tabMenuNode.data._posY, ImGui.ImGuiCond.Always)
         if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode")) then
+            -- 新建组合节点
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_composites")) then
 
-            if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_audio"), "") then
-                print("click addnode_audio ")
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_sequence"), "") then
+                    local data = DataManager:createData(enum.nodetype.sequence)
+                    if data then
+                        ViewManager:createNode(data)
+                    end
+                end
+
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_selector"), "") then
+                    local data = DataManager:createData(enum.nodetype.selector)
+                    if data then
+                        ViewManager:createNode(data)
+                    end
+                end
+
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_parallel"), "") then
+                    local data = DataManager:createData(enum.nodetype.parallel)
+                    if data then
+                        ViewManager:createNode(data)
+                    end
+                end
+
+                ImGui.EndMenu()
+            end
+            -- 新建修饰节点
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_decorator")) then
+
+
+                ImGui.EndMenu()
+            end
+            -- 新建条件节点
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_conditinals")) then
+
+
+                ImGui.EndMenu()
+            end
+            -- 新建行为节点
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action")) then
+
+
+                ImGui.EndMenu()
             end
 
             ImGui.EndMenu()

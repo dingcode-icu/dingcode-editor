@@ -15,6 +15,14 @@ return {
         node = "节点",
         addnode = "新建节点",
         addnode_audio = "新建音频节点",
+        addnode_composites = "composites",
+        addnode_sequence = "sequence",
+        addnode_selector = "selector",
+        addnode_parallel = "parallel",
+        addnode_decorator = "decorator",
+        addnode_conditinals = "conditinals",
+        addnode_action = "action",
+
 
         close = "关闭",
     },
