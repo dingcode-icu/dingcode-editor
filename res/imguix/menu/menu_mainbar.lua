@@ -2,6 +2,7 @@ local Lang = require("res/lib/language/Lang")
 local Event = require("res/lib/event")
 local json = require("res/lib/json")
 local DataManager = require("res/data/datamanager")
+local ViewManager = require("res/render/viewmanager")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -72,6 +73,32 @@ function tabMenuMainBar.render()
                 end
                 ImGui.EndMenu()
             end
+            if ImGui.BeginMenu("测试") then
+                if ImGui.MenuItem("打印 dataList") then
+                    dump(DataManager.data)
+                end
+
+                if ImGui.MenuItem("初始化parent节点") then
+
+                    try {
+                        function()
+                            ViewManager:initViewParent()
+                            local node = cc.Sprite.create("texture/while.png")
+                            ViewManager._viewParent:addChild(node)
+                        end, catch {
+                            function (err)
+                                print(err)
+                            end
+                        }
+                    }
+
+
+                end
+                ImGui.EndMenu()
+            end
+
+
+
             ImGui.EndMainMenuBar()
         end
 

@@ -233,6 +233,9 @@ inline void Init(sol::state_view& lua){
     auto rect = CC.new_usertype<cocos2d::Rect>("rect",
                                       sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>());
 
+    auto size = CC.new_usertype<cocos2d::Size>("size",
+                                      sol::call_constructor, sol::constructors<sol::types<float, float>>());
+
 #pragma endregion ccTypes
 
 #pragma region Instance
@@ -277,7 +280,10 @@ inline void Init(sol::state_view& lua){
 #pragma region Scene
     CC.new_usertype<Scene>("Scene",
                             "create",&Scene::create,
-                            "createWithPhysics", &Scene::createWithPhysics);
+                            "createWithPhysics", &Scene::createWithPhysics,
+                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)));
 #pragma endregion Scene
 
 #pragma region AnimationCache
@@ -287,8 +293,17 @@ inline void Init(sol::state_view& lua){
 
 #pragma region Node
      CC.new_usertype<Node>("Node",
-                           "create", &Node::create
+                           "create", &Node::create,
+                           "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
+                           "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
+                           "removeFromParent", &Node::removeFromParent,
+                           "setContentSize", &Node::setContentSize,
+                           "getContentSize", &Node::getContentSize,
+                           "getEventDispatcher", &Node::getEventDispatcher
                            );
+
 #pragma endregion Node
 
 #pragma region Layer
@@ -308,11 +323,21 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma region Event
+
      CC.new_usertype<EventDispatcher>("EventDispatcher",
                                       "addEventListenerWithFixedPriority", &EventDispatcher::addEventListenerWithFixedPriority,
                                             "addCustomEventListener", &EventDispatcher::addCustomEventListener,
                                             "addEventListenerWithSceneGraphPriority", &EventDispatcher::addEventListenerWithSceneGraphPriority
                                       );
+
+     CC.new_usertype<EventListenerTouchOneByOne>("EventListenerTouchOneByOne",
+                                          "create", &EventListenerTouchOneByOne::create,
+                                          "setSwallowTouches", &EventListenerTouchOneByOne::setSwallowTouches,
+                                          "onTouchBegan", &EventListenerTouchOneByOne::onTouchBegan,
+                                          "onTouchMoved", &EventListenerTouchOneByOne::onTouchMoved,
+                                          "onTouchEnded", &EventListenerTouchOneByOne::onTouchEnded,
+                                          "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled
+                                          );
 
      CC.new_usertype<EventListenerCustom>("EventListenerCustom",
                                           "create", &EventListenerCustom::create);
