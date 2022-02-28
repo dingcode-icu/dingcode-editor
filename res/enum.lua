@@ -1,4 +1,5 @@
 enum = {
+    -- 创建的节点枚举
     nodetype = {
         composites = 1,         -- "新建组合节点",
         sequence = 1001,        -- "顺序条件",
@@ -7,6 +8,11 @@ enum = {
         decorator = 2,          -- "新建修饰节点",
         conditinals = 3,        -- "新建条件节点",
         action = 4,             -- "新建行为节点",
+    },
+
+    -- 时间监听枚举
+    eventconst = {
+        imgui_menu_node = "imgui_menu_node",     -- 显示右键节点列表
     }
 }
 

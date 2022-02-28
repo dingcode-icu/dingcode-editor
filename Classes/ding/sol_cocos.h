@@ -339,6 +339,21 @@ inline void Init(sol::state_view& lua){
                                           "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled
                                           );
 
+     CC.new_usertype<EventListenerMouse>("EventListenerMouse",
+                                          "create", &EventListenerMouse::create,
+                                          "onMouseDown", &EventListenerMouse::onMouseDown,
+                                          "onMouseMove", &EventListenerMouse::onMouseMove,
+                                          "onMouseUp", &EventListenerMouse::onMouseUp,
+                                          "onMouseUp", &EventListenerMouse::onMouseUp
+                                          );
+
+     CC.new_usertype<EventMouse>("EventMouse",
+                                 "getMouseButton",&EventMouse::getMouseButton,
+                                 "getLocation",&EventMouse::getLocation
+     );
+
+
+
      CC.new_usertype<EventListenerCustom>("EventListenerCustom",
                                           "create", &EventListenerCustom::create);
      auto kv_event = CC.new_usertype<EventListenerKeyboard>("EventListenerKeyboard",

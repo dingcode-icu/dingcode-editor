@@ -14,8 +14,13 @@ menu_mainbar:show()
 --右键节点主菜单
 local menu_node = require("res/imguix/menu/menu_node")
 menu_node:hide()
-Event:addEventListener("imgui_menu_node", function(event)
-    menu_node:show(event)
+Event:addEventListener(enum.eventconst.imgui_menu_node, function(event)
+    if event and event.isHide then
+        menu_node:hide()
+    else
+        menu_node:show(event)
+    end
+
 end)
 
 
