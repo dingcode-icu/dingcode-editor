@@ -3,9 +3,20 @@ local imguiUI = {
 }
 
 function ImGuiRenderer()
-     for k,v in pairs(imguiUI._drawList) do
-         if v then v() end
-     end
+
+    try {
+        function()
+            for k,v in pairs(imguiUI._drawList) do
+                if v then v() end
+            end
+        end, catch {
+            function (err)
+                print("err ImGuiRenderer")
+                print(err)
+            end
+        }
+    }
+
 end
 
 function ImGuiDraw(func)

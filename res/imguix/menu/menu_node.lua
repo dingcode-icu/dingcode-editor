@@ -30,6 +30,11 @@ function tabMenuNode:show(args)
     end
 end
 
+function tabMenuNode:getMenuPos()
+
+    return {x = self.data._posX, y = self.data._posY}
+end
+
 --隐藏菜单
 function tabMenuNode:hide()
     print("隐藏 tabMenuNode")

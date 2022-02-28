@@ -83,7 +83,17 @@ function viewManager:initViewParent()
 
 end
 
+function viewManager:initNodePos(node)
+    if node then
+        local menu_node = require("res/imguix/menu/menu_node")
+        local posMenu = menu_node:getMenuPos()
+        --dump(posMenu)
+        node:setPositionX(posMenu.x)
+        node:setPositionY(posMenu.y)
+    end
+end
 function viewManager:createNode(dataNode)
+
     if not self or not self._viewParent then
         print("创建node 失败")
         return
@@ -94,8 +104,9 @@ function viewManager:createNode(dataNode)
             if enum.nodetype.sequence == dataNode:gettype() then
                 local Node = require ("res/render/view/node_sequence")
                 local node = Node.new()
-
-                self._viewParent:addChild(node.view)
+                local viewNode = node.view
+                self:initNodePos(viewNode)
+                self._viewParent:addChild(viewNode)
             end
         end, catch {
             function (err)

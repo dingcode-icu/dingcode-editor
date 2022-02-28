@@ -301,7 +301,11 @@ inline void Init(sol::state_view& lua){
                            "removeFromParent", &Node::removeFromParent,
                            "setContentSize", &Node::setContentSize,
                            "getContentSize", &Node::getContentSize,
-                           "getEventDispatcher", &Node::getEventDispatcher
+                           "getEventDispatcher", &Node::getEventDispatcher,
+                           "getPositionX", &Node::getPositionX,
+                           "getPositionY", &Node::getPositionY,
+                           "setPositionX", &Node::setPositionX,
+                           "setPositionY", &Node::setPositionY
                            );
 
 #pragma endregion Node
@@ -318,6 +322,11 @@ inline void Init(sol::state_view& lua){
              sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
              sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(spriteCreate2)
              ));
+     sp_tb.set_function("setPositionX", &Node::setPositionX);
+     sp_tb.set_function("setPositionY", &Node::setPositionY);
+     sp_tb.set_function("getPositionX", &Node::getPositionX);
+     sp_tb.set_function("getPositionY", &Node::getPositionY);
+
 #pragma endregion Sprite
 
 
