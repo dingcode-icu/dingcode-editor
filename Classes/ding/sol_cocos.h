@@ -344,7 +344,7 @@ inline void Init(sol::state_view& lua){
                                           "onMouseDown", &EventListenerMouse::onMouseDown,
                                           "onMouseMove", &EventListenerMouse::onMouseMove,
                                           "onMouseUp", &EventListenerMouse::onMouseUp,
-                                          "onMouseUp", &EventListenerMouse::onMouseUp
+                                          "onMouseScroll", &EventListenerMouse::onMouseScroll
                                           );
 
      CC.new_usertype<EventMouse>("EventMouse",

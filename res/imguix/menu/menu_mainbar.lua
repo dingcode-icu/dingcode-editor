@@ -83,8 +83,6 @@ function tabMenuMainBar.render()
                     try {
                         function()
                             ViewManager:initViewParent()
-                            local node = cc.Sprite.create("texture/while.png")
-                            ViewManager._viewParent:addChild(node)
                         end, catch {
                             function (err)
                                 print(err)
