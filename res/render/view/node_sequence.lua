@@ -1,8 +1,8 @@
-local NodeActive = class("NodeActive")
+local NodeSequence = class("NodeSequence")
 
-function NodeActive:ctor()
+function NodeSequence:ctor()
     local node = cc.Sprite.create("texture/while.png")
     self.view = node
 end
 
-return NodeActive
+return NodeSequence

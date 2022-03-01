@@ -1,7 +1,8 @@
 local DataManager = require("res/data/datamanager")
 local Event = require("res/lib/event")
 local enum = enum
-
+--local winWidth = cc.Director:getInstance():getWinSize().width
+local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
     view = {
@@ -44,10 +45,7 @@ function viewManager:initViewParent()
     end
     listener.onTouchEnded = function(event1, event2)
         --local mouseType = event:getButton()
-        Event:dispatchEvent({
-            name = enum.eventconst.imgui_menu_node,
-            isHide = true,
-        })
+        viewManager:hide_imgui_menu_node()
         print("touch end")
         return true
     end
@@ -83,16 +81,28 @@ function viewManager:initViewParent()
 
 end
 
+-- 隐藏菜单
+function viewManager:hide_imgui_menu_node()
+    Event:dispatchEvent({
+        name = enum.eventconst.imgui_menu_node,
+        isHide = true,
+    })
+end
+
 function viewManager:initNodePos(node)
     if node then
         local menu_node = require("res/imguix/menu/menu_node")
         local posMenu = menu_node:getMenuPos()
         --dump(posMenu)
         node:setPositionX(posMenu.x)
-        node:setPositionY(posMenu.y)
+        node:setPositionY(winHeight - posMenu.y)
+
     end
 end
 function viewManager:createNode(dataNode)
+
+    -- 隐藏菜单
+    self:hide_imgui_menu_node()
 
     if not self or not self._viewParent then
         print("创建node 失败")

@@ -234,7 +234,12 @@ inline void Init(sol::state_view& lua){
                                       sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>());
 
     auto size = CC.new_usertype<cocos2d::Size>("size",
-                                      sol::call_constructor, sol::constructors<sol::types<float, float>>());
+                                      sol::call_constructor, sol::constructors<sol::types<float, float>>(),
+                                      "width",&cocos2d::Size::width,
+                                      "height",&cocos2d::Size::height
+                                      );
+
+
 
 #pragma endregion ccTypes
 
@@ -317,15 +322,25 @@ inline void Init(sol::state_view& lua){
 #pragma endregion Layer
 
 #pragma region Sprite
-     auto sp_tb =CC.new_usertype<Sprite>("Sprite");
+     auto sp_tb =CC.new_usertype<Sprite>("Sprite",
+                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
+                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
+                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
+                                        "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
+                                       "removeFromParent", &Node::removeFromParent,
+                                       "setContentSize", &Node::setContentSize,
+                                       "getContentSize", &Node::getContentSize,
+                                       "getEventDispatcher", &Node::getEventDispatcher,
+                                       "getPositionX", &Node::getPositionX,
+                                       "getPositionY", &Node::getPositionY,
+                                       "setPositionX", &Node::setPositionX,
+                                       "setPositionY", &Node::setPositionY
+                                       );
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
              sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(spriteCreate2)
              ));
-     sp_tb.set_function("setPositionX", &Node::setPositionX);
-     sp_tb.set_function("setPositionY", &Node::setPositionY);
-     sp_tb.set_function("getPositionX", &Node::getPositionX);
-     sp_tb.set_function("getPositionY", &Node::getPositionY);
+
 
 #pragma endregion Sprite
 
