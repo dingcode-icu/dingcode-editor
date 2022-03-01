@@ -16,6 +16,8 @@ namespace sol_cocos2d {
     inline Sprite* spriteCreate1(const std::string& filename){ return Sprite::create(filename);}
     inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
 
+    inline Label* createWithTTF(const std::string& text, const std::string& fontFile, float fontSize){return Label::createWithTTF(text, fontFile, fontSize);}
+
     //ccTypes
     static Color3B c3b_from_lua_table(sol::table t){
         Color3B c;
@@ -344,7 +346,25 @@ inline void Init(sol::state_view& lua){
 
 #pragma endregion Sprite
 
+#pragma region Label
+    CC.new_usertype<Label>("Label",
+                           "create", sol::overload(sol::resolve<Label*()>(&Label::create)),
+                           "createWithTTF", sol::overload(sol::resolve<Label*(const std::string& text, const std::string& fontFile, float fontSize)>(createWithTTF)),
+                           "removeFromParentAndCleanup", &Label::removeFromParentAndCleanup,
+                           "removeFromParent", &Label::removeFromParent,
+                           "setContentSize", &Label::setContentSize,
+                           "getContentSize", &Label::getContentSize,
+                           "getEventDispatcher", &Label::getEventDispatcher,
+                           "getPositionX", &Label::getPositionX,
+                           "getPositionY", &Label::getPositionY,
+                           "setPositionX", &Label::setPositionX,
+                           "setPositionY", &Label::setPositionY,
 
+                           "setString", &Label::setString,
+                           "setColor", &Label::setColor
+                           );
+
+#pragma endregion Label
 
 #pragma region Event
 
