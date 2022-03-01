@@ -1,6 +1,8 @@
 local BaseNode = class("BaseNode")
 
-function BaseNode:ctor()
+function BaseNode:ctor(data)
+    self.data = data
+    self.touchListener = null
     local node = cc.Node.create()
     node:setAnchorPoint(cc.p(0.5, 0.5))
     self.view = node
@@ -18,6 +20,12 @@ function BaseNode:ShowName()
     end
 end
 
+function BaseNode:setContentSize(size)
+    if self.view then
+        self.view:setContentSize(size)
+    end
+end
+
 function BaseNode:registerTouch()
 
     local listener = cc.EventListenerTouchOneByOne:create();
@@ -29,14 +37,11 @@ function BaseNode:registerTouch()
     local eventDispatcher = self.view:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self.view);
 
+    self.touchListener = listener
 end
+function BaseNode:onTouch()
 
-function BaseNode:setContentSize(size)
-    if self.view then
-        self.view:setContentSize(size)
-    end
 end
-
 function BaseNode.onTouchBegan(touch, event)
     local target = event:getCurrentTarget()
     local boundingBox = target:getBoundingBox()
@@ -51,6 +56,13 @@ function BaseNode.onTouchMoved(touch, event)
     return false
 end
 function BaseNode.onTouchEnded(touch, event)
+    local target = event:getCurrentTarget()
+    local boundingBox = target:getBoundingBox()
+    local p = touch:getLocation()
+    --local pLocal = target:convertToNodeSpace(p)
+    if boundingBox:containsPoint(p) then
+        return true
+    end
     return false
 end
 function BaseNode.onTouchCancelled(touch, event)

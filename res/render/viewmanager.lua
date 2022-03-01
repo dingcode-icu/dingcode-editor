@@ -113,7 +113,7 @@ function viewManager:createNode(dataNode)
         function()
             if enum.nodetype.sequence == dataNode:gettype() then
                 local Node = require ("res/render/view/node_sequence")
-                local node = Node.new()
+                local node = Node.new(dataNode)
                 local viewNode = node.view
                 self:initNodePos(viewNode)
                 self._viewParent:addChild(viewNode)
@@ -125,11 +125,7 @@ function viewManager:createNode(dataNode)
             end
         }
     }
-    --if enum.nodetype.sequence == dataNode:gettype() then
-    --    local NodeActive = require ("res/render/view/node_sequence")
-    --    local node = NodeActive.new()
-    --    self._viewParent:addChild(node)
-    --end
+
 end
 
 return viewManager

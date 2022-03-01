@@ -1,8 +1,8 @@
 local DataBase = require("render/view/basenode")
 local NodeSequence = class("NodeSequence", DataBase)
 
-function NodeSequence:ctor()
-    self.super:ctor()
+function NodeSequence:ctor(data)
+    self.super:ctor(data)
 
     self:initView()
 
@@ -20,27 +20,13 @@ function NodeSequence:initView()
 
     -- 注册 点击事件
     self:registerTouch()
-    --local listener = cc.EventListenerTouchOneByOne:create();
-    --listener:setSwallowTouches(true);
-    --listener.onTouchBegan = function()
-    --    return false
-    --end
-    --listener.onTouchMoved = function()
-    --    --print("2")
-    --    return true
-    --end
-    --listener.onTouchEnded = function(event1, event2)
-    --    --local mouseType = event:getButton()
-    --    print("img ========")
-    --    return true
-    --end
-    --listener.onTouchCancelled = function()
-    --    --print("4")
-    --    return true
-    --end
-    --local eventDispatcher = self.view:getEventDispatcher()
-    --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self.view);
 
+    if self.touchListener then
+        local this = self
+        self.touchListener.onTouchEnded = function(touch, event)
+            print("click node", this.data:getuuid())
+        end
+    end
 end
 
 return NodeSequence
