@@ -233,7 +233,13 @@ inline void Init(sol::state_view& lua){
     point["y"] = &Vec2::y;
 
     auto rect = CC.new_usertype<cocos2d::Rect>("rect",
-                                      sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>());
+                                      sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>(),
+                                      "containsPoint", &cocos2d::Rect::containsPoint,
+                                      "getMinX", &cocos2d::Rect::getMinX,
+                                      "getMaxX", &cocos2d::Rect::getMaxX,
+                                      "getMinY", &cocos2d::Rect::getMinY,
+                                      "getMaxY", &cocos2d::Rect::getMaxY
+                                      );
 
     auto size = CC.new_usertype<cocos2d::Size>("size",
                                       sol::call_constructor, sol::constructors<sol::types<float, float>>(),
@@ -312,7 +318,14 @@ inline void Init(sol::state_view& lua){
                            "getPositionX", &Node::getPositionX,
                            "getPositionY", &Node::getPositionY,
                            "setPositionX", &Node::setPositionX,
-                           "setPositionY", &Node::setPositionY
+                           "setPositionY", &Node::setPositionY,
+                           "getBoundingBox", &Node::getBoundingBox,
+                           "convertToNodeSpaceAR", &Node::convertToNodeSpaceAR,
+                           "convertToNodeSpace", &Node::convertToNodeSpace,
+                           "convertToWorldSpace", &Node::convertToWorldSpace,
+                           "convertToWorldSpaceAR", &Node::convertToWorldSpaceAR,
+                           "setAnchorPoint", &Node::setAnchorPoint,
+                           "getAnchorPoint", &Node::getAnchorPoint
                            );
 
 #pragma endregion Node
@@ -383,6 +396,7 @@ inline void Init(sol::state_view& lua){
                                           "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled
                                           );
 
+
      CC.new_usertype<EventListenerMouse>("EventListenerMouse",
                                           "create", &EventListenerMouse::create,
                                           "onMouseDown", &EventListenerMouse::onMouseDown,
@@ -396,7 +410,13 @@ inline void Init(sol::state_view& lua){
                                  "getLocation",&EventMouse::getLocation
      );
 
+     CC.new_usertype<Touch>("Touch",
+                                 "getLocation",&Touch::getLocation
+     );
 
+     CC.new_usertype<Event>("Event",
+                                 "getCurrentTarget",&Event::getCurrentTarget
+     );
 
      CC.new_usertype<EventListenerCustom>("EventListenerCustom",
                                           "create", &EventListenerCustom::create);
