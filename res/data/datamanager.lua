@@ -47,7 +47,7 @@ end
 
 function dataManager:removeData(id)
     if id then
-        self.data.dataList.delete(id)
+        self.data.dataList[id] = null
     end
 end
 

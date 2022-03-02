@@ -7,7 +7,7 @@ function dataBase:ctor(type)
     end
     self.data = {
         type = type,
-        uuid = uuid.generate()
+        uuid = self:generateuuid()
 
         -- 配置信息
 
@@ -21,8 +21,10 @@ function dataBase:ctor(type)
     }
 
 
-
-
+end
+-- TODO 需要去重
+function dataBase:generateuuid()
+    return uuid.generate()
 end
 
 function dataBase:setData(data)

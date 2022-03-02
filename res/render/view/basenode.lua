@@ -2,7 +2,9 @@ local BaseNode = class("BaseNode")
 
 function BaseNode:ctor(data)
     self.data = data
-    self.touchListener = null
+    self.touchListener = null           -- 点击监听
+    self.selectNode = null              -- 选中的节点（null/active=false 表示未选中）
+
     local node = cc.Node.create()
     node:setAnchorPoint(cc.p(0.5, 0.5))
     self.view = node
@@ -25,7 +27,58 @@ function BaseNode:setContentSize(size)
         self.view:setContentSize(size)
     end
 end
+function BaseNode:getContentSize()
+    if self.view then
+        return self.view:getContentSize()
+    end
+    return null
+end
+function BaseNode:removeFromParentAndCleanup(cleanup)
+    if self.view then
+        self.view:removeFromParentAndCleanup(cleanup)
+    end
+end
+-- 是否选中
+function BaseNode:isSelect()
+    if self.selectNode and self.selectNode:isVisible() then
+        return true
+    end
+    return false
+end
+-- 初始化 选中节点
+function BaseNode:initSelectNode()
+    if not self.selectNode then
+        local node = cc.Sprite.create("texture/select.png")
+        self.view:addChild(node)
+        --local size = node:getContentSize()
+        local sizeParent = self:getContentSize()
+        node:setPositionX(sizeParent.width / 2)
+        node:setPositionY(sizeParent.height / 2)
+        self.selectNode = node
+    end
+end
+-- 选中
+function BaseNode:Select()
+    self:initSelectNode()
+    self.selectNode:setVisible(true)
+end
+-- 取消选中
+function BaseNode:UnSelect()
+    if self.selectNode then
+        self.selectNode:setVisible(false)
+    end
+end
+-- 反选
+function BaseNode:ClickSelect()
+    if self:isSelect() then
+        self:UnSelect()
+    else
+        self:Select()
+    end
+end
 
+
+-- 点击相关
 function BaseNode:registerTouch()
 
     local listener = cc.EventListenerTouchOneByOne:create();
@@ -38,9 +91,6 @@ function BaseNode:registerTouch()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self.view);
 
     self.touchListener = listener
-end
-function BaseNode:onTouch()
-
 end
 function BaseNode.onTouchBegan(touch, event)
     local target = event:getCurrentTarget()
@@ -60,6 +110,7 @@ function BaseNode.onTouchEnded(touch, event)
     local boundingBox = target:getBoundingBox()
     local p = touch:getLocation()
     --local pLocal = target:convertToNodeSpace(p)
+
     if boundingBox:containsPoint(p) then
         return true
     end

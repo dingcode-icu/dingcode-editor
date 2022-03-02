@@ -5,7 +5,7 @@ local enum = enum
 local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
-    view = {
+    data = {
         viewList = {},                      -- 创建的数据
     },
     isInit = false,                         -- 是否已经初始化
@@ -46,7 +46,7 @@ function viewManager:initViewParent()
     listener.onTouchEnded = function(event1, event2)
         --local mouseType = event:getButton()
         viewManager:hide_imgui_menu_node()
-        print("touch end")
+        print("viewmanager touch end")
         return true
     end
     listener.onTouchCancelled = function()
@@ -79,6 +79,26 @@ function viewManager:initViewParent()
     --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
 
+    self:registerEvent()
+end
+
+function viewManager:registerEvent()
+    local this = self
+    Event:addEventListener(enum.eventconst.imgui_delete_node, function(event)
+        local list = this.data.viewList
+        for i, v in pairs(list) do
+            if v:isSelect() then
+                -- 移除页面
+                v:removeFromParentAndCleanup(true)
+                list[i] = null
+                -- 移除数据
+                DataManager:removeData(i)
+            end
+        end
+    end)
+end
+function viewManager:unRegisterEvent()
+    Event:removeEventListenersByEvent(enum.eventconst.imgui_delete_node)
 end
 
 -- 隐藏菜单
@@ -99,6 +119,11 @@ function viewManager:initNodePos(node)
 
     end
 end
+
+function viewManager:addToList(node)
+    self.data.viewList[node.data:getuuid()] = node
+end
+
 function viewManager:createNode(dataNode)
 
     -- 隐藏菜单
@@ -117,6 +142,7 @@ function viewManager:createNode(dataNode)
                 local viewNode = node.view
                 self:initNodePos(viewNode)
                 self._viewParent:addChild(viewNode)
+                self:addToList(node)
             end
         end, catch {
             function (err)

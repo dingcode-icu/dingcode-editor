@@ -10,9 +10,10 @@ enum = {
         action = 4,             -- "新建行为节点",
     },
 
-    -- 时间监听枚举
+    -- 事件监听枚举
     eventconst = {
-        imgui_menu_node = "imgui_menu_node",     -- 显示右键节点列表
+        imgui_menu_node = "imgui_menu_node",                        -- 显示右键节点列表
+        imgui_delete_node = "imgui_delete_node",                    -- 删除节点
     }
 }
 

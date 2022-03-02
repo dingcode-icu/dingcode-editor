@@ -14,7 +14,7 @@ local tabMenuNode = {
 
 --显示菜单
 function tabMenuNode:show(args)
-    print("显示 tabMenuNode")
+    --print("显示 tabMenuNode")
     self.data._isShow = true
     if args then
         if args.posX then
@@ -37,7 +37,7 @@ end
 
 --隐藏菜单
 function tabMenuNode:hide()
-    print("隐藏 tabMenuNode")
+    --print("隐藏 tabMenuNode")
     self.data._isShow = false
 end
 

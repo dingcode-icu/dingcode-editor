@@ -325,7 +325,9 @@ inline void Init(sol::state_view& lua){
                            "convertToWorldSpace", &Node::convertToWorldSpace,
                            "convertToWorldSpaceAR", &Node::convertToWorldSpaceAR,
                            "setAnchorPoint", &Node::setAnchorPoint,
-                           "getAnchorPoint", &Node::getAnchorPoint
+                           "getAnchorPoint", &Node::getAnchorPoint,
+                           "isVisible", &Node::isVisible,
+                           "setVisible", &Node::setVisible
                            );
 
 #pragma endregion Node
@@ -349,7 +351,9 @@ inline void Init(sol::state_view& lua){
                                        "getPositionX", &Node::getPositionX,
                                        "getPositionY", &Node::getPositionY,
                                        "setPositionX", &Node::setPositionX,
-                                       "setPositionY", &Node::setPositionY
+                                       "setPositionY", &Node::setPositionY,
+                                       "isVisible", &Node::isVisible,
+                                        "setVisible", &Node::setVisible
                                        );
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
@@ -420,10 +424,12 @@ inline void Init(sol::state_view& lua){
 
      CC.new_usertype<EventListenerCustom>("EventListenerCustom",
                                           "create", &EventListenerCustom::create);
+
      auto kv_event = CC.new_usertype<EventListenerKeyboard>("EventListenerKeyboard",
                                     "create", &EventListenerKeyboard::create);
      kv_event["onKeyPressed"] = &EventListenerKeyboard::onKeyPressed;
      kv_event["onKeyReleased"] = &EventListenerKeyboard::onKeyReleased;
+
 #pragma endregion Event
 
 

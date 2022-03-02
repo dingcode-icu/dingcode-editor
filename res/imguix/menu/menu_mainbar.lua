@@ -74,6 +74,11 @@ function tabMenuMainBar.render()
                 ImGui.EndMenu()
             end
             if ImGui.BeginMenu("测试") then
+                if ImGui.MenuItem("打印 viewList") then
+                    for i, v in pairs(ViewManager.data.viewList) do
+                        print(v.data:getuuid())
+                    end
+                end
                 if ImGui.MenuItem("打印 dataList") then
                     dump(DataManager.data)
                 end
