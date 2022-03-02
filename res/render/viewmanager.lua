@@ -31,7 +31,12 @@ function viewManager:initViewParent()
     local scene = cc.Director:getInstance():getRunningScene()
     scene:addChild(node)
 
-
+    self:registerTouch()
+    self:registerEvent()
+end
+function viewManager:registerTouch()
+    local node = self._viewParent
+    local this = self
     -- 注册 点击事件
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
@@ -45,7 +50,8 @@ function viewManager:initViewParent()
     end
     listener.onTouchEnded = function(event1, event2)
         --local mouseType = event:getButton()
-        viewManager:hide_imgui_menu_node()
+        this:hide_imgui_menu_node()
+        this:unSelectAll()
         print("viewmanager touch end")
         return true
     end
@@ -78,10 +84,7 @@ function viewManager:initViewParent()
     local eventDispatcher = node:getEventDispatcher()
     --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
-
-    self:registerEvent()
 end
-
 function viewManager:registerEvent()
     local this = self
     Event:addEventListener(enum.eventconst.imgui_delete_node, function(event)
@@ -108,6 +111,18 @@ function viewManager:hide_imgui_menu_node()
         isHide = true,
     })
 end
+-- 取消全部选中
+function viewManager:unSelectAll()
+    local list = self.data.viewList
+    for i, v in pairs(list) do
+        v:UnSelect()
+    end
+end
+
+
+function viewManager:addToList(node)
+    self.data.viewList[node.data:getuuid()] = node
+end
 
 function viewManager:initNodePos(node)
     if node then
@@ -118,10 +133,6 @@ function viewManager:initNodePos(node)
         node:setPositionY(winHeight - posMenu.y)
 
     end
-end
-
-function viewManager:addToList(node)
-    self.data.viewList[node.data:getuuid()] = node
 end
 
 function viewManager:createNode(dataNode)
