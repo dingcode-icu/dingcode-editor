@@ -1,7 +1,7 @@
 local DataManager = require("res/data/datamanager")
 local Event = require("res/lib/event")
 local enum = enum
---local winWidth = cc.Director:getInstance():getWinSize().width
+local winWidth = cc.Director:getInstance():getWinSize().width
 local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
@@ -25,7 +25,7 @@ end
 
 function viewManager:initViewParent()
     local node = cc.Node.create()
-    node:setContentSize(cc.size(9999,9999))
+    node:setContentSize(cc.size(10000,10000))
     self._viewParent = node
 
     local scene = cc.Director:getInstance():getRunningScene()
@@ -64,7 +64,7 @@ function viewManager:registerTouch()
 
     -- 注册 右键点击
     local listener = cc.EventListenerMouse:create();
-    listener.onMouseDown = function(event)
+    listener.onMouseUp = function(event)
         local mouseType = event:getMouseButton()
         if mouseType == 0 then
             --print("左键点击")
