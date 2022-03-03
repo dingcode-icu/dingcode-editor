@@ -1,4 +1,5 @@
 local BaseNode = class("BaseNode")
+local enum = enum
 
 function BaseNode:ctor(data)
     self.data = data
@@ -12,7 +13,7 @@ end
 
 function BaseNode:ShowName()
     if self.view then
-        local lab = cc.Label.createWithTTF(self.__cname, "font/FZLanTYJW.TTF", 15)
+        local lab = cc.Label.createWithTTF(self:getNameForType(), "font/FZLanTYJW.TTF", 15)
         self.view:addChild(lab)
         --lab:setString(self.__cname)
         local size = self.view:getContentSize()
@@ -20,6 +21,18 @@ function BaseNode:ShowName()
         lab:setPositionY(size.height / 2)
         lab:setColor(cc.c3b(0,255,0))
     end
+end
+function BaseNode:getNameForType()
+    if self.data then
+        if self.data:gettype() then
+            for i, v in pairs(enum.nodetype) do
+                if v == self.data:gettype() then
+                    return i
+                end
+            end
+        end
+    end
+    return "default"
 end
 
 function BaseNode:setContentSize(size)

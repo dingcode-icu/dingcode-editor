@@ -162,13 +162,24 @@ function viewManager:createNode(dataNode)
     print("创建node， type = ", dataNode:gettype())
     try {
         function()
+            local Node = null
             if enum.nodetype.sequence == dataNode:gettype() then
-                local Node = require ("res/render/view/node_sequence")
+                Node = require ("res/render/view/node_sequence")
+            elseif enum.nodetype.parallel == dataNode:gettype() then
+                Node = require ("res/render/view/node_parallel")
+            elseif enum.nodetype.selector == dataNode:gettype() then
+                Node = require ("res/render/view/node_selector")
+            else
+                Node = require ("res/render/view/node_default")
+            end
+            if Node then
                 local node = Node.new(dataNode)
                 local viewNode = node.view
                 self:initNodePos(viewNode)
                 self._viewParent:addChild(viewNode)
                 self:addToList(node)
+            else
+                print("创建 view 失败, type = ", dataNode:gettype())
             end
         end, catch {
             function (err)
