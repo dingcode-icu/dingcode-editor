@@ -86,7 +86,7 @@ function viewManager:registerTouch()
         -- 鼠标滚轮 缩放
         local scrollY = event:getScrollY()
         if this._viewParent then
-            local curScale = this._viewParent:getScale() + scrollY * 1
+            local curScale = this._viewParent:getScale() + scrollY * 0.1
             if curScale < 0.3 then
                 curScale = 0.3
             end
