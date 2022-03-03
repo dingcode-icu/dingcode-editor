@@ -81,6 +81,21 @@ function viewManager:registerTouch()
         end
         return true
     end
+
+    listener.onMouseScroll = function(event)
+        -- 鼠标滚轮 缩放
+        local scrollY = event:getScrollY()
+        if this._viewParent then
+            local curScale = this._viewParent:getScale() + scrollY * 1
+            if curScale < 0.3 then
+                curScale = 0.3
+            end
+            if curScale > 3 then
+                 curScale = 3
+            end
+            this._viewParent:setScale(curScale)
+        end
+    end
     local eventDispatcher = node:getEventDispatcher()
     --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);

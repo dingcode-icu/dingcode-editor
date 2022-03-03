@@ -327,7 +327,9 @@ inline void Init(sol::state_view& lua){
                            "setAnchorPoint", &Node::setAnchorPoint,
                            "getAnchorPoint", &Node::getAnchorPoint,
                            "isVisible", &Node::isVisible,
-                           "setVisible", &Node::setVisible
+                           "setVisible", &Node::setVisible,
+                           "getScale", &Node::getScale,
+                           "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale))
                            );
 
 #pragma endregion Node
@@ -411,11 +413,15 @@ inline void Init(sol::state_view& lua){
 
      CC.new_usertype<EventMouse>("EventMouse",
                                  "getMouseButton",&EventMouse::getMouseButton,
-                                 "getLocation",&EventMouse::getLocation
+                                 "getLocation",&EventMouse::getLocation,
+                                 "getStartLocation", &EventMouse::getStartLocation,
+                                 "getScrollX", &EventMouse::getScrollX,
+                                 "getScrollY", &EventMouse::getScrollY
      );
 
      CC.new_usertype<Touch>("Touch",
-                                 "getLocation",&Touch::getLocation
+                                 "getLocation",&Touch::getLocation,
+                                 "getStartLocation", &Touch::getStartLocation
      );
 
      CC.new_usertype<Event>("Event",
