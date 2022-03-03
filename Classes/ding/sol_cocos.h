@@ -324,6 +324,7 @@ inline void Init(sol::state_view& lua){
                            "convertToNodeSpace", &Node::convertToNodeSpace,
                            "convertToWorldSpace", &Node::convertToWorldSpace,
                            "convertToWorldSpaceAR", &Node::convertToWorldSpaceAR,
+                           "convertTouchToNodeSpace", &Node::convertTouchToNodeSpace,
                            "setAnchorPoint", &Node::setAnchorPoint,
                            "getAnchorPoint", &Node::getAnchorPoint,
                            "isVisible", &Node::isVisible,

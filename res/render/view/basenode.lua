@@ -94,10 +94,9 @@ function BaseNode:registerTouch()
 end
 function BaseNode.onTouchBegan(touch, event)
     local target = event:getCurrentTarget()
-    local boundingBox = target:getBoundingBox()
-    local p = touch:getLocation()
-    --local pLocal = target:convertToNodeSpace(p)
-    if boundingBox:containsPoint(p) then
+    local size = target:getContentSize()
+    --local p = touch:getLocation()
+    if BaseNode.isTouchInsideNode(touch, target, size) then
         return true
     end
     return false
@@ -107,17 +106,22 @@ function BaseNode.onTouchMoved(touch, event)
 end
 function BaseNode.onTouchEnded(touch, event)
     local target = event:getCurrentTarget()
-    local boundingBox = target:getBoundingBox()
-    local p = touch:getLocation()
-    --local pLocal = target:convertToNodeSpace(p)
-
-    if boundingBox:containsPoint(p) then
+    local size = target:getContentSize()
+    --local p = touch:getLocation()
+    if BaseNode.isTouchInsideNode(touch, target, size) then
         return true
     end
     return false
 end
 function BaseNode.onTouchCancelled(touch, event)
     return false
+end
+function BaseNode.isTouchInsideNode(pTouch,node,nodeSize)
+    local point = node:convertTouchToNodeSpace(pTouch)
+    local x,y = point.x,point.y
+    if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
+        return true
+    end
 end
 
 
