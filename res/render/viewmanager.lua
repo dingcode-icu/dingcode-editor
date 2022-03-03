@@ -83,6 +83,11 @@ function viewManager:registerTouch()
     end
 
     listener.onMouseScroll = function(event)
+        local menu_node = require("res/imguix/menu/menu_node")
+        --local menu_mainbar = require("res/imguix/menu/menu_mainbar")
+        if menu_node:isShow() then
+            return
+        end
         -- 鼠标滚轮 缩放
         local scrollY = event:getScrollY()
         if this._viewParent then

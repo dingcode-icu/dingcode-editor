@@ -21,11 +21,14 @@ function tabMenuMainBar:show(args)
 
     end
 end
-
 --隐藏菜单
 function tabMenuMainBar:hide()
     print("隐藏 tabMenuMainBar")
     self.data._isShow = false
+end
+-- 是否在显示
+function tabMenuMainBar:isShow()
+    return self.data._isShow
 end
 
 function tabMenuMainBar.render()

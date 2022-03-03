@@ -29,16 +29,17 @@ function tabMenuNode:show(args)
         end
     end
 end
-
-function tabMenuNode:getMenuPos()
-
-    return {x = self.data._posX, y = self.data._posY}
-end
-
 --隐藏菜单
 function tabMenuNode:hide()
     --print("隐藏 tabMenuNode")
     self.data._isShow = false
+end
+function tabMenuNode:getMenuPos()
+    return {x = self.data._posX, y = self.data._posY}
+end
+-- 是否在显示
+function tabMenuNode:isShow()
+    return self.data._isShow
 end
 
 function tabMenuNode.render()
@@ -86,7 +87,9 @@ function tabMenuNode.render()
             end
             -- 新建行为节点
             if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action")) then
-
+                for i = 1, 60 do
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_sequence"), "") then end
+                end
 
                 ImGui.EndMenu()
             end
