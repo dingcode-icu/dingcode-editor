@@ -87,8 +87,63 @@ function tabMenuNode.render()
             end
             -- 新建行为节点
             if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action")) then
-                for i = 1, 60 do
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_sequence"), "") then end
+
+                -- node
+                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_node")) then
+                    tabMenuNode.renderComNode()
+                    ImGui.EndMenu()
+                end
+                -- sprite
+                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_sprite")) then
+                    tabMenuNode.renderComNode()
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_sprite_path"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_sprite_path)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    ImGui.EndMenu()
+                end
+                -- lab
+                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_lab")) then
+                    tabMenuNode.renderComNode()
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_string"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_lab_string)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_fontsize"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_lab_fontsize)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    ImGui.EndMenu()
+                end
+                -- richtext
+                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_richtext")) then
+                    tabMenuNode.renderComNode()
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_string"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_richtext_string)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_fontsize"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_richtext_fontsize)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    ImGui.EndMenu()
+                end
+                --spine
+                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_spine")) then
+                    tabMenuNode.renderComNode()
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_animation"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_spine_animation)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_loop"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_spine_loop)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_timescale"), "") then
+                        local data = DataManager:createData(enum.nodetype.action_spine_timescale)
+                        if data then ViewManager:createNode(data) end
+                    end
+                    ImGui.EndMenu()
                 end
 
                 ImGui.EndMenu()
@@ -102,6 +157,37 @@ function tabMenuNode.render()
         end
 
         ImGui.End()
+    end
+end
+
+function tabMenuNode.renderComNode()
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_active"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_active)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_pos"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_pos)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_scale"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_scale)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_anchor"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_anchor)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_size"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_size)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_color"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_color)
+        if data then ViewManager:createNode(data) end
+    end
+    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_node_alpha"), "") then
+        local data = DataManager:createData(enum.nodetype.action_node_alpha)
+        if data then ViewManager:createNode(data) end
     end
 end
 

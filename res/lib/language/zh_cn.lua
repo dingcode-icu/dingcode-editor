@@ -21,8 +21,29 @@ return {
         addnode_parallel = "parallel",
         addnode_decorator = "decorator",
         addnode_conditinals = "conditinals",
-        addnode_action = "action",
 
+
+        addnode_action = "action",
+        addnode_action_node = "node",                            -- node
+        addnode_action_node_active = "node_active",
+        addnode_action_node_pos = "node_pos",
+        addnode_action_node_scale = "node_scale",
+        addnode_action_node_anchor = "node_anchor",
+        addnode_action_node_size = "node_size",
+        addnode_action_node_color = "node_color",
+        addnode_action_node_alpha = "node_alpha",
+        addnode_action_sprite = "sprite",                        -- 图片
+        addnode_action_sprite_path = "sprite_path",
+        addnode_action_lab = "lab",                              -- lab
+        addnode_action_lab_string = "lab_string",
+        addnode_action_lab_fontsize = "lab_fontsize",
+        addnode_action_richtext = "richtext",                    -- 富文本
+        addnode_action_richtext_string = "richtext_string",
+        addnode_action_richtext_fontsize = "richtext_fontsize",
+        addnode_action_spine = "spine",                          -- spine
+        addnode_action_spine_animation = "spine_animation",
+        addnode_action_spine_loop = "spine_loop",
+        addnode_action_spine_timescale = "spine_timescale",
 
         close = "关闭",
     },
