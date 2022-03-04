@@ -91,7 +91,7 @@ function viewManager:registerTouch()
             -- print("右键点击")
             local pos = event:getLocation()
             local pStart = this._mouseStart
-            if math.abs(pStart.x - pos.x) < 20 and math.abs(pStart.y - pos.y) < 20 then
+            if math.abs(pStart.x - pos.x) < 10 and math.abs(pStart.y - pos.y) < 10 then
                 Event:dispatchEvent({
                     name = enum.eventconst.imgui_menu_node,
                     posX = pos.x,

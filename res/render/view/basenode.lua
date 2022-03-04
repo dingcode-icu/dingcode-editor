@@ -93,48 +93,75 @@ end
 
 -- 点击相关
 function BaseNode:registerTouch()
-
+    local this = self
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
-    listener.onTouchBegan = self.onTouchBegan
-    listener.onTouchMoved = self.onTouchMoved
-    listener.onTouchEnded = self.onTouchEnded
-    listener.onTouchCancelled = self.onTouchCancelled
+    listener.onTouchBegan = function(touch, event)
+        local isTouch = this.isTouchSelf(touch, event)
+        if isTouch then
+            this._touchStart = touch:getLocation()
+            local target = event:getCurrentTarget()
+            this._pStartX = target:getPositionX()
+            this._pStartY = target:getPositionY()
+            return true
+        end
+        return false
+    end
+    listener.onTouchMoved = function(touch, event)
+        if this._touchStart then
+            if not this:isSelect() then
+                -- 未选中 拖动自己
+                local pos = touch:getLocation()
+                local posStart = this._touchStart
+                local target = event:getCurrentTarget()
+                target:setPositionX(this._pStartX + pos.x - posStart.x)
+                target:setPositionY(this._pStartY + pos.y - posStart.y)
+                return false
+            else
+                -- 选中 拖动所有已选中的点
+
+            end
+        end
+
+    end
+    listener.onTouchEnded = function(touch, event)
+        this._touchStart = null
+        return this.isTouchSelf(touch, event)
+    end
+    listener.onTouchCancelled = function(touch, event)
+        this._touchStart = null
+        return false
+    end
     local eventDispatcher = self.view:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self.view);
 
     self.touchListener = listener
 end
-function BaseNode.onTouchBegan(touch, event)
+-- 是否点击自己
+function BaseNode.isTouchSelf(touch, event)
     local target = event:getCurrentTarget()
     local size = target:getContentSize()
-    --local p = touch:getLocation()
     if BaseNode.isTouchInsideNode(touch, target, size) then
         return true
     end
     return false
 end
-function BaseNode.onTouchMoved(touch, event)
-    return false
-end
-function BaseNode.onTouchEnded(touch, event)
-    local target = event:getCurrentTarget()
-    local size = target:getContentSize()
-    --local p = touch:getLocation()
-    if BaseNode.isTouchInsideNode(touch, target, size) then
-        return true
-    end
-    return false
-end
-function BaseNode.onTouchCancelled(touch, event)
-    return false
-end
+-- 是否在自己点击范围内
 function BaseNode.isTouchInsideNode(pTouch,node,nodeSize)
     local point = node:convertTouchToNodeSpace(pTouch)
     local x,y = point.x,point.y
     if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
         return true
     end
+end
+-- 判断是否点击
+function BaseNode.isClickForTouch(touch)
+    local pEnd = touch:getLocation()
+    local pStart = touch:getStartLocation()
+    if math.abs(pStart.x - pEnd.x) < 10 and math.abs(pStart.y - pEnd.y) < 10 then
+        return true
+    end
+    return false
 end
 
 
