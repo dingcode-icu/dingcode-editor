@@ -64,6 +64,24 @@ function viewManager:registerTouch()
 
     -- 注册 右键点击
     local listener = cc.EventListenerMouse:create();
+    listener.onMouseDown = function(event)
+        local mouseType = event:getMouseButton()
+        if mouseType == 1 and this._viewParent then
+            this._mouseStart = event:getLocation()
+            this._parPosStartX = this._viewParent:getPositionX()
+            this._parPosStartY = this._viewParent:getPositionY()
+        end
+    end
+    listener.onMouseMove = function(event)
+        local mouseType = event:getMouseButton()
+        if mouseType == 1 and this._viewParent then
+            local pos = event:getLocation()
+            local pStart = this._mouseStart
+            this._viewParent:setPositionX(this._parPosStartX + pos.x - pStart.x)
+            this._viewParent:setPositionY(this._parPosStartY - pos.y + pStart.y)
+        end
+
+    end
     listener.onMouseUp = function(event)
         local mouseType = event:getMouseButton()
         if mouseType == 0 then
@@ -72,12 +90,14 @@ function viewManager:registerTouch()
         elseif mouseType == 1 then
             -- print("右键点击")
             local pos = event:getLocation()
-            print(pos.x, pos.y)
-            Event:dispatchEvent({
-                name = enum.eventconst.imgui_menu_node,
-                posX = pos.x,
-                posY = pos.y,
-            })
+            local pStart = this._mouseStart
+            if math.abs(pStart.x - pos.x) < 20 and math.abs(pStart.y - pos.y) < 20 then
+                Event:dispatchEvent({
+                    name = enum.eventconst.imgui_menu_node,
+                    posX = pos.x,
+                    posY = pos.y,
+                })
+            end
         end
         return true
     end
@@ -91,7 +111,15 @@ function viewManager:registerTouch()
         -- 鼠标滚轮 缩放
         local scrollY = event:getScrollY()
         if this._viewParent then
-            local curScale = this._viewParent:getScale() + scrollY * 0.1
+            local size = this._viewParent:getContentSize()
+            local posLocal = this._viewParent:convertToNodeSpace(event:getLocation())
+            local posAnchor = cc.p(posLocal.x / size.width, posLocal.y / size.height)
+            print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
+            this.setAnchorOnly(this._viewParent, posAnchor)
+
+
+
+            local curScale = this._viewParent:getScale() + scrollY * 0.02
             if curScale < 0.3 then
                 curScale = 0.3
             end
@@ -99,11 +127,23 @@ function viewManager:registerTouch()
                  curScale = 3
             end
             this._viewParent:setScale(curScale)
+
         end
     end
     local eventDispatcher = node:getEventDispatcher()
     --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
+end
+function viewManager.setAnchorOnly(node, pAnchor)
+    local size = node:getContentSize()
+    local width = size.width
+    local height = size.height
+    local pAnchorOld = node:getAnchorPoint()
+    local diffx = (pAnchor.x - pAnchorOld.x) * width
+    local diffy = (pAnchor.y - pAnchorOld.y) * height
+    node:setPositionX(node:getPositionX() + diffx)
+    node:setPositionY(node:getPositionY() + diffy)
+    node:setAnchorPoint(pAnchor)
 end
 function viewManager:registerEvent()
     local this = self
