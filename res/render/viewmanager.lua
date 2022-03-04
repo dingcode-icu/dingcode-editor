@@ -113,11 +113,10 @@ function viewManager:registerTouch()
         if this._viewParent then
             local size = this._viewParent:getContentSize()
             local posLocal = this._viewParent:convertToNodeSpace(event:getLocation())
-            local posAnchor = cc.p(posLocal.x / size.width, posLocal.y / size.height)
-            print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
+            local posAnchor = cc.p(posLocal.x / size.width, (posLocal.y) / size.height)
+            --print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
             this.setAnchorOnly(this._viewParent, posAnchor)
-
-
+            
 
             local curScale = this._viewParent:getScale() + scrollY * 0.02
             if curScale < 0.3 then
@@ -135,12 +134,13 @@ function viewManager:registerTouch()
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
 end
 function viewManager.setAnchorOnly(node, pAnchor)
+    local scale = node:getScale()
     local size = node:getContentSize()
     local width = size.width
     local height = size.height
     local pAnchorOld = node:getAnchorPoint()
-    local diffx = (pAnchor.x - pAnchorOld.x) * width
-    local diffy = (pAnchor.y - pAnchorOld.y) * height
+    local diffx = (pAnchor.x - pAnchorOld.x) * width * scale
+    local diffy = (pAnchor.y - pAnchorOld.y) * height * scale
     node:setPositionX(node:getPositionX() + diffx)
     node:setPositionY(node:getPositionY() + diffy)
     node:setAnchorPoint(pAnchor)
