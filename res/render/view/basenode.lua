@@ -1,4 +1,5 @@
 local BaseNode = class("BaseNode")
+local Event = require("res/lib/event")
 local enum = enum
 
 function BaseNode:ctor(data)
@@ -45,6 +46,26 @@ function BaseNode:getContentSize()
         return self.view:getContentSize()
     end
     return null
+end
+function BaseNode:setPositionX(x)
+    if self.view then
+        self.view:setPositionX(x)
+    end
+end
+function BaseNode:setPositionY(x)
+    if self.view then
+        self.view:setPositionY(x)
+    end
+end
+function BaseNode:addPositionX(x)
+    if self.view and x then
+        self:setPositionX(x + self.view:getPositionX())
+    end
+end
+function BaseNode:addPositionY(x)
+    if self.view and x then
+        self:setPositionY(x + self.view:getPositionY())
+    end
 end
 function BaseNode:removeFromParentAndCleanup(cleanup)
     if self.view then
@@ -119,7 +140,17 @@ function BaseNode:registerTouch()
                 return false
             else
                 -- 选中 拖动所有已选中的点
+                local pos = touch:getLocation()
+                local posStart = this._touchStart
+                local target = event:getCurrentTarget()
+                local offX = this._pStartX + pos.x - posStart.x - target:getPositionX()
+                local offY = this._pStartY + pos.y - posStart.y - target:getPositionY()
 
+                Event:dispatchEvent({
+                    name = enum.eventconst.imgui_move_node,
+                    offX = offX,
+                    offY = offY,
+                })
             end
         end
 

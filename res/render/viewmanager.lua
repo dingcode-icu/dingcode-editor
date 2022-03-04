@@ -147,6 +147,7 @@ function viewManager.setAnchorOnly(node, pAnchor)
 end
 function viewManager:registerEvent()
     local this = self
+    -- 删除节点
     Event:addEventListener(enum.eventconst.imgui_delete_node, function(event)
         local list = this.data.viewList
         for i, v in pairs(list) do
@@ -159,9 +160,28 @@ function viewManager:registerEvent()
             end
         end
     end)
+    -- 移动节点
+    Event:addEventListener(enum.eventconst.imgui_move_node, function(event)
+        local list = this.data.viewList
+        local offX = event.offX
+        local offY = event.offY
+        if offX or offY then
+            for i, v in pairs(list) do
+                if v:isSelect() then
+                    if offX then
+                        v:addPositionX(offX)
+                    end
+                    if offY then
+                        v:addPositionY(offY)
+                    end
+                end
+            end
+        end
+    end)
 end
 function viewManager:unRegisterEvent()
     Event:removeEventListenersByEvent(enum.eventconst.imgui_delete_node)
+    Event:removeEventListenersByEvent(enum.eventconst.imgui_mode_node)
 end
 
 -- 隐藏菜单
