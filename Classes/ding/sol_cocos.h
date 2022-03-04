@@ -330,7 +330,8 @@ inline void Init(sol::state_view& lua){
                            "isVisible", &Node::isVisible,
                            "setVisible", &Node::setVisible,
                            "getScale", &Node::getScale,
-                           "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale))
+                           "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale)),
+                           "getParent", sol::overload(sol::resolve<Node*()>(&Node::getParent))
                            );
 
 #pragma endregion Node

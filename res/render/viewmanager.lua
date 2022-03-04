@@ -189,8 +189,9 @@ function viewManager:initNodePos(node)
         local menu_node = require("res/imguix/menu/menu_node")
         local posMenu = menu_node:getMenuPos()
         --dump(posMenu)
-        node:setPositionX(posMenu.x)
-        node:setPositionY(winHeight - posMenu.y)
+        local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, winHeight - posMenu.y))
+        node:setPositionX(posLocal.x)
+        node:setPositionY(posLocal.y)
 
     end
 end
@@ -220,8 +221,8 @@ function viewManager:createNode(dataNode)
             if Node then
                 local node = Node.new(dataNode)
                 local viewNode = node.view
-                self:initNodePos(viewNode)
                 self._viewParent:addChild(viewNode)
+                self:initNodePos(viewNode)
                 self:addToList(node)
             else
                 print("创建 view 失败, type = ", dataNode:gettype())
