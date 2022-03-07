@@ -11,7 +11,7 @@
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
 #include "ding/FileDialogUtils.h"
-#include "ding/uuid/guid.h"
+#include "ding/guid/guid.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
@@ -68,7 +68,7 @@ int lua_print(lua_State* L)
     return 0;
 }
 
-const char* guid(){
+const char* new_guid(){
     int len = 64;
     char *ret = new char[len];
     ding::Guid guid = ding::guid::new_guid();
@@ -86,12 +86,6 @@ namespace dan {
         FileUtils::getInstance()->setDefaultResourceRootPath("res");
 #endif
         ding::guid_globals::init();
-        printf("guid = %s", guid());
-                printf("guid = %s", guid());
-                        printf("guid = %s", guid());
-                                printf("guid = %s", guid());
-                                        printf("guid = %s", guid());
-                                                printf("guid = %s", guid());
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
@@ -127,6 +121,7 @@ namespace dan {
 
     void LuaEntry::lua_thirdmodule_register(sol::state_view &lua){
         sol::table d = lua.create_table("ding");
+        d.set_function("guid", new_guid);
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );
@@ -139,10 +134,6 @@ namespace dan {
     //---------------------------------
 
     void LuaEntry::test_imgui() {
-//        auto scene = cocos2d::Scene::create();
-//        Director::getInstance()->runWithScene(scene);
-//        auto svgSprite = SVGSprite::create("tiger.svg");
-//        scene->addChild(svgSprite);
         CCIMGUI::getInstance()->addImGUI([=]() {
                 ImGui::ShowDemoWindow();
                 // 4. Can Lua function

@@ -62,7 +62,6 @@ file(GLOB_RECURSE DING_CPP_CLASSES Classes/ding/**.cpp Classes/ding/**.inl)
 
 list(APPEND GAME_HEADER
         Classes/cmdline.h
-        Classes/HelloWorldScene.h
         Classes/AppDelegate.h
         #ding
         ${DING_H_CLASSES}
@@ -77,7 +76,6 @@ list(APPEND GAME_HEADER
      )
 add_definitions(-DSOL_NO_EXCEPTIONS=1)
 list(APPEND GAME_SOURCE
-        Classes/HelloWorldScene.cpp
         Classes/AppDelegate.cpp
         #ding
         ${DING_CPP_CLASSES}

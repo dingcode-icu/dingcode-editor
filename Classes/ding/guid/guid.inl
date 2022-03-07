@@ -3,7 +3,7 @@
  * License: https://github.com/dbartolini/crown/blob/master/LICENSE
  */
 
-#include "ding/uuid/guid.h"
+#include "ding/guid/guid.h"
 #include <inttypes.h>
 
 namespace ding

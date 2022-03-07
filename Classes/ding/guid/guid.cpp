@@ -4,7 +4,7 @@
  */
 
 
-#include "ding/uuid/guid.h"
+#include "ding/guid/guid.h"
 #include <inttypes.h>
 #include <stdio.h>  // sscanf
 #include <assert.h>

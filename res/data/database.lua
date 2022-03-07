@@ -24,7 +24,7 @@ function dataBase:ctor(type)
 end
 -- TODO 需要去重
 function dataBase:generateuuid()
-    return uuid.generate()
+    return ding.guid()
 end
 
 function dataBase:setData(data)

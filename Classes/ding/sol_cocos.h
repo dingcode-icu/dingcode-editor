@@ -303,9 +303,10 @@ inline void Init(sol::state_view& lua){
     CC.new_usertype<Scene>("Scene",
                             "create",&Scene::create,
                             "createWithPhysics", &Scene::createWithPhysics,
-                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)));
+                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild))
+                                        );
 #pragma endregion Scene
 
 #pragma region AnimationCache
