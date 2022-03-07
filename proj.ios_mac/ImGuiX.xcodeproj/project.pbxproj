@@ -12,8 +12,8 @@
 		042DDE7027C62467004BCD5B /* FileDialogUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */; };
 		042DDE7C27C629DE004BCD5B /* libnfd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042DDE7B27C629DE004BCD5B /* libnfd.a */; };
 		042DDE8727C63063004BCD5B /* sol_cocos.h in Sources */ = {isa = PBXBuildFile; fileRef = 04D1568027A28E9E00672622 /* sol_cocos.h */; };
-		04B4B56C27D615EA00E9C0DE /* guid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B4B56727D615EA00E9C0DE /* guid.cpp */; };
-		04B4B56D27D615EA00E9C0DE /* guid.inl in Resources */ = {isa = PBXBuildFile; fileRef = 04B4B56927D615EA00E9C0DE /* guid.inl */; };
+		04B4B57227D61EE200E9C0DE /* guid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B4B56F27D61EE200E9C0DE /* guid.cpp */; };
+		04B4B57327D61EE200E9C0DE /* guid.inl in Resources */ = {isa = PBXBuildFile; fileRef = 04B4B57127D61EE200E9C0DE /* guid.inl */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -83,9 +83,9 @@
 		042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileDialogUtils.cpp; sourceTree = "<group>"; };
 		042DDE6F27C62467004BCD5B /* FileDialogUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDialogUtils.h; sourceTree = "<group>"; };
 		042DDE7B27C629DE004BCD5B /* libnfd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnfd.a; path = ../third/libnfd/lib/mac/libnfd.a; sourceTree = "<group>"; };
-		04B4B56727D615EA00E9C0DE /* guid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guid.cpp; sourceTree = "<group>"; };
-		04B4B56827D615EA00E9C0DE /* guid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guid.h; sourceTree = "<group>"; };
-		04B4B56927D615EA00E9C0DE /* guid.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guid.inl; sourceTree = "<group>"; };
+		04B4B56F27D61EE200E9C0DE /* guid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guid.cpp; sourceTree = "<group>"; };
+		04B4B57027D61EE200E9C0DE /* guid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guid.h; sourceTree = "<group>"; };
+		04B4B57127D61EE200E9C0DE /* guid.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = guid.inl; sourceTree = "<group>"; };
 		04D1568027A28E9E00672622 /* sol_cocos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sol_cocos.h; sourceTree = "<group>"; };
 		04D1568527A2935D00672622 /* sol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sol.hpp; sourceTree = "<group>"; };
 		04D1568627A2935D00672622 /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		04214022279FA6E100C441DF /* ding */ = {
 			isa = PBXGroup;
 			children = (
-				04B4B56627D615EA00E9C0DE /* uuid */,
+				04B4B56E27D61EE200E9C0DE /* guid */,
 				04214023279FA6E100C441DF /* LuaEntry.h */,
 				04214024279FA70900C441DF /* LuaEntry.cpp */,
 				042DDE6E27C62467004BCD5B /* FileDialogUtils.cpp */,
@@ -193,14 +193,14 @@
 			path = ding;
 			sourceTree = "<group>";
 		};
-		04B4B56627D615EA00E9C0DE /* uuid */ = {
+		04B4B56E27D61EE200E9C0DE /* guid */ = {
 			isa = PBXGroup;
 			children = (
-				04B4B56727D615EA00E9C0DE /* guid.cpp */,
-				04B4B56827D615EA00E9C0DE /* guid.h */,
-				04B4B56927D615EA00E9C0DE /* guid.inl */,
+				04B4B56F27D61EE200E9C0DE /* guid.cpp */,
+				04B4B57027D61EE200E9C0DE /* guid.h */,
+				04B4B57127D61EE200E9C0DE /* guid.inl */,
 			);
-			path = uuid;
+			path = guid;
 			sourceTree = "<group>";
 		};
 		04D1568427A2935D00672622 /* sol */ = {
@@ -442,7 +442,7 @@
 			files = (
 				0421401F279FA52B00C441DF /* res in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				04B4B56D27D615EA00E9C0DE /* guid.inl in Resources */,
+				04B4B57327D61EE200E9C0DE /* guid.inl in Resources */,
 				842EC6052612F69D00A2F118 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +456,7 @@
 			files = (
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				04B4B56C27D615EA00E9C0DE /* guid.cpp in Sources */,
+				04B4B57227D61EE200E9C0DE /* guid.cpp in Sources */,
 				C5DD8EFB27BBCF98006BEE07 /* AppSetting.cpp in Sources */,
 				842EC6072612F69D00A2F118 /* imgui_draw.cpp in Sources */,
 				842EC60C2612F69D00A2F118 /* imgui_impl_glfw.cpp in Sources */,
