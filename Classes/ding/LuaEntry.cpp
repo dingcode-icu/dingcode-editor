@@ -122,10 +122,10 @@ namespace dan {
     //---------------------------------
 
     void LuaEntry::test_imgui() {
-        auto scene = cocos2d::Scene::create();
-        Director::getInstance()->runWithScene(scene);
-        auto svgSprite = SVGSprite::create("tiger.svg");
-        scene->addChild(svgSprite);
+//        auto scene = cocos2d::Scene::create();
+//        Director::getInstance()->runWithScene(scene);
+//        auto svgSprite = SVGSprite::create("tiger.svg");
+//        scene->addChild(svgSprite);
         CCIMGUI::getInstance()->addImGUI([=]() {
                 ImGui::ShowDemoWindow();
                 // 4. Can Lua function
