@@ -225,6 +225,13 @@ inline void Init(sol::state_view& lua){
     c3b["g"] = &Color3B::g;
     c3b["b"] = &Color3B::b;
 
+    auto c4f = CC.new_usertype<Color4F>("c4f",
+                              sol::call_constructor,sol::constructors<sol::types<float, float, float, float>>()
+    );
+    auto c4b = CC.new_usertype<Color4B>("c4b",
+                              sol::call_constructor,sol::constructors<sol::types<int, int, int, int>>()
+    );
+
 
     auto point = CC.new_usertype<Vec2>("p",
                                        sol::call_constructor, sol::constructors<sol::types<float, float>>());
@@ -295,19 +302,16 @@ inline void Init(sol::state_view& lua){
 #pragma region Scene
     CC.new_usertype<Scene>("Scene",
                             "create",&Scene::create,
-                            "createWithPhysics", &Scene::createWithPhysics
-//                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
-//                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
-//                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)
-                                       );
+                            "createWithPhysics", &Scene::createWithPhysics,
+                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
+                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)));
 #pragma endregion Scene
-
 
 #pragma region AnimationCache
      CC.new_usertype<AnimationCache>("AnimationCache",
                                      "getInstance", &AnimationCache::getInstance);
 #pragma endregion AnimationCache
-
 
 #pragma region Node
      CC.new_usertype<Node>("Node",
@@ -341,6 +345,19 @@ inline void Init(sol::state_view& lua){
 
 #pragma endregion Node
 
+#pragma region DrawNode
+        CC.new_usertype<DrawNode>("DrawNode",
+                                  "create", &DrawNode::create,
+                                  "drawCubicBezier", &DrawNode::drawCubicBezier,
+                                  "draw", &DrawNode::draw,
+                                  "drawDot", &DrawNode::drawDot,
+                                  "drawLine", &DrawNode::drawLine,
+                                  "drawPoint", &DrawNode::drawPoint,
+                                  "drawQuadBezier", &DrawNode::drawQuadBezier
+                                 );
+
+
+#pragma endregion DrawNode
 
 #pragma region Layer
      CC.new_usertype<Layer>("Layer",
@@ -351,9 +368,9 @@ inline void Init(sol::state_view& lua){
 
 #pragma region Sprite
      auto sp_tb =CC.new_usertype<Sprite>("Sprite",
-//                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
-//                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
-//                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
+                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
+                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
+                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
                                         "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
                                        "removeFromParent", &Node::removeFromParent,
                                        "setContentSize", &Node::setContentSize,
