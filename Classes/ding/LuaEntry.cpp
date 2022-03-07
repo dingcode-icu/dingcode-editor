@@ -99,7 +99,7 @@ namespace dan {
         //cocos
         sol_cocos2d::Init(luaView);
         //third
-        lua_thirdmodule_register(luaView);
+        lua_third_register(luaView);
         //load res/main.lua
 
         auto def = FileUtils::getInstance()->getDefaultResourceRootPath();
@@ -114,12 +114,12 @@ namespace dan {
         _luaState.script(l_append);
         _luaState.script_file(path);
 
-        test_imgui();
+        imgui_render();
         ImGuiLayer::createAndKeepOnTop();
         return true;
     }
 
-    void LuaEntry::lua_thirdmodule_register(sol::state_view &lua){
+    void LuaEntry::lua_third_register(sol::state_view &lua){
         sol::table d = lua.create_table("ding");
         d.set_function("guid", new_guid);
         d.new_usertype<SVGSprite>("SVGSprite",
@@ -133,7 +133,7 @@ namespace dan {
     //dev
     //---------------------------------
 
-    void LuaEntry::test_imgui() {
+    void LuaEntry::imgui_render() {
         CCIMGUI::getInstance()->addImGUI([=]() {
                 ImGui::ShowDemoWindow();
                 // 4. Can Lua function
@@ -149,6 +149,6 @@ namespace dan {
     
     void LuaEntry::lua_dev_register(sol::state_view &lua){
         sol::table dev = lua.create_named_table("dev");
-//        dev.set_function("test_imgui", [=](){})
+//        dev.set_function("imgui_render", [=](){})
     }
 }

@@ -28,14 +28,14 @@ namespace dan{
         注册三方扩展
         @param lua sol::state_view
         **/
-        void lua_thirdmodule_register(sol::state_view& lua);
+        void lua_third_register(sol::state_view& lua);
         
         /**
          注册调试用lua接口
          @param lua sol::state_view
          */
         void lua_dev_register(sol::state_view& lua);
-        void test_imgui();
+        void imgui_render();
         
         sol::state _luaState;
     };

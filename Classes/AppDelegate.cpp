@@ -36,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->getOpenGLView()->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 180);
+    director->setAnimationInterval(1.0 / 60);
         
     #if TESTFUNC == 1
        TESTFUNC;
@@ -44,13 +44,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     #else
     auto e = new dan::LuaEntry();
     bool ret = e->entry();
-       
     return ret;
     #endif
-
-    // auto check when imGUI layer is not added yet.
-    ImGuiLayer::createAndKeepOnTop();
-
     return true;
 }
 
