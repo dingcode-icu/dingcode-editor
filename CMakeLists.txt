@@ -47,22 +47,25 @@ if(APPLE OR VS)
 endif()
 
 #获取Classes目录下所有代码文件
+
+#IMGUI
 set(IMGUIEXT_H_CLASSES)
 file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.h)
-
 set(IMGUIEXT_CPP_CLASSES)
 file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.cpp)
 
+#DING
+set(DING_H_CLASSES)
+file(GLOB_RECURSE DING_H_CLASSES Classes/ding/**.h)
+set(DING_CPP_CLASSES)
+file(GLOB_RECURSE DING_CPP_CLASSES Classes/ding/**.cpp Classes/ding/**.inl)
 
 list(APPEND GAME_HEADER
         Classes/cmdline.h
         Classes/HelloWorldScene.h
         Classes/AppDelegate.h
         #ding
-        Classes/ding/LuaEntry.h
-        Classes/ding/SmartSingleton.h
-        Classes/ding/sol_cocos.h
-        Classes/ding/AppSetting.h
+        ${DING_H_CLASSES}
         #sol
         #svg
         Classes/svg/nanosvg.h
@@ -72,18 +75,12 @@ list(APPEND GAME_HEADER
         #imguiext
         ${IMGUIEXT_H_CLASSES}
      )
-
-message ("imguiext_h" ${IMGUIEXT_H_CLASSES})
-
-
 add_definitions(-DSOL_NO_EXCEPTIONS=1)
-
 list(APPEND GAME_SOURCE
         Classes/HelloWorldScene.cpp
         Classes/AppDelegate.cpp
         #ding
-        Classes/ding/LuaEntry.cpp
-        Classes/ding/AppSetting.cpp
+        ${DING_CPP_CLASSES}
         #sol
         Classes/sol/config.hpp
         Classes/sol/forward.hpp
@@ -159,9 +156,9 @@ else()
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
-
 target_include_directories(${APP_NAME} PRIVATE Classes)
 target_include_directories(${APP_NAME} PRIVATE ${COCOS2DX_ROOT_PATH}/external/luajit/include)
+target_include_directories(${APP_NAME} PRIVATE third/libnfd/include)
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})
@@ -171,12 +168,16 @@ if(APPLE)
         set_target_properties(${APP_NAME} PROPERTIES
                               MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
                               )
+        target_link_directories(${APP_NAME} PRIVATE third/libnfd/lib/mac)
+        target_link_libraries(${APP_NAME} libfd)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
+    target_link_directories(${APP_NAME} PRIVATE third/libnfd/lib/win32)
+    target_link_libraries(${APP_NAME} nfd)
 endif()
 
 if(LINUX OR WINDOWS)

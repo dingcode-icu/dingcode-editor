@@ -1,4 +1,5 @@
 #include <string>
+#include <inttypes.h>
 #include "LuaEntry.h"
 #define SOL_IMGUI_IMPLEMENTATION
 
@@ -9,13 +10,16 @@
 #include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
-#include "FileDialogUtils.h"
+#include "ding/FileDialogUtils.h"
+#include "ding/uuid/guid.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "cmdline.h"
 #endif
 
+using namespace std;
 USING_NS_CC;
+
 
 /// <summary>
 /// Lua print
@@ -64,6 +68,13 @@ int lua_print(lua_State* L)
     return 0;
 }
 
+const char* guid(){
+    int len = 64;
+    char *ret = new char[len];
+    ding::Guid guid = ding::guid::new_guid();
+    return ding::guid::to_string(ret, len, guid);
+}
+
 namespace dan {
 
     LuaEntry::LuaEntry(){}
@@ -74,6 +85,13 @@ namespace dan {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         FileUtils::getInstance()->setDefaultResourceRootPath("res");
 #endif
+        ding::guid_globals::init();
+        printf("guid = %s", guid());
+                printf("guid = %s", guid());
+                        printf("guid = %s", guid());
+                                printf("guid = %s", guid());
+                                        printf("guid = %s", guid());
+                                                printf("guid = %s", guid());
         //base 
         _luaState.open_libraries();
         _luaState["print"] = [&]() {
@@ -114,7 +132,6 @@ namespace dan {
                                   );
         d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile,
                                         "GetOpenFile", &FileDialogUtils::GetOpenFile);
-//        d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetOpenFile", &FileDialogUtils::GetOpenFile);
     }
 
     //---------------------------------

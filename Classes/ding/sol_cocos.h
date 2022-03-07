@@ -217,7 +217,6 @@ inline void Init(sol::state_view& lua){
 #pragma endregion ENUM
 
 
-
 #pragma region ccTypes
     auto c3b = CC.new_usertype<Color3B>("c3b",
                               sol::call_constructor,sol::constructors<sol::types<int, int, int>>()
@@ -250,6 +249,7 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma endregion ccTypes
+
 
 #pragma region Instance
     CC.new_usertype<Director>("Director",
@@ -284,25 +284,30 @@ inline void Init(sol::state_view& lua){
                             "getFrameSize", &GLView::getFrameSize);
 #pragma endregion GLViewImpl
 
+
 #pragma region SpriteFrameCache
     CC.new_usertype<SpriteFrameCache>("SpriteFrameCache",
                                       "getInstance", &SpriteFrameCache::getInstance);
 
 #pragma endregion SpriteFrameCache
 
+
 #pragma region Scene
     CC.new_usertype<Scene>("Scene",
                             "create",&Scene::create,
-                            "createWithPhysics", &Scene::createWithPhysics,
-                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)));
+                            "createWithPhysics", &Scene::createWithPhysics
+//                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Scene::addChild)),
+//                                        sol::overload(sol::resolve<void(Node*, int)>(&Scene::addChild)),
+//                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Scene::addChild)
+                                       );
 #pragma endregion Scene
+
 
 #pragma region AnimationCache
      CC.new_usertype<AnimationCache>("AnimationCache",
                                      "getInstance", &AnimationCache::getInstance);
 #pragma endregion AnimationCache
+
 
 #pragma region Node
      CC.new_usertype<Node>("Node",
@@ -336,17 +341,19 @@ inline void Init(sol::state_view& lua){
 
 #pragma endregion Node
 
+
 #pragma region Layer
      CC.new_usertype<Layer>("Layer",
                            "create", &Layer::create
                            );
 #pragma endregion Layer
 
+
 #pragma region Sprite
      auto sp_tb =CC.new_usertype<Sprite>("Sprite",
-                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
-                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
-                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
+//                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
+//                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
+//                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
                                         "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
                                        "removeFromParent", &Node::removeFromParent,
                                        "setContentSize", &Node::setContentSize,
@@ -367,6 +374,7 @@ inline void Init(sol::state_view& lua){
 
 #pragma endregion Sprite
 
+
 #pragma region Label
     CC.new_usertype<Label>("Label",
                            "create", sol::overload(sol::resolve<Label*()>(&Label::create)),
@@ -386,6 +394,7 @@ inline void Init(sol::state_view& lua){
                            );
 
 #pragma endregion Label
+
 
 #pragma region Event
 
@@ -439,7 +448,6 @@ inline void Init(sol::state_view& lua){
      kv_event["onKeyReleased"] = &EventListenerKeyboard::onKeyReleased;
 
 #pragma endregion Event
-
 
 
 #pragma region Texture2D

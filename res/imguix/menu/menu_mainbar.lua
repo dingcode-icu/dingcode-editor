@@ -113,6 +113,7 @@ end
 
 -- 打开文件
 function tabMenuMainBar:OpenFile()
+    dump(ding, "-->>ding")
     local filePath = ding.FileDialogUtils.GetOpenFile()
     print(filePath)
     if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
