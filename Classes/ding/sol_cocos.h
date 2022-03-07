@@ -226,6 +226,13 @@ inline void Init(sol::state_view& lua){
     c3b["g"] = &Color3B::g;
     c3b["b"] = &Color3B::b;
 
+    auto c4f = CC.new_usertype<Color4F>("c4f",
+                              sol::call_constructor,sol::constructors<sol::types<float, float, float, float>>()
+    );
+    auto c4b = CC.new_usertype<Color4B>("c4b",
+                              sol::call_constructor,sol::constructors<sol::types<int, int, int, int>>()
+    );
+
 
     auto point = CC.new_usertype<Vec2>("p",
                                        sol::call_constructor, sol::constructors<sol::types<float, float>>());
@@ -335,6 +342,20 @@ inline void Init(sol::state_view& lua){
                            );
 
 #pragma endregion Node
+
+#pragma region DrawNode
+        CC.new_usertype<DrawNode>("DrawNode",
+                                  "create", &DrawNode::create,
+                                  "drawCubicBezier", &DrawNode::drawCubicBezier,
+                                  "draw", &DrawNode::draw,
+                                  "drawDot", &DrawNode::drawDot,
+                                  "drawLine", &DrawNode::drawLine,
+                                  "drawPoint", &DrawNode::drawPoint,
+                                  "drawQuadBezier", &DrawNode::drawQuadBezier
+                                 );
+
+
+#pragma endregion DrawNode
 
 #pragma region Layer
      CC.new_usertype<Layer>("Layer",

@@ -11,6 +11,7 @@ local viewManager = {
     isInit = false,                         -- 是否已经初始化
 
     _viewParent = null,
+    _lineParent = null,
 }
 
 function viewManager:init(config)
@@ -27,6 +28,10 @@ function viewManager:initViewParent()
     local node = cc.Node.create()
     node:setContentSize(cc.size(10000,10000))
     self._viewParent = node
+
+    local nodelineParent = cc.Node.create()
+    self._viewParent:addChild(nodelineParent)
+    self._lineParent = nodelineParent
 
     local scene = cc.Director:getInstance():getRunningScene()
     scene:addChild(node)
@@ -48,7 +53,7 @@ function viewManager:registerTouch()
         --print("2")
         return true
     end
-    listener.onTouchEnded = function(event1, event2)
+    listener.onTouchEnded = function(touch, event)
         --local mouseType = event:getButton()
         this:hide_imgui_menu_node()
         this:unSelectAll()
@@ -255,6 +260,14 @@ function viewManager:createNode(dataNode)
         }
     }
 
+end
+
+function viewManager:createLineBezier(pIn, pOut)
+    local drawNode = cc.DrawNode.create(4)
+    local offX = pOut.x - pIn.x
+    local offY = pOut.y - pIn.y
+    drawNode:drawCubicBezier(pIn, cc.p(pIn.x + offX / 2,pIn.y), cc.p(pOut.x - offX / 2,pOut.y), pOut, 30, cc.c4f(1, 1, 1, 1))
+    self._lineParent:addChild(drawNode)
 end
 
 return viewManager

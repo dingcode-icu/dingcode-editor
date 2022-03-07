@@ -76,7 +76,7 @@ function tabMenuMainBar.render()
                 end
                 ImGui.EndMenu()
             end
-            if ImGui.BeginMenu("测试") then
+            if ImGui.BeginMenu("调试") then
                 if ImGui.MenuItem("打印 viewList") then
                     for i, v in pairs(ViewManager.data.viewList) do
                         print(v.data:getuuid())
@@ -90,7 +90,7 @@ function tabMenuMainBar.render()
 
                     try {
                         function()
-                            ViewManager:initViewParent()
+                            --ViewManager:initViewParent()
                         end, catch {
                             function (err)
                                 print(err)
