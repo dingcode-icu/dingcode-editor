@@ -8,7 +8,7 @@
 #ifndef FileDialogUtils_h
 #define FileDialogUtils_h
 
-#include <stdio.h>
+#include <string>
 
 class FileDialogUtils {
 public:
