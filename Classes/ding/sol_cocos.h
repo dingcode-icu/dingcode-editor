@@ -354,7 +354,10 @@ inline void Init(sol::state_view& lua){
                                   "drawDot", &DrawNode::drawDot,
                                   "drawLine", &DrawNode::drawLine,
                                   "drawPoint", &DrawNode::drawPoint,
-                                  "drawQuadBezier", &DrawNode::drawQuadBezier
+                                  "drawQuadBezier", &DrawNode::drawQuadBezier,
+                                  "clear", &DrawNode::clear,
+                                  "removeFromParent", &DrawNode::removeFromParent,
+                                  "removeFromParentAndCleanup", &DrawNode::removeFromParentAndCleanup
                                  );
 
 

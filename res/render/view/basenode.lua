@@ -1,5 +1,6 @@
 local BaseNode = class("BaseNode")
 local Event = require("res/lib/event")
+local ViewManager = require("res/render/viewmanager")
 local enum = enum
 
 function BaseNode:ctor(data)
@@ -111,6 +112,14 @@ function BaseNode:ClickSelect()
     end
 end
 
+function BaseNode:initPoint()
+    local size = self:getContentSize()
+    local nodePoint = cc.Sprite.create("texture/point.png")
+    self.view:addChild(nodePoint)
+    nodePoint:setPositionX(8)
+    nodePoint:setPositionY(size.height / 2)
+    self._nodePoint = nodePoint
+end
 
 -- 点击相关
 function BaseNode:registerTouch()
@@ -118,6 +127,24 @@ function BaseNode:registerTouch()
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function(touch, event)
+        if ViewManager and ViewManager.isDropingLine then
+            return false
+        end
+
+        if self._nodePoint then
+            local size = this._nodePoint:getContentSize()
+            if this.isTouchInsideNode(touch, this._nodePoint, size) then
+                local pos = touch:getLocation()
+                local dropData = {
+                    posStart = pos,
+                    posEnd = pos,
+                }
+                ViewManager:startDropingLine(dropData)
+                return false
+            end
+        end
+
+
         local isTouch = this.isTouchSelf(touch, event)
         if isTouch then
             this._touchStart = touch:getLocation()
@@ -129,6 +156,10 @@ function BaseNode:registerTouch()
         return false
     end
     listener.onTouchMoved = function(touch, event)
+        if ViewManager and ViewManager.isDropingLine then
+            return false
+        end
+
         if this._touchStart then
             if not this:isSelect() then
                 -- 未选中 拖动自己
@@ -156,10 +187,18 @@ function BaseNode:registerTouch()
 
     end
     listener.onTouchEnded = function(touch, event)
+        if ViewManager and ViewManager.isDropingLine then
+            return false
+        end
+
         this._touchStart = null
         return this.isTouchSelf(touch, event)
     end
     listener.onTouchCancelled = function(touch, event)
+        if ViewManager and ViewManager.isDropingLine then
+            return false
+        end
+
         this._touchStart = null
         return false
     end

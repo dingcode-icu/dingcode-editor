@@ -10,6 +10,10 @@ local viewManager = {
     },
     isInit = false,                         -- 是否已经初始化
 
+    isDropingLine = false,                  -- 是否正在拖动划线
+    dataRropingLine = null,                 -- 拖动中的数据对象
+    nodeDropingLine = null,                 -- 拖动中的对象
+
     _viewParent = null,
     _lineParent = null,
 }
@@ -22,6 +26,7 @@ function viewManager:init(config)
     end
 
     self.isInit = true
+    self.isDropingLine = false
 end
 
 function viewManager:initViewParent()
@@ -49,19 +54,33 @@ function viewManager:registerTouch()
         --print("111")
         return true
     end
-    listener.onTouchMoved = function()
-        --print("2")
-        return true
+    listener.onTouchMoved = function(touch, event)
+        if this.isDropingLine then
+            this:upStartDropingline(touch:getLocation())
+            return true
+        end
+        return false
     end
     listener.onTouchEnded = function(touch, event)
         --local mouseType = event:getButton()
+        if this.isDropingLine then
+            this:calcelDropingLine()
+        end
         this:hide_imgui_menu_node()
         this:unSelectAll()
         print("viewmanager touch end")
+
+        --local pos = touch:getLocation()
+        --local posStart = touch:getStartLocation()
+        --this:createLineBezier(posStart, pos)
+
         return true
     end
     listener.onTouchCancelled = function()
         --print("4")
+        if this.isDropingLine then
+            this:calcelDropingLine()
+        end
         return true
     end
     local eventDispatcher = node:getEventDispatcher()
@@ -261,13 +280,40 @@ function viewManager:createNode(dataNode)
     }
 
 end
-
+-- 开始拖动连线
+function viewManager:startDropingLine(dropData)
+    self.isDropingLine = true                       -- 是否正在拖动划线
+    self.dataRropingLine = dropData                 -- 拖动中的对象
+end
+-- 刷新拖动连线
+function viewManager:upStartDropingline(posEnd)
+    if not self.nodeDropingLine then
+        local posStart = self.dataRropingLine.posStart
+        self.nodeDropingLine = self:createLineBezier(posStart, posEnd)
+    else
+        self.nodeDropingLine:upDrawForPos(posEnd)
+    end
+end
+-- 取消拖动连线
+function viewManager:calcelDropingLine()
+    self.isDropingLine = false
+    self.dataRropingLine = null
+    self.nodeDropingLine:removeFromParentAndCleanup(true)
+    self.nodeDropingLine = null
+end
+-- 结束拖动连线
+function viewManager:endDropingLine()
+    self.isDropingLine = false
+end
+-- 创建连线
 function viewManager:createLineBezier(pIn, pOut)
-    local drawNode = cc.DrawNode.create(4)
-    local offX = pOut.x - pIn.x
-    local offY = pOut.y - pIn.y
-    drawNode:drawCubicBezier(pIn, cc.p(pIn.x + offX / 2,pIn.y), cc.p(pOut.x - offX / 2,pOut.y), pOut, 30, cc.c4f(1, 1, 1, 1))
-    self._lineParent:addChild(drawNode)
+    local NodeLine = require("render/common/nodeline")
+    local node = NodeLine.new({
+        pIn = pIn,
+        pOut = pOut,
+    })
+    self._lineParent:addChild(node.view)
+    return node
 end
 
 return viewManager
