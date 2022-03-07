@@ -13,7 +13,7 @@
 #if defined(_WIN32) || defined(_WIN64)
 	#include <objbase.h>
 #else
-    #definfe PLATFORM_POSIX 1
+    #define PLATFORM_POSIX 1
     #include <fcntl.h>
 	#include <unistd.h>
 	#include <errno.h>
@@ -31,7 +31,7 @@ namespace guid_globals
 	{
 #if PLATFORM_POSIX
 		_fd = ::open("/dev/urandom", O_RDONLY);
-		assert(_fd != -1, "open: errno = %d", errno);
+		assert(_fd != -1);
 #endif // PLATFORM_POSIX
 	}
 
@@ -56,7 +56,7 @@ namespace guid
 		assert(hr == S_OK);
 		CE_UNUSED(hr);
 #else
-		assert(guid_globals::_fd != -1, "new_guid: library uninitialized");
+		assert(guid_globals::_fd != -1);
 		ssize_t rb = read(guid_globals::_fd, &guid, sizeof(guid));
 		assert(rb == sizeof(guid));
 		CE_UNUSED(rb);
