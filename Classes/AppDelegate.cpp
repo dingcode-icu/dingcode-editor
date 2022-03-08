@@ -1,7 +1,9 @@
 #include "AppDelegate.h"
-#include "ding/LuaEntry.h"
 #include "platform/CCGLView.h"
 #include "ImGuiExt/CCImGuiLayer.h"
+#include "ding/LuaEntry.h"
+#include "ding/AppSetting.h"
+#include "TEST.hpp"
 
 USING_NS_CC;
 //
@@ -37,13 +39,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-        
+
+
     #if TESTFUNC == 1
        TESTFUNC;
        return true;
     #else
     auto e = new dan::LuaEntry();
     bool ret = e->entry();
+
     return ret;
     #endif
     return true;

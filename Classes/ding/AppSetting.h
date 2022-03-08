@@ -17,13 +17,12 @@ namespace dan {
     /**
      App运行上下文
      */
-    class AppContext{
-        friend class SmartSingleton<AppSetting>;
-    private:
-        AppContext():setting(setting){
-        };
+    class AppContext {
+        friend class SmartSingleton<AppContext>;
     public:
-        /**
+
+
+/**
          从外部传参读取
          */
         void load_parase(int argc, char *argv[]);
@@ -31,7 +30,9 @@ namespace dan {
          从本地读取配置
          */
         void load_config();
+
     private:
+        AppContext():setting(setting){};
         AppSetting &setting;
     };
 }

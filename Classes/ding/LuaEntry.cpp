@@ -13,10 +13,6 @@
 #include "ding/sys/FileDialogUtils.h"
 #include "ding/guid/guid.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "cmdline.h"
-#endif
-
 using namespace std;
 USING_NS_CC;
 

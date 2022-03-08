@@ -59,7 +59,6 @@ set(DING_SRC_CLASSES)
 file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
 
 list(APPEND GAME_HEADER
-        Classes/ding/sys/cmdline.h
         Classes/AppDelegate.h
         #ding
         #svg
@@ -72,6 +71,7 @@ list(APPEND GAME_HEADER
      )
 add_definitions(-DSOL_NO_EXCEPTIONS=1)
 list(APPEND GAME_SOURCE
+        Classes/TEST.hpp
         Classes/AppDelegate.cpp
         #ding
         #sol
