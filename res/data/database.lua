@@ -1,4 +1,3 @@
-local uuid = require 'lib/uuid'
 local dataBase = class("DataBase", {})
 
 function dataBase:ctor(type)

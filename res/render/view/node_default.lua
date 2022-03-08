@@ -18,6 +18,8 @@ function NodeDefault:initView()
 
     self:setContentSize(size)
 
+    self:initPoint()
+
     -- 注册 点击事件
     self:registerTouch()
 
