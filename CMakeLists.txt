@@ -55,17 +55,13 @@ set(IMGUIEXT_CPP_CLASSES)
 file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.cpp)
 
 #DING
-set(DING_H_CLASSES)
-file(GLOB_RECURSE DING_H_CLASSES Classes/ding/**.h)
-set(DING_CPP_CLASSES)
-file(GLOB_RECURSE DING_CPP_CLASSES Classes/ding/**.cpp Classes/ding/**.inl)
+set(DING_SRC_CLASSES)
+file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
 
 list(APPEND GAME_HEADER
-        Classes/cmdline.h
+        Classes/ding/sys/cmdline.h
         Classes/AppDelegate.h
         #ding
-        ${DING_H_CLASSES}
-        #sol
         #svg
         Classes/svg/nanosvg.h
         Classes/svg/nanosvgrast.h
@@ -78,7 +74,6 @@ add_definitions(-DSOL_NO_EXCEPTIONS=1)
 list(APPEND GAME_SOURCE
         Classes/AppDelegate.cpp
         #ding
-        ${DING_CPP_CLASSES}
         #sol
         Classes/sol/config.hpp
         Classes/sol/forward.hpp
@@ -142,6 +137,7 @@ endif()
 set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
+        ${DING_SRC_CLASSES}
     )
 
 # mark app complie info

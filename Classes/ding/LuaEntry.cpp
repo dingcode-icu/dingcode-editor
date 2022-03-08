@@ -10,7 +10,7 @@
 #include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
-#include "ding/FileDialogUtils.h"
+#include "ding/sys/FileDialogUtils.h"
 #include "ding/guid/guid.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -21,24 +21,9 @@ using namespace std;
 USING_NS_CC;
 
 
-/// <summary>
-/// Lua print
-/// </summary>
-#define MAX_LOG_LENGTH 16 * 1024
-void print_win32(const std::string& str)
-{
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    wchar_t buf[MAX_LOG_LENGTH] = { '\0' };
-    size_t i = 0;
-    for (i = 0; i < str.length(); i++)
-    {
-        buf[i] = str.c_str()[i];
-    }
-    buf[i] = '\n';
-    OutputDebugString(buf);
-#endif
-}
-
+/*
+ * lua print打印复写
+ * */
 int lua_print(lua_State* L)
 {
     int n = lua_gettop(L);  /* number of arguments */
@@ -65,12 +50,16 @@ int lua_print(lua_State* L)
     return 0;
 }
 
+/*
+ *创新新的guid
+ * */
 const char* new_guid(){
     int len = 64;
     char *ret = new char[len];
     ding::Guid guid = ding::guid::new_guid();
     return ding::guid::to_string(ret, len, guid);
 }
+
 
 namespace dan {
 
@@ -106,7 +95,7 @@ namespace dan {
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
 
         char l_append[512];
-        sprintf(l_append,"package.path = package.path..';%s?.lua;'", workspace.c_str());
+        sprintf(l_append,"package.path = package.path..';%s?.lua;res/%s?.lua;'", workspace.c_str(), workspace.c_str());
         _luaState.script(l_append);
         _luaState.script_file(path);
 
@@ -117,6 +106,11 @@ namespace dan {
 
     void LuaEntry::lua_third_register(sol::state_view &lua){
         sol::table d = lua.create_table("ding");
+        //dev
+        auto dev_tb = d.create_named("dev");
+        dev_tb.set_function("show_imgui_demo", [=]{
+            ImGui::ShowDemoWindow();
+        });
         d.set_function("guid", new_guid);
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
@@ -127,8 +121,7 @@ namespace dan {
 
     void LuaEntry::imgui_render() {
         CCIMGUI::getInstance()->addImGUI([=]() {
-                ImGui::ShowDemoWindow();
-                // 4. Can Lua function
+                // schedule call lua function for render
                 if (CCIMGUI::getInstance()->chineseFont)
                     ImGui::PushFont(CCIMGUI::getInstance()->chineseFont);
                 {
@@ -136,7 +129,7 @@ namespace dan {
                 }
                 if (CCIMGUI::getInstance()->chineseFont)
                     ImGui::PopFont();
-                }, "demoid");
+                }, "dingcode-imguix");
     }
 
     //---------------------------------

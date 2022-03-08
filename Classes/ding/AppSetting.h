@@ -1,6 +1,6 @@
 #ifndef AppSetting_h
 #define AppSetting_h
-#include "ding/SmartSingleton.h"
+#include "ding/common/SmartSingleton.h"
 
 namespace dan {
    

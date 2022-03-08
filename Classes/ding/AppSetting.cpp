@@ -1,5 +1,5 @@
 #include "ding/AppSetting.h"
-#include "cmdline.h"
+#include "ding/sys/cmdline.h"
 
 namespace dan{
 

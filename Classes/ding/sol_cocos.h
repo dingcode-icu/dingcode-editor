@@ -438,7 +438,8 @@ inline void Init(sol::state_view& lua){
                                           "onTouchBegan", &EventListenerTouchOneByOne::onTouchBegan,
                                           "onTouchMoved", &EventListenerTouchOneByOne::onTouchMoved,
                                           "onTouchEnded", &EventListenerTouchOneByOne::onTouchEnded,
-                                          "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled
+                                          "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled,
+                                          sol::base_classes, sol::bases<EventListener>()
                                           );
 
 
@@ -447,7 +448,8 @@ inline void Init(sol::state_view& lua){
                                           "onMouseDown", &EventListenerMouse::onMouseDown,
                                           "onMouseMove", &EventListenerMouse::onMouseMove,
                                           "onMouseUp", &EventListenerMouse::onMouseUp,
-                                          "onMouseScroll", &EventListenerMouse::onMouseScroll
+                                          "onMouseScroll", &EventListenerMouse::onMouseScroll,
+                                          sol::base_classes, sol::bases<EventListener>()
                                           );
 
      CC.new_usertype<EventMouse>("EventMouse",
