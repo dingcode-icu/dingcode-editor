@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "platform/CCGLView.h"
 
-#define SOL_ALL_SAFETIES_ON 1
 #define SOL_DEFAULT_PASS_ON_ERROR 1
 #include "sol/sol.hpp"
 using namespace cocos2d;
@@ -309,10 +308,12 @@ inline void Init(sol::state_view& lua){
                                         );
 #pragma endregion Scene
 
+
 #pragma region AnimationCache
      CC.new_usertype<AnimationCache>("AnimationCache",
                                      "getInstance", &AnimationCache::getInstance);
 #pragma endregion AnimationCache
+
 
 #pragma region Node
      CC.new_usertype<Node>("Node",
@@ -346,6 +347,7 @@ inline void Init(sol::state_view& lua){
 
 #pragma endregion Node
 
+
 #pragma region DrawNode
         CC.new_usertype<DrawNode>("DrawNode",
                                   "create", &DrawNode::create,
@@ -359,6 +361,7 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma endregion DrawNode
+
 
 #pragma region Layer
      CC.new_usertype<Layer>("Layer",
@@ -415,17 +418,16 @@ inline void Init(sol::state_view& lua){
                            "setString", &Label::setString,
                            "setColor", &Label::setColor
                            );
-
 #pragma endregion Label
 
 
 #pragma region Event
 
      CC.new_usertype<EventDispatcher>("EventDispatcher",
-                                      "addEventListenerWithFixedPriority", &EventDispatcher::addEventListenerWithFixedPriority,
-                                            "addCustomEventListener", &EventDispatcher::addCustomEventListener,
-                                            "addEventListenerWithSceneGraphPriority", &EventDispatcher::addEventListenerWithSceneGraphPriority
-                                      );
+                                      "addCustomEventListener", &EventDispatcher::addCustomEventListener,
+                                      "addEventListenerWithSceneGraphPriority", &EventDispatcher::addEventListenerWithSceneGraphPriority,
+                                      "addEventListenerWithFixedPriority",&EventDispatcher::addEventListenerWithFixedPriority
+                                     );
 
      CC.new_usertype<EventListenerTouchOneByOne>("EventListenerTouchOneByOne",
                                           "create", &EventListenerTouchOneByOne::create,
@@ -466,7 +468,8 @@ inline void Init(sol::state_view& lua){
                                           "create", &EventListenerCustom::create);
 
      auto kv_event = CC.new_usertype<EventListenerKeyboard>("EventListenerKeyboard",
-                                    "create", &EventListenerKeyboard::create);
+                                    "create", &EventListenerKeyboard::create,
+                                    sol::base_classes, sol::bases<EventListener>());
      kv_event["onKeyPressed"] = &EventListenerKeyboard::onKeyPressed;
      kv_event["onKeyReleased"] = &EventListenerKeyboard::onKeyReleased;
 
