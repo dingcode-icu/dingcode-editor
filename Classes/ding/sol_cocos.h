@@ -348,6 +348,7 @@ inline void Init(sol::state_view& lua){
 
 #pragma region DrawNode
         CC.new_usertype<DrawNode>("DrawNode",
+                                  sol::base_classes, sol::bases<Node>(),
                                   "create", &DrawNode::create,
                                   "drawCubicBezier", &DrawNode::drawCubicBezier,
                                   "draw", &DrawNode::draw,
@@ -355,9 +356,7 @@ inline void Init(sol::state_view& lua){
                                   "drawLine", &DrawNode::drawLine,
                                   "drawPoint", &DrawNode::drawPoint,
                                   "drawQuadBezier", &DrawNode::drawQuadBezier,
-                                  "clear", &DrawNode::clear,
-                                  "removeFromParent", &DrawNode::removeFromParent,
-                                  "removeFromParentAndCleanup", &DrawNode::removeFromParentAndCleanup
+                                  "clear", &DrawNode::clear
                                  );
 
 

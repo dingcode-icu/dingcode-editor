@@ -134,9 +134,10 @@ end
 -- 获取放置节点的位置
 function BaseNode:getDropPosForKey(key)
     if self.listNodePoint[key] then
-        return cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY())
+        local pos = self.listNodePoint[key]:getParent():convertToWorldSpace(cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY()))
+        return pos
     end
-    return true
+    return null
 end
 
 function BaseNode:setSwallowTouches(needSwallow)
@@ -214,25 +215,20 @@ function BaseNode:registerTouch()
 
     end
     listener.onTouchEnded = function(touch, event)
-        print("000")
+
         if ViewManager and ViewManager.isDropingLine then
-            print("111111")
+
             for key, nodePoint in pairs(this.listNodePoint) do
                 if nodePoint then
                     local size = nodePoint:getContentSize()
-                    local pos = touch:getLocation()
-                    local target = event:getCurrentTarget()
-                    local point = nodePoint:convertToNodeSpace(target:convertToWorldSpace(pos))
-                    print(point.x, point.y)
 
                     if this.isTouchInsideNode(touch, nodePoint, size) then
                         local dropData = {
                             keyPoint = key,
                             endNodeData = this,
                         }
-                        print("222")
                         if ViewManager:isCanDropEnd(dropData) then
-                            ViewManager:startDropingLine(dropData)
+                            ViewManager:endDropingLine(dropData)
                             return true
                         end
                     end

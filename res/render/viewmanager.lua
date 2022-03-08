@@ -328,7 +328,7 @@ function viewManager:endDropingLine(endData)
         return
     end
     local endNodeData = endData.endNodeData
-    local keyPointEnd = endData.keyPointEnd
+    local keyPointEnd = endData.keyPoint
     local nodeStart = self.dataRropingLine.nodeStart
     local keyPointStart = self.dataRropingLine.keyPoint
 
