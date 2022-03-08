@@ -7,6 +7,7 @@ function BaseNode:ctor(data)
     self.data = data
     self.touchListener = null           -- 点击监听
     self.selectNode = null              -- 选中的节点（null/active=false 表示未选中）
+    self.listNodePoint = {}
 
     local node = cc.Node.create()
     node:setAnchorPoint(cc.p(0.5, 0.5))
@@ -112,35 +113,61 @@ function BaseNode:ClickSelect()
     end
 end
 
-function BaseNode:initPoint()
+function BaseNode:initTestPoint()
     local size = self:getContentSize()
     local nodePoint = cc.Sprite.create("texture/point.png")
     self.view:addChild(nodePoint)
     nodePoint:setPositionX(8)
     nodePoint:setPositionY(size.height / 2)
-    self._nodePoint = nodePoint
+    self.listNodePoint["testPoint1"] = nodePoint
+end
+-- 是否可以开始拖动
+function BaseNode:isCanDropStart(keyPoint)
+    return true
+end
+-- 是否可以放置
+function BaseNode:isCanDropIn(dropData, keyPointEnd)
+    local nodeStart = dropData.nodeStart
+    local keyPointStart = dropData.keyPoint
+    return true
+end
+-- 获取放置节点的位置
+function BaseNode:getDropPosForKey(key)
+    if self.listNodePoint[key] then
+        return cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY())
+    end
+    return true
+end
+
+function BaseNode:setSwallowTouches(needSwallow)
+    if self.touchListener then
+        self.touchListener:setSwallowTouches(needSwallow);
+    end
 end
 
 -- 点击相关
 function BaseNode:registerTouch()
     local this = self
     local listener = cc.EventListenerTouchOneByOne:create();
-    listener:setSwallowTouches(true);
+    listener:setSwallowTouches(false);
     listener.onTouchBegan = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then
-            return false
+            return true
         end
-
-        if self._nodePoint then
-            local size = this._nodePoint:getContentSize()
-            if this.isTouchInsideNode(touch, this._nodePoint, size) then
-                local pos = touch:getLocation()
-                local dropData = {
-                    posStart = pos,
-                    posEnd = pos,
-                }
-                ViewManager:startDropingLine(dropData)
-                return false
+        for key, nodePoint in pairs(this.listNodePoint) do
+            if nodePoint and this:isCanDropStart(key) then
+                local size = nodePoint:getContentSize()
+                if this.isTouchInsideNode(touch, nodePoint, size) then
+                    local pos = touch:getLocation()
+                    local dropData = {
+                        posStart = pos,
+                        posEnd = pos,
+                        keyPoint = key,
+                        nodeStart = this,
+                    }
+                    ViewManager:startDropingLine(dropData)
+                    return true
+                end
             end
         end
 
@@ -153,11 +180,11 @@ function BaseNode:registerTouch()
             this._pStartY = target:getPositionY()
             return true
         end
-        return false
+        return true
     end
     listener.onTouchMoved = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then
-            return false
+            return true
         end
 
         if this._touchStart then
@@ -187,16 +214,39 @@ function BaseNode:registerTouch()
 
     end
     listener.onTouchEnded = function(touch, event)
+        print("000")
         if ViewManager and ViewManager.isDropingLine then
-            return false
+            print("111111")
+            for key, nodePoint in pairs(this.listNodePoint) do
+                if nodePoint then
+                    local size = nodePoint:getContentSize()
+                    local pos = touch:getLocation()
+                    local target = event:getCurrentTarget()
+                    local point = nodePoint:convertToNodeSpace(target:convertToWorldSpace(pos))
+                    print(point.x, point.y)
+
+                    if this.isTouchInsideNode(touch, nodePoint, size) then
+                        local dropData = {
+                            keyPoint = key,
+                            endNodeData = this,
+                        }
+                        print("222")
+                        if ViewManager:isCanDropEnd(dropData) then
+                            ViewManager:startDropingLine(dropData)
+                            return true
+                        end
+                    end
+                end
+            end
         end
+
 
         this._touchStart = null
         return this.isTouchSelf(touch, event)
     end
     listener.onTouchCancelled = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then
-            return false
+            return true
         end
 
         this._touchStart = null
@@ -218,7 +268,9 @@ function BaseNode.isTouchSelf(touch, event)
 end
 -- 是否在自己点击范围内
 function BaseNode.isTouchInsideNode(pTouch,node,nodeSize)
-    local point = node:convertTouchToNodeSpace(pTouch)
+
+    local pos = pTouch:getLocation()
+    local point = node:convertToNodeSpace(pos)
     local x,y = point.x,point.y
     if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
         return true

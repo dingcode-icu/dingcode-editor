@@ -64,7 +64,7 @@ function viewManager:registerTouch()
     listener.onTouchEnded = function(touch, event)
         --local mouseType = event:getButton()
         if this.isDropingLine then
-            this:calcelDropingLine()
+            this:cancelDropingLine()
         end
         this:hide_imgui_menu_node()
         this:unSelectAll()
@@ -79,13 +79,12 @@ function viewManager:registerTouch()
     listener.onTouchCancelled = function()
         --print("4")
         if this.isDropingLine then
-            this:calcelDropingLine()
+            this:cancelDropingLine()
         end
         return true
     end
     local eventDispatcher = node:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
-
     -- 注册 右键点击
     local listener = cc.EventListenerMouse:create();
     listener.onMouseDown = function(event)
@@ -284,6 +283,12 @@ end
 function viewManager:startDropingLine(dropData)
     self.isDropingLine = true                       -- 是否正在拖动划线
     self.dataRropingLine = dropData                 -- 拖动中的对象
+
+    -- 设置所有节点 点击穿透
+    local list = self.data.viewList
+    for i, v in pairs(list) do
+        v:setSwallowTouches(false)
+    end
 end
 -- 刷新拖动连线
 function viewManager:upStartDropingline(posEnd)
@@ -295,15 +300,44 @@ function viewManager:upStartDropingline(posEnd)
     end
 end
 -- 取消拖动连线
-function viewManager:calcelDropingLine()
+function viewManager:cancelDropingLine()
     self.isDropingLine = false
     self.dataRropingLine = null
     self.nodeDropingLine:removeFromParentAndCleanup(true)
     self.nodeDropingLine = null
+
+    -- 设置所有节点 点击穿透
+    local list = self.data.viewList
+    for i, v in pairs(list) do
+        v:setSwallowTouches(true)
+    end
+end
+function viewManager:isCanDropEnd(dropData)
+
+    local endNodeData = dropData.endNodeData
+    local keyPointEnd = dropData.keyPoint
+    local startNodeData = self.dataRropingLine
+
+    return endNodeData:isCanDropIn(startNodeData, keyPointEnd)
 end
 -- 结束拖动连线
-function viewManager:endDropingLine()
-    self.isDropingLine = false
+function viewManager:endDropingLine(endData)
+    if not endData then
+        self:cancelDropingLine()
+        return
+    end
+    local endNodeData = endData.endNodeData
+    local keyPointEnd = endData.keyPointEnd
+    local nodeStart = self.dataRropingLine.nodeStart
+    local keyPointStart = self.dataRropingLine.keyPoint
+
+    local posStart = nodeStart:getDropPosForKey(keyPointStart)
+    local posEnd = endNodeData:getDropPosForKey(keyPointEnd)
+    if posStart and posEnd then
+        local lineNode = self:createLineBezier(posStart, posEnd)
+    end
+    -- 清除临时的连线
+    self:cancelDropingLine()
 end
 -- 创建连线
 function viewManager:createLineBezier(pIn, pOut)
