@@ -42,7 +42,6 @@ if not view then
     director:setOpenGLView(view)
 end
 
-print(view, "-->>view")
 local framesize = view:getFrameSize()
 local textureCache = director:getTextureCache()
 local spriteFrameCache = cc.SpriteFrameCache:getInstance()
@@ -162,7 +161,6 @@ if type(CC_DESIGN_RESOLUTION) == "table" then
     display.setAutoScale(CC_DESIGN_RESOLUTION)
 end
 
-dump(cc.c3b, "-->>ccc3b")
 display.COLOR_WHITE = cc.c3b(255, 255, 255)
 display.COLOR_BLACK = cc.c3b(0, 0, 0)
 display.COLOR_RED   = cc.c3b(255, 0, 0)

@@ -9,16 +9,9 @@ local function main()
     local sc = cc.Scene.create()
     cc.Director:getInstance():runWithScene(sc)
 
-    local guid = ding.guid();
-    print(ding.guid(), "-->>>guid")
-    print(ding.guid(), "-->>>guid")
-
-    print(ding.guid(), "-->>>guid")
-    print(ding.guid(), "-->>>guid")
-    print(ding.guid(), "-->>>guid")
-    print(ding.guid(), "-->>>guid")
     --local bg = d.sp("texture/grid.png")
     require("res/enum")
+    require("res/release")
     require("res/imguix/init"):init()
     require("res/render/init"):init()
     require("res/imguix/menu/menu_all")

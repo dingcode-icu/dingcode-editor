@@ -302,9 +302,7 @@ inline void Init(sol::state_view& lua){
     CC.new_usertype<Scene>("Scene",
                             "create",&Scene::create,
                             "createWithPhysics", &Scene::createWithPhysics,
-                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild))
+                            sol::base_classes, sol::bases<Node>()
                                         );
 #pragma endregion Scene
 
@@ -375,25 +373,7 @@ inline void Init(sol::state_view& lua){
 
 #pragma region Sprite
      auto sp_tb =CC.new_usertype<Sprite>("Sprite",
-                                        "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
-                                            sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
-                                            sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
-                                        "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
-                                       "removeFromParent", &Node::removeFromParent,
-                                       "setContentSize", &Node::setContentSize,
-                                       "getContentSize", &Node::getContentSize,
-                                       "getEventDispatcher", &Node::getEventDispatcher,
-                                       "convertToNodeSpaceAR", &Node::convertToNodeSpaceAR,
-                                       "convertToNodeSpace", &Node::convertToNodeSpace,
-                                       "convertToWorldSpace", &Node::convertToWorldSpace,
-                                       "convertToWorldSpaceAR", &Node::convertToWorldSpaceAR,
-                                       "convertTouchToNodeSpace", &Node::convertTouchToNodeSpace,
-                                       "getPositionX", &Node::getPositionX,
-                                       "getPositionY", &Node::getPositionY,
-                                       "setPositionX", &Node::setPositionX,
-                                       "setPositionY", &Node::setPositionY,
-                                       "isVisible", &Node::isVisible,
-                                        "setVisible", &Node::setVisible
+                                        sol::base_classes, sol::bases<Node>()
                                        );
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
@@ -408,16 +388,7 @@ inline void Init(sol::state_view& lua){
     CC.new_usertype<Label>("Label",
                            "create", sol::overload(sol::resolve<Label*()>(&Label::create)),
                            "createWithTTF", sol::overload(sol::resolve<Label*(const std::string& text, const std::string& fontFile, float fontSize)>(createWithTTF)),
-                           "removeFromParentAndCleanup", &Label::removeFromParentAndCleanup,
-                           "removeFromParent", &Label::removeFromParent,
-                           "setContentSize", &Label::setContentSize,
-                           "getContentSize", &Label::getContentSize,
-                           "getEventDispatcher", &Label::getEventDispatcher,
-                           "getPositionX", &Label::getPositionX,
-                           "getPositionY", &Label::getPositionY,
-                           "setPositionX", &Label::setPositionX,
-                           "setPositionY", &Label::setPositionY,
-
+                           sol::base_classes, sol::bases<Node>(),
                            "setString", &Label::setString,
                            "setColor", &Label::setColor
                            );
@@ -438,7 +409,8 @@ inline void Init(sol::state_view& lua){
                                           "onTouchBegan", &EventListenerTouchOneByOne::onTouchBegan,
                                           "onTouchMoved", &EventListenerTouchOneByOne::onTouchMoved,
                                           "onTouchEnded", &EventListenerTouchOneByOne::onTouchEnded,
-                                          "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled
+                                          "onTouchCancelled", &EventListenerTouchOneByOne::onTouchCancelled,
+                                          sol::base_classes, sol::bases<EventListener>()
                                           );
 
 
@@ -447,7 +419,8 @@ inline void Init(sol::state_view& lua){
                                           "onMouseDown", &EventListenerMouse::onMouseDown,
                                           "onMouseMove", &EventListenerMouse::onMouseMove,
                                           "onMouseUp", &EventListenerMouse::onMouseUp,
-                                          "onMouseScroll", &EventListenerMouse::onMouseScroll
+                                          "onMouseScroll", &EventListenerMouse::onMouseScroll,
+                                          sol::base_classes, sol::bases<EventListener>()
                                           );
 
      CC.new_usertype<EventMouse>("EventMouse",

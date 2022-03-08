@@ -28,7 +28,7 @@ end
 function BaseNode:getNameForType()
     if self.data then
         if self.data:gettype() then
-            for i, v in pairs(enum.nodetype) do
+            for i, v in pairs(enum.logic_node_type) do
                 if v == self.data:gettype() then
                     return i
                 end
@@ -205,7 +205,7 @@ function BaseNode:registerTouch()
                 local offY = this._pStartY + pos.y - posStart.y - target:getPositionY()
 
                 Event:dispatchEvent({
-                    name = enum.eventconst.imgui_move_node,
+                    name = enum.evt_keyboard.imgui_move_node,
                     offX = offX,
                     offY = offY,
                 })

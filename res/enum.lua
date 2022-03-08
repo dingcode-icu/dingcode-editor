@@ -1,6 +1,6 @@
 enum = {
     -- 创建的节点枚举
-    nodetype = {
+    logic_node_type = {
         composites = "composites",                              -- "新建组合节点",
         sequence = "sequence",                                  -- "顺序条件",
         selector = "selector",                                  -- "选择条件",
@@ -35,7 +35,8 @@ enum = {
     },
 
     -- 事件监听枚举
-    eventconst = {
+    evt_keyboard = {
+        dev_reload = "dev_reload",                                  -- 刷新当前界面的脚本
         imgui_menu_node = "imgui_menu_node",                        -- 显示右键节点列表
         imgui_delete_node = "imgui_delete_node",                    -- 删除节点
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点

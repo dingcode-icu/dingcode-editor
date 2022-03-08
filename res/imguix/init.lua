@@ -4,18 +4,16 @@ local imguiUI = {
 }
 
 function ImGuiRenderer()
-
     try {
         function()
-            if not imguiUI._isInitView then
-                imguiUI._isInitView = true
+            if not _isInitView then
+                _isInitView = true
                 local ViewManager = require("res/render/viewmanager")
                 ViewManager:initViewParent()
             end
-
             for k,v in pairs(imguiUI._drawList) do
                 if v then v() end
-        end
+            end
         end, catch {
             function (err)
                 print("err ImGuiRenderer")

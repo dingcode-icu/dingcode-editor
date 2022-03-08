@@ -42,7 +42,7 @@ function tabMenuMainBar.render()
 
                     if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
                         Event:dispatchEvent({
-                            name = enum.eventconst.imgui_menu_node,
+                            name = enum.evt_keyboard.imgui_menu_node,
                             posX = math.random() * 300 + 100,
                             posY = math.random() * 300 + 100,
                         })
