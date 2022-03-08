@@ -48,6 +48,7 @@ function viewManager:registerTouch()
     local node = self._viewParent
     local this = self
     -- 注册 点击事件
+    print("register event touch")
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function()
@@ -117,7 +118,7 @@ function viewManager:registerTouch()
             local pStart = this._mouseStart
             if math.abs(pStart.x - pos.x) < 10 and math.abs(pStart.y - pos.y) < 10 then
                 Event:dispatchEvent({
-                    name = enum.eventconst.imgui_menu_node,
+                    name = enum.evt_keyboard.imgui_menu_node,
                     posX = pos.x,
                     posY = pos.y,
                 })
@@ -172,7 +173,7 @@ end
 function viewManager:registerEvent()
     local this = self
     -- 删除节点
-    Event:addEventListener(enum.eventconst.imgui_delete_node, function(event)
+    Event:addEventListener(enum.evt_keyboard.imgui_delete_node, function(event)
         local list = this.data.viewList
         for i, v in pairs(list) do
             if v:isSelect() then
@@ -185,7 +186,7 @@ function viewManager:registerEvent()
         end
     end)
     -- 移动节点
-    Event:addEventListener(enum.eventconst.imgui_move_node, function(event)
+    Event:addEventListener(enum.evt_keyboard.imgui_move_node, function(event)
         local list = this.data.viewList
         local offX = event.offX
         local offY = event.offY
@@ -204,14 +205,14 @@ function viewManager:registerEvent()
     end)
 end
 function viewManager:unRegisterEvent()
-    Event:removeEventListenersByEvent(enum.eventconst.imgui_delete_node)
-    Event:removeEventListenersByEvent(enum.eventconst.imgui_mode_node)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_delete_node)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_mode_node)
 end
 
 -- 隐藏菜单
 function viewManager:hide_imgui_menu_node()
     Event:dispatchEvent({
-        name = enum.eventconst.imgui_menu_node,
+        name = enum.evt_keyboard.imgui_menu_node,
         isHide = true,
     })
 end
@@ -253,11 +254,11 @@ function viewManager:createNode(dataNode)
     try {
         function()
             local Node = null
-            if enum.nodetype.sequence == dataNode:gettype() then
+            if enum.logic_node_type.sequence == dataNode:gettype() then
                 Node = require ("res/render/view/node_sequence")
-            elseif enum.nodetype.parallel == dataNode:gettype() then
+            elseif enum.logic_node_type.parallel == dataNode:gettype() then
                 Node = require ("res/render/view/node_parallel")
-            elseif enum.nodetype.selector == dataNode:gettype() then
+            elseif enum.logic_node_type.selector == dataNode:gettype() then
                 Node = require ("res/render/view/node_selector")
             else
                 Node = require ("res/render/view/node_default")

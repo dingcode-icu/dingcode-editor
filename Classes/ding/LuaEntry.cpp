@@ -60,9 +60,6 @@ int lua_print(lua_State* L)
         out.append(s, sz);
         lua_pop(L, 1);  /* pop result */
     }
-
-    print_win32(out);
-
     cocos2d::log("[LUA-PRINT] %s\n \n", out.c_str());
     fflush(stdout);
     return 0;
@@ -101,7 +98,6 @@ namespace dan {
         //third
         lua_third_register(luaView);
         //load res/main.lua
-
         auto def = FileUtils::getInstance()->getDefaultResourceRootPath();
         std::string name("main.lua");
         auto path = FileUtils::getInstance()->fullPathForFilename(name);
@@ -129,10 +125,6 @@ namespace dan {
                                         "GetOpenFile", &FileDialogUtils::GetOpenFile);
     }
 
-    //---------------------------------
-    //dev
-    //---------------------------------
-
     void LuaEntry::imgui_render() {
         CCIMGUI::getInstance()->addImGUI([=]() {
                 ImGui::ShowDemoWindow();
@@ -146,9 +138,11 @@ namespace dan {
                     ImGui::PopFont();
                 }, "demoid");
     }
-    
+
+    //---------------------------------
+    //dev
+    //---------------------------------
     void LuaEntry::lua_dev_register(sol::state_view &lua){
         sol::table dev = lua.create_named_table("dev");
-//        dev.set_function("imgui_render", [=](){})
     }
 }
