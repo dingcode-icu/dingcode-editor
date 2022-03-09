@@ -405,6 +405,7 @@ inline void Init(sol::state_view& lua){
      CC.new_usertype<EventListenerTouchOneByOne>("EventListenerTouchOneByOne",
                                           "create", &EventListenerTouchOneByOne::create,
                                           "setSwallowTouches", &EventListenerTouchOneByOne::setSwallowTouches,
+                                          "isSwallowTouches", &EventListenerTouchOneByOne::isSwallowTouches,
                                           "onTouchBegan", &EventListenerTouchOneByOne::onTouchBegan,
                                           "onTouchMoved", &EventListenerTouchOneByOne::onTouchMoved,
                                           "onTouchEnded", &EventListenerTouchOneByOne::onTouchEnded,

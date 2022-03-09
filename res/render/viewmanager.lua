@@ -13,6 +13,7 @@ local viewManager = {
     isDropingLine = false,                  -- 是否正在拖动划线
     dataRropingLine = null,                 -- 拖动中的数据对象
     nodeDropingLine = null,                 -- 拖动中的对象
+    _isAllNodeSwallow = false,
 
     _viewParent = null,
     _lineParent = null,
@@ -43,6 +44,15 @@ function viewManager:initViewParent()
 
     self:registerTouch()
     self:registerEvent()
+end
+function viewManager:setAllNodeSwallowTouch(isSwallow)
+    if self._isAllNodeSwallow == isSwallow then
+        return
+    end
+    local list = self.data.viewList
+    for i, v in pairs(list) do
+        v:setSwallowTouches(isSwallow)
+    end
 end
 function viewManager:registerTouch()
     local node = self._viewParent
@@ -285,11 +295,6 @@ function viewManager:startDropingLine(dropData)
     self.isDropingLine = true                       -- 是否正在拖动划线
     self.dataRropingLine = dropData                 -- 拖动中的对象
 
-    -- 设置所有节点 点击穿透
-    local list = self.data.viewList
-    for i, v in pairs(list) do
-        v:setSwallowTouches(false)
-    end
 end
 -- 刷新拖动连线
 function viewManager:upStartDropingline(posEnd)
@@ -307,11 +312,6 @@ function viewManager:cancelDropingLine()
     self.nodeDropingLine:removeFromParentAndCleanup(true)
     self.nodeDropingLine = null
 
-    -- 设置所有节点 点击穿透
-    local list = self.data.viewList
-    for i, v in pairs(list) do
-        v:setSwallowTouches(true)
-    end
 end
 function viewManager:isCanDropEnd(dropData)
 
