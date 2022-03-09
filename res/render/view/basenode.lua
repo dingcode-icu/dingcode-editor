@@ -152,6 +152,7 @@ function BaseNode:registerTouch()
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(false);
     listener.onTouchBegan = function(touch, event)
+        ViewManager:setAllNodeSwallowTouch(false)
         if ViewManager and ViewManager.isDropingLine then
             return true
         end
@@ -238,7 +239,19 @@ function BaseNode:registerTouch()
 
 
         this._touchStart = null
-        return this.isTouchSelf(touch, event)
+
+        local isClick = this.isTouchSelf(touch, event)
+        if isClick then
+            if this.isClickForTouch(touch) then
+                print("click node", this.data:getuuid())
+                this:ClickSelect()
+            end
+            if not ViewManager.isDropingLine then
+                ViewManager:setAllNodeSwallowTouch(true)
+            end
+        end
+
+        return isClick
     end
     listener.onTouchCancelled = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then

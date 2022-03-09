@@ -25,15 +25,6 @@ function NodeDefault:initView()
 
     if self.touchListener then
         local this = self
-        --self.touchListener.onTouchEnded = function(touch, event)
-        --    local isClick = this.super.isTouchSelf(touch, event)
-        --    if isClick and this.isClickForTouch(touch) then
-        --        print("click node", this.data:getuuid())
-        --        this:ClickSelect()
-        --    end
-        --
-        --    return isClick
-        --end
     end
 end
 

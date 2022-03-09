@@ -49,6 +49,7 @@ function viewManager:setAllNodeSwallowTouch(isSwallow)
     if self._isAllNodeSwallow == isSwallow then
         return
     end
+    self._isAllNodeSwallow = isSwallow
     local list = self.data.viewList
     for i, v in pairs(list) do
         v:setSwallowTouches(isSwallow)
@@ -62,7 +63,6 @@ function viewManager:registerTouch()
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function()
-        --print("111")
         return true
     end
     listener.onTouchMoved = function(touch, event)
@@ -309,9 +309,10 @@ end
 function viewManager:cancelDropingLine()
     self.isDropingLine = false
     self.dataRropingLine = null
-    self.nodeDropingLine:removeFromParentAndCleanup(true)
-    self.nodeDropingLine = null
-
+    if self.nodeDropingLine then
+        self.nodeDropingLine:removeFromParentAndCleanup(true)
+        self.nodeDropingLine = null
+    end
 end
 function viewManager:isCanDropEnd(dropData)
 
