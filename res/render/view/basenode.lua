@@ -213,7 +213,7 @@ function BaseNode:registerTouch()
                 })
             end
         end
-
+        return false
     end
     listener.onTouchEnded = function(touch, event)
 
