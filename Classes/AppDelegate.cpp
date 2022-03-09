@@ -1,12 +1,13 @@
 #include "AppDelegate.h"
 #include "platform/CCGLView.h"
-#include "ImGuiExt/CCImGuiLayer.h"
 #include "ding/LuaEntry.h"
 #include "ding/AppSetting.h"
+#include "ding/sys/Display.hpp"
 #include "TEST.hpp"
 
 USING_NS_CC;
-//
+static const int SCREEN_MIN_WIDTH = 960;
+static const int SCREEN_MIN_HEIGHT = 640;
 AppDelegate::AppDelegate() 
 {
 }
@@ -31,7 +32,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("ding-editor", cocos2d::Rect(0, 0, 960, 640));
+
+        glview = GLViewImpl::createWithRect("ding-editor", cocos2d::Rect(0, 0, SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT), 1.0, true);
+        //设置窗口
+        this->init_glview(glview);
         director->setOpenGLView(glview);
     }
 
@@ -66,4 +70,19 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+
+void AppDelegate::init_glview(GLView* glview){
+    auto impl = (GLViewImpl*)glview;
+    auto win = impl->getWindow();
+    //设置窗口大小
+    int scene_cnt;
+    GLFWmonitor** p = glfwGetMonitors(&scene_cnt);
+    const GLFWvidmode* mode = glfwGetVideoMode(p[0]);
+    cocos2d::log("screen glfw:width =  %d, height = %d", mode->width, mode->height);
+    //设置窗口大小
+    glfwSetWindowPos(win, mode->width / 2 - SCREEN_MIN_WIDTH / 2, mode->height / 2 - SCREEN_MIN_HEIGHT / 2);
+    glfwSetWindowSizeLimits(win, SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT, GLFW_DONT_CARE, GLFW_DONT_CARE);
+    glfwShowWindow(win);
+
 }

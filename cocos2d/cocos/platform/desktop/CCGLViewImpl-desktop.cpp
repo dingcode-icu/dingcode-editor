@@ -293,7 +293,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
     
     glfwWindowHint(GLFW_SAMPLES, _glContextAttrs.multisamplingCount);
-
+    glfwWindowHint(GLFW_VISIBLE, false);
     int neededWidth = rect.size.width * _frameZoomFactor;
     int neededHeight = rect.size.height * _frameZoomFactor;
 
