@@ -40,6 +40,8 @@ enum = {
         imgui_menu_node = "imgui_menu_node",                        -- 显示右键节点列表
         imgui_delete_node = "imgui_delete_node",                    -- 删除节点
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
+
+        imgui_move_node_to_line = "imgui_move_node_to_line",        -- 移动节点 - 对应移动连线
     }
 }
 

@@ -2,6 +2,7 @@ local BaseNode = class("BaseNode")
 local Event = require("res/lib/event")
 local ViewManager = require("res/render/viewmanager")
 local enum = enum
+local MEMORY = MEMORY
 
 function BaseNode:ctor(data)
     self.data = data
@@ -73,6 +74,9 @@ function BaseNode:removeFromParentAndCleanup(cleanup)
     if self.view then
         self.view:removeFromParentAndCleanup(cleanup)
     end
+end
+function BaseNode:destroy()
+    self:removeFromParentAndCleanup(true)
 end
 -- 是否选中
 function BaseNode:isSelect()
@@ -146,29 +150,35 @@ function BaseNode:setSwallowTouches(needSwallow)
     end
 end
 
+function BaseNode:getuuid()
+    return self.data:getuuid()
+end
+
 -- 点击相关
 function BaseNode:registerTouch()
     local this = self
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(false);
     listener.onTouchBegan = function(touch, event)
-        ViewManager:setAllNodeSwallowTouch(false)
-        if ViewManager and ViewManager.isDropingLine then
-            return true
-        end
-        for key, nodePoint in pairs(this.listNodePoint) do
-            if nodePoint and this:isCanDropStart(key) then
-                local size = nodePoint:getContentSize()
-                if this.isTouchInsideNode(touch, nodePoint, size) then
-                    local pos = touch:getLocation()
-                    local dropData = {
-                        posStart = pos,
-                        posEnd = pos,
-                        keyPoint = key,
-                        nodeStart = this,
-                    }
-                    ViewManager:startDropingLine(dropData)
-                    return true
+        if not MEMORY.isCtrlDown then
+            ViewManager:setAllNodeSwallowTouch(false)
+            if ViewManager and ViewManager.isDropingLine then
+                return true
+            end
+            for key, nodePoint in pairs(this.listNodePoint) do
+                if nodePoint and this:isCanDropStart(key) then
+                    local size = nodePoint:getContentSize()
+                    if this.isTouchInsideNode(touch, nodePoint, size) then
+                        local pos = touch:getLocation()
+                        local dropData = {
+                            posStart = pos,
+                            posEnd = pos,
+                            keyPoint = key,
+                            nodeStart = this,
+                        }
+                        ViewManager:startDropingLine(dropData)
+                        return true
+                    end
                 end
             end
         end
@@ -176,13 +186,16 @@ function BaseNode:registerTouch()
 
         local isTouch = this.isTouchSelf(touch, event)
         if isTouch then
-            this._touchStart = touch:getLocation()
             local target = event:getCurrentTarget()
+            this._touchStart = target:getParent():convertToNodeSpace(touch:getLocation())
             this._pStartX = target:getPositionX()
             this._pStartY = target:getPositionY()
             return true
         end
-        return true
+        if not MEMORY.isCtrlDown then
+            return true
+        end
+        return false
     end
     listener.onTouchMoved = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then
@@ -195,16 +208,24 @@ function BaseNode:registerTouch()
                 local pos = touch:getLocation()
                 local posStart = this._touchStart
                 local target = event:getCurrentTarget()
-                target:setPositionX(this._pStartX + pos.x - posStart.x)
-                target:setPositionY(this._pStartY + pos.y - posStart.y)
+                local posEnd = target:getParent():convertToNodeSpace(pos)
+                target:setPositionX(this._pStartX + posEnd.x - posStart.x)
+                target:setPositionY(this._pStartY + posEnd.y - posStart.y)
+
+                Event:dispatchEvent({
+                    name = enum.evt_keyboard.imgui_move_node_to_line,
+                    list = {this},
+                })
+
                 return false
             else
                 -- 选中 拖动所有已选中的点
                 local pos = touch:getLocation()
                 local posStart = this._touchStart
                 local target = event:getCurrentTarget()
-                local offX = this._pStartX + pos.x - posStart.x - target:getPositionX()
-                local offY = this._pStartY + pos.y - posStart.y - target:getPositionY()
+                local posEnd = target:getParent():convertToNodeSpace(pos)
+                local offX = this._pStartX + posEnd.x - posStart.x - target:getPositionX()
+                local offY = this._pStartY + posEnd.y - posStart.y - target:getPositionY()
 
                 Event:dispatchEvent({
                     name = enum.evt_keyboard.imgui_move_node,

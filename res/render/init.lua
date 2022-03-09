@@ -1,7 +1,8 @@
 local render = {}
-
+local MEMORY = MEMORY
 
 local Event = require("res/lib/event")
+local ViewManager = require("res/render/viewmanager")
 
 ---单按键键盘快捷键
 local SINGLE_KEY_MAP  = {
@@ -38,6 +39,12 @@ function render:init()
             comb_cnt = comb_cnt - 1
             comb_key = nil
         end
+
+        -- 是否按下 ctrl
+        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL then
+            MEMORY.isCtrlDown = false
+            ViewManager:setAllNodeSwallowTouch(false)
+        end
     end
     kb_evt["onKeyPressed"] = function(keycode, data)
         local evt = MULTI_KEY_MAP[keycode]
@@ -52,6 +59,12 @@ function render:init()
                                     data = data
                                 })
             end
+        end
+
+        -- 是否按下 ctrl
+        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL then
+            MEMORY.isCtrlDown = true
+            ViewManager:setAllNodeSwallowTouch(true)
         end
     end
     dispatcher:addEventListenerWithFixedPriority(kb_evt, 10);

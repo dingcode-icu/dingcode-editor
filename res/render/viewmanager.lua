@@ -7,6 +7,7 @@ local winHeight = cc.Director:getInstance():getWinSize().height
 local viewManager = {
     data = {
         viewList = {},                      -- 创建的数据
+        lineList = {},                      -- 线
     },
     isInit = false,                         -- 是否已经初始化
 
@@ -184,13 +185,26 @@ function viewManager:registerEvent()
     -- 删除节点
     Event:addEventListener(enum.evt_keyboard.imgui_delete_node, function(event)
         local list = this.data.viewList
+        local listNeedDelete = {}
+        -- 删除页面node
         for i, v in pairs(list) do
             if v:isSelect() then
                 -- 移除页面
-                v:removeFromParentAndCleanup(true)
+                v:destroy()
                 list[i] = null
                 -- 移除数据
                 DataManager:removeData(i)
+
+                table.insert(listNeedDelete, v)
+            end
+        end
+        -- 删除连线
+        local list = self.data.lineList
+        for i, v in pairs(list) do
+            if v:isCantainSelf(listNeedDelete) then
+                -- 删除连线页面
+                v:destroy()
+                list[i] = null
             end
         end
     end)
@@ -199,6 +213,8 @@ function viewManager:registerEvent()
         local list = this.data.viewList
         local offX = event.offX
         local offY = event.offY
+        local listNeedMove = {}
+
         if offX or offY then
             for i, v in pairs(list) do
                 if v:isSelect() then
@@ -208,9 +224,17 @@ function viewManager:registerEvent()
                     if offY then
                         v:addPositionY(offY)
                     end
+                    table.insert(listNeedMove, v)
                 end
             end
         end
+        if #listNeedMove > 0 then
+            Event:dispatchEvent({
+                name = enum.evt_keyboard.imgui_move_node_to_line,
+                list = listNeedMove,
+            })
+        end
+
     end)
 end
 function viewManager:unRegisterEvent()
@@ -310,7 +334,7 @@ function viewManager:cancelDropingLine()
     self.isDropingLine = false
     self.dataRropingLine = null
     if self.nodeDropingLine then
-        self.nodeDropingLine:removeFromParentAndCleanup(true)
+        self.nodeDropingLine:destroy()
         self.nodeDropingLine = null
     end
 end
@@ -336,19 +360,35 @@ function viewManager:endDropingLine(endData)
     local posStart = nodeStart:getDropPosForKey(keyPointStart)
     local posEnd = endNodeData:getDropPosForKey(keyPointEnd)
     if posStart and posEnd then
-        local lineNode = self:createLineBezier(posStart, posEnd)
+        local data = {
+            nodeDataStart = nodeStart,
+            nodeDataEnd = endNodeData,
+            keyStart = keyPointStart,
+            keyEnd = keyPointEnd,
+        }
+        local lineNode = self:createLineBezier(posStart, posEnd, data)
+        self.data.lineList[lineNode:getuuid()] = lineNode
     end
     -- 清除临时的连线
     self:cancelDropingLine()
 end
 -- 创建连线
-function viewManager:createLineBezier(pIn, pOut)
+function viewManager:createLineBezier(pIn, pOut, data)
     local NodeLine = require("render/common/nodeline")
+    if not data then
+        data = {}
+    end
     local node = NodeLine.new({
         pIn = pIn,
         pOut = pOut,
+        nodeDataStart = data.nodeDataStart,
+        nodeDataEnd = data.nodeDataEnd,
+        keyStart = data.keyStart,
+        keyEnd = data.keyEnd,
     })
     self._lineParent:addChild(node.view)
+    node:upDrawSelf()
+
     return node
 end
 
