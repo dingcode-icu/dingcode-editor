@@ -9,6 +9,7 @@ local function main()
     cc.Director:getInstance():runWithScene(sc)
 
     --local bg = d.sp("texture/grid.png")
+    require("res/render/memory")
     require("res/enum")
     require("res/release")
     require("res/imguix/init"):init()
