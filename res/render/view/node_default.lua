@@ -18,23 +18,13 @@ function NodeDefault:initView()
 
     self:setContentSize(size)
 
-    self:initPoint()
+    self:initTestPoint()
 
     -- 注册 点击事件
     self:registerTouch()
 
     if self.touchListener then
         local this = self
-        self.touchListener.onTouchEnded = function(touch, event)
-
-            local isClick = this.super.isTouchSelf(touch, event)
-            if isClick and this.isClickForTouch(touch) then
-                print("click node", this.data:getuuid())
-                this:ClickSelect()
-            end
-
-            return isClick
-        end
     end
 end
 

@@ -348,6 +348,7 @@ inline void Init(sol::state_view& lua){
 
 #pragma region DrawNode
         CC.new_usertype<DrawNode>("DrawNode",
+                                  sol::base_classes, sol::bases<Node>(),
                                   "create", &DrawNode::create,
                                   "drawCubicBezier", &DrawNode::drawCubicBezier,
                                   "draw", &DrawNode::draw,
@@ -355,9 +356,7 @@ inline void Init(sol::state_view& lua){
                                   "drawLine", &DrawNode::drawLine,
                                   "drawPoint", &DrawNode::drawPoint,
                                   "drawQuadBezier", &DrawNode::drawQuadBezier,
-                                  "clear", &DrawNode::clear,
-                                  "removeFromParent", &DrawNode::removeFromParent,
-                                  "removeFromParentAndCleanup", &DrawNode::removeFromParentAndCleanup
+                                  "clear", &DrawNode::clear
                                  );
 
 
@@ -406,6 +405,7 @@ inline void Init(sol::state_view& lua){
      CC.new_usertype<EventListenerTouchOneByOne>("EventListenerTouchOneByOne",
                                           "create", &EventListenerTouchOneByOne::create,
                                           "setSwallowTouches", &EventListenerTouchOneByOne::setSwallowTouches,
+                                          "isSwallowTouches", &EventListenerTouchOneByOne::isSwallowTouches,
                                           "onTouchBegan", &EventListenerTouchOneByOne::onTouchBegan,
                                           "onTouchMoved", &EventListenerTouchOneByOne::onTouchMoved,
                                           "onTouchEnded", &EventListenerTouchOneByOne::onTouchEnded,
