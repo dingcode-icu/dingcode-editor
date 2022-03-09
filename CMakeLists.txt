@@ -52,11 +52,13 @@ endif()
 set(IMGUIEXT_H_CLASSES)
 file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.h)
 set(IMGUIEXT_CPP_CLASSES)
-file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.cpp)
+file(GLOB_RECURSE IMGUIEXT_CPP_CLASSES Classes/ImGuiExt/**.cpp Classes/ImGuiExt/**.mm)
 
 #DING
 set(DING_SRC_CLASSES)
 file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
+
+add_definitions(-DSOL_NO_EXCEPTIONS=1 -DSOL_IMGUI_IMPLEMENTATION=1)
 
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
@@ -69,7 +71,7 @@ list(APPEND GAME_HEADER
         #imguiext
         ${IMGUIEXT_H_CLASSES}
      )
-add_definitions(-DSOL_NO_EXCEPTIONS=1)
+
 list(APPEND GAME_SOURCE
         Classes/TEST.hpp
         Classes/AppDelegate.cpp

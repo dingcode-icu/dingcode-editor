@@ -35,6 +35,10 @@ function viewManager:initViewParent()
     node:setContentSize(cc.size(10000,10000))
     self._viewParent = node
 
+    local bg = cc.Sprite.create("texture/grid.png")
+    node:addChild(bg)
+    --bg:setContentSize(cc.size(10000, 10))
+
     local nodelineParent = cc.Node.create()
     self._viewParent:addChild(nodelineParent)
     self._lineParent = nodelineParent

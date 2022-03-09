@@ -1,13 +1,11 @@
-#include <string>
-#include <inttypes.h>
 #include "LuaEntry.h"
-#define SOL_IMGUI_IMPLEMENTATION
+#include "ding/Core.h"
 
+#include "lua.h"
+#include "ding/common/StringUtil.h"
 #include "ImGuiExt/sol_imgui.h"
 #include "ding/sol_cocos.h"
-
 #include "svg/SvgSprite.h"
-#include "lua.h"
 #include "ImGuiExt/CCImGuiLayer.h"
 #include "ImGuiExt/CCIMGUI.h"
 #include "ding/sys/FileDialogUtils.h"
@@ -76,23 +74,23 @@ namespace dan {
         };
         _luaState["ImGuiRenderer"] = []() { };
         sol::state_view luaView(_luaState.lua_state());
-        //imgui
+        //imgui+cocos init
         sol_ImGui::Init(luaView);
-        //cocos
         sol_cocos2d::Init(luaView);
-        //third
+        //third bind
         lua_third_register(luaView);
+        lua_dev_register(luaView);
         //load res/main.lua
         auto def = FileUtils::getInstance()->getDefaultResourceRootPath();
         std::string name("main.lua");
+        std::string workspace("");
         auto path = FileUtils::getInstance()->fullPathForFilename(name);
-        auto workspace = path;
+        workspace = path;
         workspace.replace(path.find(name), name.size(), "");
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
 
-        char l_append[512];
-        sprintf(l_append,"package.path = package.path..';%s?.lua;res/%s?.lua;'", workspace.c_str(), workspace.c_str());
-        _luaState.script(l_append);
+        std::string cmd("package.path = package.path..';{l}/?.lua;res/{l}/?.lua;{l}/?/init.lua;res/{l}/?/init.lua;'");
+        _luaState.script(StringUtil::Replace(cmd, "{l}", workspace));
         _luaState.script_file(path);
 
         imgui_render();
@@ -102,11 +100,7 @@ namespace dan {
 
     void LuaEntry::lua_third_register(sol::state_view &lua){
         sol::table d = lua.create_table("ding");
-        //dev
-        auto dev_tb = d.create_named("dev");
-        dev_tb.set_function("show_imgui_demo", [=]{
-            ImGui::ShowDemoWindow();
-        });
+
         d.set_function("guid", new_guid);
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
@@ -125,13 +119,19 @@ namespace dan {
                 }
                 if (CCIMGUI::getInstance()->chineseFont)
                     ImGui::PopFont();
-                }, "dingcode-imguix");
+                }, "dingcode-editor");
     }
 
     //---------------------------------
     //dev
     //---------------------------------
     void LuaEntry::lua_dev_register(sol::state_view &lua){
-        sol::table dev = lua.create_named_table("dev");
+        //dev
+        auto d = lua.get<sol::table>("ding");
+        auto dev_tb = d.create_named("dev");
+        dev_tb.set_function("show_imgui_demo", [=]{
+            ImGui::ShowDemoWindow();
+        });
     }
+
 }

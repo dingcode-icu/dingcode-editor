@@ -100,6 +100,10 @@ function tabMenuMainBar.render()
 
 
                 end
+
+                if ImGui.MenuItem("showDemo") then
+                    ding.dev.show_imgui_demo()
+                end
                 ImGui.EndMenu()
             end
 

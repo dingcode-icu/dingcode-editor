@@ -1,6 +1,5 @@
 require("path")
-require("lib/lua_ex")
-require("lib/display")
+require("lib")
 
 
 

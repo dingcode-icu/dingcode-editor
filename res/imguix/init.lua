@@ -1,16 +1,23 @@
 local imguiUI = {
     _drawList = {},
-    _isInitView = false
+    _isInitRoot = false,   --所有cocos渲染根节点是否初始化,
+    _isDemo = false
 }
 
 function ImGuiRenderer()
     try {
         function()
-            if not _isInitView then
-                _isInitView = true
+            if not _isDemo then
+                _isDemo = true
+                table.insert(imguiUI._drawList, #imguiUI._drawList, ding.dev.show_imgui_demo)
+            end
+            if not _isInitRoot then
+                _isInitRoot = true
                 local ViewManager = require("res/render/viewmanager")
                 ViewManager:initViewParent()
             end
+
+
             for k,v in pairs(imguiUI._drawList) do
                 if v then v() end
             end

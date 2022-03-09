@@ -1,0 +1,5 @@
+print("init lib...")
+require("lib/lua_ex")
+require("lib/functions")
+require("lib/display")
+require("lib/extends/NodeEx")

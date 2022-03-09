@@ -24,6 +24,10 @@ namespace dan{
          lua启动入口
          */
         bool entry();
+        /*
+         * dev helper
+         * */
+        bool dev_helper();
     protected:
         /**
         注册三方扩展

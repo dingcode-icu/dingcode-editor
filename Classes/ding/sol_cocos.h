@@ -16,15 +16,9 @@ namespace sol_cocos2d {
     inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
 
     inline Label* createWithTTF(const std::string& text, const std::string& fontFile, float fontSize){return Label::createWithTTF(text, fontFile, fontSize);}
-
-    //ccTypes
-    static Color3B c3b_from_lua_table(sol::table t){
-        Color3B c;
-        c.r = t[1];
-        c.g = t[2];
-        c.b = t[3];
-        return c;
-    }
+    //fileutil
+    inline auto getSearchPath(){return sol::as_table(FileUtils::getInstance()->getSearchPaths());}
+    inline auto setSearchPaths(sol::as_table_t<std::vector<std::string>> o){return FileUtils::getInstance()->setSearchPaths(o.value());}
 };
 
 
@@ -272,13 +266,14 @@ inline void Init(sol::state_view& lua){
                               "getScheduler", &Director::getScheduler,
                               "getEventDispatcher", &Director::getEventDispatcher
                               );
-    CC.new_usertype<FileUtils>(
+    auto fu = CC.new_usertype<FileUtils>(
         "FileUtils",
         "getInstance", &FileUtils::getInstance,
         "getDefaultResourceRootPath", &FileUtils::getDefaultResourceRootPath
         );
-    
-    
+    fu.set_function("getSearchPaths", getSearchPath);
+    fu.set_function("setSearchPaths", setSearchPaths);
+
 #pragma endregion Instance
 
 

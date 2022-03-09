@@ -2,7 +2,6 @@
 #include "platform/CCGLView.h"
 #include "ding/LuaEntry.h"
 #include "ding/AppSetting.h"
-#include "ding/sys/Display.hpp"
 #include "TEST.hpp"
 
 USING_NS_CC;
