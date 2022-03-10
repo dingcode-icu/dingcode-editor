@@ -124,6 +124,13 @@ function BaseNode:initTestPoint()
     nodePoint:setPositionX(8)
     nodePoint:setPositionY(size.height / 2)
     self.listNodePoint["testPoint1"] = nodePoint
+
+    local size = self:getContentSize()
+    local nodePoint = cc.Sprite.create("texture/point.png")
+    self.view:addChild(nodePoint)
+    nodePoint:setPositionX(size.width - 8)
+    nodePoint:setPositionY(size.height / 2)
+    self.listNodePoint["testPoint2"] = nodePoint
 end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
@@ -139,9 +146,13 @@ end
 function BaseNode:getDropPosForKey(key)
     if self.listNodePoint[key] then
         local pos = self.listNodePoint[key]:getParent():convertToWorldSpace(cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY()))
-        return pos
+        if key == "testPoint1" then
+            return pos, enum.node_direct.left
+        else
+            return pos, enum.node_direct.right
+        end
     end
-    return null
+    return null, null
 end
 
 function BaseNode:setSwallowTouches(needSwallow)
@@ -169,12 +180,13 @@ function BaseNode:registerTouch()
                 if nodePoint and this:isCanDropStart(key) then
                     local size = nodePoint:getContentSize()
                     if this.isTouchInsideNode(touch, nodePoint, size) then
-                        local pos = touch:getLocation()
+                        local posStart, dirIn = this:getDropPosForKey(key)
                         local dropData = {
-                            posStart = pos,
-                            posEnd = pos,
+                            posStart = posStart,
+                            posEnd = posStart,
                             keyPoint = key,
                             nodeStart = this,
+                            dirIn = dirIn,
                         }
                         ViewManager:startDropingLine(dropData)
                         return true

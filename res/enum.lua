@@ -42,7 +42,15 @@ enum = {
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
 
         imgui_move_node_to_line = "imgui_move_node_to_line",        -- 移动节点 - 对应移动连线
-    }
+    },
+
+    -- 节点可拖动的方向
+    node_direct = {
+        top = "top",
+        bottom = "bottom",
+        left = "left",
+        right = "right",
+    },
 }
 
 return enum

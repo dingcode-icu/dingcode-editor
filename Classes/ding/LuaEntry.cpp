@@ -89,7 +89,7 @@ namespace dan {
         workspace.replace(path.find(name), name.size(), "");
         FileUtils::getInstance()->setDefaultResourceRootPath(workspace);
 
-        std::string cmd("package.path = package.path..';{l}/?.lua;res/{l}/?.lua;{l}/?/init.lua;res/{l}/?/init.lua;'");
+        std::string cmd("package.path = package.path..';{l}/?.lua;{l}/res/?.lua;{l}/?/init.lua;{l}/res/?/init.lua;'");
         _luaState.script(StringUtil::Replace(cmd, "{l}", workspace));
         _luaState.script_file(path);
 
@@ -126,7 +126,7 @@ namespace dan {
         });
 
         d.set_function("guid", new_guid);
-        d.set_function("bgSprite", [=](const std::string& filename, const Rect& rect) ->Sprite*{
+        d.set_function("bgSprite", [=](const std::string& filename, const cocos2d::Rect& rect) ->Sprite*{
             auto img = Director::getInstance()->getTextureCache()->addImage(filename);
             Texture2D::TexParams tp = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
             img->setTexParameters(tp);

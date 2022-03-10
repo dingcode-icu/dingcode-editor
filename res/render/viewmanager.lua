@@ -91,10 +91,6 @@ function viewManager:registerTouch()
         this:unSelectAll()
         print("viewmanager touch end")
 
-        --local pos = touch:getLocation()
-        --local posStart = touch:getStartLocation()
-        --this:createLineBezier(posStart, pos)
-
         return true
     end
     listener.onTouchCancelled = function()
@@ -210,8 +206,12 @@ function viewManager:registerEvent()
         -- 删除连线
         local list = self.data.lineList
         for i, v in pairs(list) do
-            if v:isCantainSelf(listNeedDelete) then
-                -- 删除连线页面
+            if v:isSelect() then
+                -- 删除连线
+                v:destroy()
+                list[i] = null
+            elseif v:isCantainSelf(listNeedDelete) then
+                -- 删除包含节点的连线
                 v:destroy()
                 list[i] = null
             end
@@ -333,7 +333,16 @@ end
 function viewManager:upStartDropingline(posEnd)
     if not self.nodeDropingLine then
         local posStart = self.dataRropingLine.posStart
-        self.nodeDropingLine = self:createLineBezier(posStart, posEnd)
+
+        local data = {
+            dirIn = self.dataRropingLine.dirIn,
+            nodeDataStart = self.dataRropingLine.nodeStart,
+            keyStart = self.dataRropingLine.keyPoint,
+            pIn = self.dataRropingLine.posStart,
+            pOut = self.dataRropingLine.posEnd,
+        }
+
+        self.nodeDropingLine = self:createLineBezier(posStart, posEnd, data)
     else
         self.nodeDropingLine:upDrawForPos(posEnd)
     end
@@ -366,14 +375,16 @@ function viewManager:endDropingLine(endData)
     local nodeStart = self.dataRropingLine.nodeStart
     local keyPointStart = self.dataRropingLine.keyPoint
 
-    local posStart = nodeStart:getDropPosForKey(keyPointStart)
-    local posEnd = endNodeData:getDropPosForKey(keyPointEnd)
+    local posStart, dirIn = nodeStart:getDropPosForKey(keyPointStart)
+    local posEnd, dirOut = endNodeData:getDropPosForKey(keyPointEnd)
     if posStart and posEnd then
         local data = {
             nodeDataStart = nodeStart,
             nodeDataEnd = endNodeData,
             keyStart = keyPointStart,
             keyEnd = keyPointEnd,
+            dirOut = dirOut,
+            dirIn = dirIn,
         }
         local lineNode = self:createLineBezier(posStart, posEnd, data)
         self.data.lineList[lineNode:getuuid()] = lineNode
@@ -394,6 +405,8 @@ function viewManager:createLineBezier(pIn, pOut, data)
         nodeDataEnd = data.nodeDataEnd,
         keyStart = data.keyStart,
         keyEnd = data.keyEnd,
+        dirOut = data.dirOut,
+        dirIn = data.dirIn,
     })
     self._lineParent:addChild(node.view)
     node:upDrawSelf()

@@ -43,117 +43,111 @@ function tabMenuNode:isShow()
 end
 
 function tabMenuNode.render()
+    --tabMenuNode.data._isShow = true
     if tabMenuNode.data._isShow then
-        ImGui.Begin(Lang:Lang("menu_node", "node"))
-        ImGui.SetWindowPos(tabMenuNode.data._posX, tabMenuNode.data._posY, ImGui.ImGuiCond.Always)
-        if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode")) then
-            -- 新建组合节点
-            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_composites")) then
+        ImGui.SetNextWindowPos(tabMenuNode.data._posX, tabMenuNode.data._posY, ImGui.ImGuiCond.Always)
+        ImGui.Begin(Lang:Lang("menu_node", "node"), true, ImGui.ImGuiWindowFlags.NoTitleBar)
 
-                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_sequence"), "") then
-                    local data = DataManager:createData(enum.logic_node_type.sequence)
-                    if data then
-                        ViewManager:createNode(data)
-                    end
+        -- 新建组合节点
+        if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_composites")) then
+
+            if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_sequence"), "") then
+                local data = DataManager:createData(enum.logic_node_type.sequence)
+                if data then
+                    ViewManager:createNode(data)
                 end
-
-                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_selector"), "") then
-                    local data = DataManager:createData(enum.logic_node_type.selector)
-                    if data then
-                        ViewManager:createNode(data)
-                    end
-                end
-
-                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_parallel"), "") then
-                    local data = DataManager:createData(enum.logic_node_type.parallel)
-                    if data then
-                        ViewManager:createNode(data)
-                    end
-                end
-
-                ImGui.EndMenu()
             end
-            -- 新建修饰节点
-            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_decorator")) then
 
-
-                ImGui.EndMenu()
+            if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_selector"), "") then
+                local data = DataManager:createData(enum.logic_node_type.selector)
+                if data then
+                    ViewManager:createNode(data)
+                end
             end
-            -- 新建条件节点
-            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_conditinals")) then
 
-
-                ImGui.EndMenu()
-            end
-            -- 新建行为节点
-            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action")) then
-
-                -- node
-                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_node")) then
-                    tabMenuNode.renderComNode()
-                    ImGui.EndMenu()
+            if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_parallel"), "") then
+                local data = DataManager:createData(enum.logic_node_type.parallel)
+                if data then
+                    ViewManager:createNode(data)
                 end
-                -- sprite
-                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_sprite")) then
-                    tabMenuNode.renderComNode()
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_sprite_path"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_sprite_path)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    ImGui.EndMenu()
-                end
-                -- lab
-                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_lab")) then
-                    tabMenuNode.renderComNode()
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_string"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_lab_string)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_fontsize"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_lab_fontsize)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    ImGui.EndMenu()
-                end
-                -- richtext
-                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_richtext")) then
-                    tabMenuNode.renderComNode()
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_string"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_richtext_string)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_fontsize"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_richtext_fontsize)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    ImGui.EndMenu()
-                end
-                --spine
-                if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_spine")) then
-                    tabMenuNode.renderComNode()
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_animation"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_spine_animation)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_loop"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_spine_loop)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_timescale"), "") then
-                        local data = DataManager:createData(enum.logic_node_type.action_spine_timescale)
-                        if data then ViewManager:createNode(data) end
-                    end
-                    ImGui.EndMenu()
-                end
-
-                ImGui.EndMenu()
             end
 
             ImGui.EndMenu()
         end
+        -- 新建修饰节点
+        if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_decorator")) then
 
-        if ImGui.MenuItem(Lang:Lang("menu_node", "close"), "") then
-            tabMenuNode:hide()
+
+            ImGui.EndMenu()
+        end
+        -- 新建条件节点
+        if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_conditinals")) then
+
+
+            ImGui.EndMenu()
+        end
+        -- 新建行为节点
+        if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action")) then
+
+            -- node
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_node")) then
+                tabMenuNode.renderComNode()
+                ImGui.EndMenu()
+            end
+            -- sprite
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_sprite")) then
+                tabMenuNode.renderComNode()
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_sprite_path"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_sprite_path)
+                    if data then ViewManager:createNode(data) end
+                end
+                ImGui.EndMenu()
+            end
+            -- lab
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_lab")) then
+                tabMenuNode.renderComNode()
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_string"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_lab_string)
+                    if data then ViewManager:createNode(data) end
+                end
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_lab_fontsize"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_lab_fontsize)
+                    if data then ViewManager:createNode(data) end
+                end
+                ImGui.EndMenu()
+            end
+            -- richtext
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_richtext")) then
+                tabMenuNode.renderComNode()
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_string"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_richtext_string)
+                    if data then ViewManager:createNode(data) end
+                end
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_richtext_fontsize"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_richtext_fontsize)
+                    if data then ViewManager:createNode(data) end
+                end
+                ImGui.EndMenu()
+            end
+            --spine
+            if ImGui.BeginMenu(Lang:Lang("menu_node", "addnode_action_spine")) then
+                tabMenuNode.renderComNode()
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_animation"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_spine_animation)
+                    if data then ViewManager:createNode(data) end
+                end
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_loop"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_spine_loop)
+                    if data then ViewManager:createNode(data) end
+                end
+                if ImGui.MenuItem(Lang:Lang("menu_node", "addnode_action_spine_timescale"), "") then
+                    local data = DataManager:createData(enum.logic_node_type.action_spine_timescale)
+                    if data then ViewManager:createNode(data) end
+                end
+                ImGui.EndMenu()
+            end
+
+            ImGui.EndMenu()
         end
 
         ImGui.End()
