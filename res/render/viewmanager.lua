@@ -288,16 +288,12 @@ function viewManager:createNode(dataNode)
         print("创建node 失败")
         return
     end
-    print("创建node， type = ", dataNode:gettype())
+    print("创建node， type = ", dataNode:getName())
     try {
         function()
             local Node = null
-            if enum.logic_node_type.sequence == dataNode:gettype() then
+            if false then
                 Node = require ("res/render/view/node_sequence")
-            elseif enum.logic_node_type.parallel == dataNode:gettype() then
-                Node = require ("res/render/view/node_parallel")
-            elseif enum.logic_node_type.selector == dataNode:gettype() then
-                Node = require ("res/render/view/node_selector")
             else
                 Node = require ("res/render/view/node_default")
             end
@@ -308,7 +304,7 @@ function viewManager:createNode(dataNode)
                 self:initNodePos(viewNode)
                 self:addToList(node)
             else
-                print("创建 view 失败, type = ", dataNode:gettype())
+                print("创建 view 失败, type = ", dataNode:getName())
             end
         end, catch {
             function (err)

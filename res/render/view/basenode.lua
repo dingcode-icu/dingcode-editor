@@ -28,12 +28,8 @@ function BaseNode:ShowName()
 end
 function BaseNode:getNameForType()
     if self.data then
-        if self.data:gettype() then
-            for i, v in pairs(enum.logic_node_type) do
-                if v == self.data:gettype() then
-                    return i
-                end
-            end
+        if self.data:getName() then
+            return self.data:getName()
         end
     end
     return "default"

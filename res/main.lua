@@ -15,6 +15,7 @@ local function main()
     require("res/imguix/init"):init()
     require("res/render/init"):init()
     require("res/imguix/menu/menu_all")
+
 end
 
 ---打印报错及堆栈

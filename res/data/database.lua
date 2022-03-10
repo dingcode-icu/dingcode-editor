@@ -1,12 +1,13 @@
 local dataBase = class("DataBase", {})
 
-function dataBase:ctor(type)
-    if not type then
+function dataBase:ctor(config)
+
+    if not config then
         return
     end
     self.data = {
-        type = type,
-        uuid = self:generateuuid()
+        uuid = self:generateuuid(),
+        config = config,
 
         -- 配置信息
 
@@ -19,11 +20,14 @@ function dataBase:ctor(type)
 
     }
 
-
 end
 -- TODO 需要去重
 function dataBase:generateuuid()
     return ding.guid()
+end
+
+function dataBase:getName()
+    return self.data.config.name or ""
 end
 
 function dataBase:setData(data)
@@ -43,8 +47,8 @@ function dataBase:getuuid()
     return null
 end
 function dataBase:gettype()
-    if self and self.data and self.data.type then
-        return self.data.type
+    if self and self.data and self.data.config and self.data.config.type then
+        return self.data.config.type
     end
     return null
 end
