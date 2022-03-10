@@ -100,6 +100,30 @@ namespace dan {
 
     void LuaEntry::lua_third_register(sol::state_view &lua){
         sol::table d = lua.create_table("ding");
+        //lua
+        auto l_tb = d.create_named("lua");
+        auto L = lua.lua_state();
+        l_tb.set_function("getpeer", [=](){
+            lua_getfenv(L, -1);
+            if (lua_rawequal(L, -1, LUA_REGISTRYINDEX)) {
+                lua_pop(L, 1);
+                lua_pushnil(L);
+            };
+        });
+        l_tb.set_function("setpeer", [=](){
+          /* stack: userdata, table */
+            if (!lua_isuserdata(L, -2)) {
+                lua_pushstring(L, "Invalid argument #1 to setpeer: userdata expected.");
+                lua_error(L);
+            };
+
+            if (lua_isnil(L, -1)) {
+
+                lua_pop(L, 1);
+                lua_pushvalue(L, LUA_REGISTRYINDEX);
+            };
+            lua_setfenv(L, -2);
+        });
 
         d.set_function("guid", new_guid);
         d.set_function("bgSprite", [=](const std::string& filename, const cocos2d::Rect& rect) ->Sprite*{

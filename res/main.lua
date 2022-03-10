@@ -1,15 +1,7 @@
-require("path")
-require("lib")
-
-
-
 ---入口
 local function main()
-    local sc = cc.Scene.create()
-    cc.Director:getInstance():runWithScene(sc)
-
-    --local bg = d.sp("texture/grid.png")
-    require("res/render/memory")
+    require("path")
+    require("lib")
     require("res/enum")
     require("res/release")
     require("res/imguix/init"):init()

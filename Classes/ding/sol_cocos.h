@@ -293,8 +293,10 @@ inline void Init(sol::state_view& lua){
 
 #pragma region Scene
     CC.new_usertype<Scene>("Scene",
+                            sol::call_constructor, sol::constructors<Scene*()>(),
                             "create",&Scene::create,
                             "createWithPhysics", &Scene::createWithPhysics,
+                            "setOnEnterCallback", &Node::setOnEnterCallback,
                             sol::base_classes, sol::bases<Node>()
                                         );
 #pragma endregion Scene
@@ -333,8 +335,10 @@ inline void Init(sol::state_view& lua){
                            "setVisible", &Node::setVisible,
                            "getScale", &Node::getScale,
                            "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale)),
-                           "getParent", sol::overload(sol::resolve<Node*()>(&Node::getParent))
+                           "getParent", sol::overload(sol::resolve<Node*()>(&Node::getParent)),
+                           "setOnEnterCallback", &Node::setOnEnterCallback
                            );
+//     node_tb.set_function("setOnEnterCallback", &Node::setOnEnterCallback);
 
 #pragma endregion Node
 

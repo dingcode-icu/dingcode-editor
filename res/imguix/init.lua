@@ -14,8 +14,7 @@ function ImGuiRenderer()
             end
             if not imguiUI._isInitRoot then
                 imguiUI._isInitRoot = true
-                local ViewManager = require("res/render/viewmanager")
-                ViewManager:initViewParent()
+
             end
 
 

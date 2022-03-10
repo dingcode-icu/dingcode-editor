@@ -135,10 +135,10 @@ end
 local setmetatableindex_
 setmetatableindex_ = function(t, index)
     if type(t) == "userdata" then
-        local peer = tolua.getpeer(t)
+        local peer = ding.lua.getpeer(t)
         if not peer then
             peer = {}
-            tolua.setpeer(t, peer)
+            ding.lua.setpeer(t, peer)
         end
         setmetatableindex_(peer, index)
     else
@@ -235,7 +235,8 @@ function class(classname, ...)
             instance = {}
         end
         setmetatableindex(instance, cls)
-        instance.class = cls
+
+        --instance.class = cls
         instance:ctor(...)
         return instance
     end
