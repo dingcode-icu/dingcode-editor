@@ -1,8 +1,23 @@
 local render = {}
-local MEMORY = MEMORY
 
+require("res/render/memory")
 local Event = require("res/lib/event")
 local ViewManager = require("res/render/viewmanager")
+local MEMORY = MEMORY
+
+---root scene
+local root
+do
+root = class("RootScene")
+function root:ctor()
+    self.view = cc.Scene.create()
+    self.view:setOnEnterCallback(function()
+        ViewManager:initViewParent()
+    end)
+end
+end
+    local sc = root.new()
+    cc.Director:getInstance():runWithScene(sc.view)
 
 ---单按键键盘快捷键
 local SINGLE_KEY_MAP  = {
@@ -21,7 +36,11 @@ local MULTI_KEY_MAP = {
 ---cocos渲染层初始化
 -- @return nil
 function render:init()
-    local dispatcher = cc.Director:getInstance():getEventDispatcher()
+    local dir_inc = cc.Director:getInstance()
+    local sc = root.new()
+    dir_inc:runWithScene(sc.view)
+
+    local dispatcher = dir_inc:getEventDispatcher()
     local comb_cnt = 0
     local comb_key = nil
     local kb_evt = cc.EventListenerKeyboard:create();

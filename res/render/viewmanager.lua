@@ -31,6 +31,10 @@ function viewManager:init(config)
     self.isDropingLine = false
 end
 
+function viewManager:reset()
+    --TODO reload
+end
+
 function viewManager:initViewParent()
     local node = cc.Node.create()
     node:setContentSize(cc.size(10000,10000))
