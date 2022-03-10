@@ -10,11 +10,9 @@ using namespace cocos2d;
 
 namespace sol_cocos2d {
     inline void Init(sol::state_view& lua);
-
     //sprite
     inline Sprite* spriteCreate1(const std::string& filename){ return Sprite::create(filename);}
     inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
-
     inline Label* createWithTTF(const std::string& text, const std::string& fontFile, float fontSize){return Label::createWithTTF(text, fontFile, fontSize);}
     //fileutil
     inline auto getSearchPath(){return sol::as_table(FileUtils::getInstance()->getSearchPaths());}
@@ -309,7 +307,7 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma region Node
-     CC.new_usertype<Node>("Node",
+     auto node_tb = CC.new_usertype<Node>("Node",
                            "create", &Node::create,
                            "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
                                         sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
@@ -370,9 +368,15 @@ inline void Init(sol::state_view& lua){
                                         sol::base_classes, sol::bases<Node>()
                                        );
      sp_tb.set_function("create", sol::overload(
-             sol::resolve<Sprite*(const std::string& filename)>(spriteCreate1),
-             sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(spriteCreate2)
+             sol::resolve<Sprite*(const std::string& filename)>(&Sprite::create),
+             sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(&Sprite::create)
              ));
+
+     sp_tb.set_function("createWithTexture",
+                        sol::overload(
+                                sol::resolve<Sprite*(Texture2D*)>(&Sprite::createWithTexture),
+                                sol::resolve<Sprite*(Texture2D*, const cocos2d::Rect&, bool)>(&Sprite::createWithTexture)));
+
 
 
 #pragma endregion Sprite
@@ -448,7 +452,8 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma region Texture2D
-//     CC.new_usertype<Texture2D>()
+//     CC.new_usertype<Texture2D>("Texture2D",
+//                                "setTexParameters", &Texture2D::setTexParameters);
 #pragma endregion Texture2D
 
 

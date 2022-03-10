@@ -138,6 +138,7 @@ local function setConstants()
     printInfo("#")
 end
 
+setConstants()
 function display.setAutoScale(configs)
     if type(configs) ~= "table" then return end
 
@@ -510,4 +511,4 @@ function display.removeUnusedSpriteFrames()
     textureCache:removeUnusedTextures()
 end
 
-return display
+_G.display = display

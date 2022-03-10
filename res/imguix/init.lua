@@ -7,12 +7,13 @@ local imguiUI = {
 function ImGuiRenderer()
     try {
         function()
-            if not _isDemo then
-                _isDemo = true
+            if imguiUI._isDemo then
+                print("_isdemo", _isDemo)
+                imguiUI._isDemo = false
                 table.insert(imguiUI._drawList, #imguiUI._drawList, ding.dev.show_imgui_demo)
             end
-            if not _isInitRoot then
-                _isInitRoot = true
+            if not imguiUI._isInitRoot then
+                imguiUI._isInitRoot = true
                 local ViewManager = require("res/render/viewmanager")
                 ViewManager:initViewParent()
             end
@@ -40,6 +41,10 @@ function imguiUI:init()
 
     local Event = require("res/lib/event")
     Event:bind(self)
+end
+
+function imguiUI:open_demo()
+    imguiUI._isDemo = true
 end
 
 return imguiUI

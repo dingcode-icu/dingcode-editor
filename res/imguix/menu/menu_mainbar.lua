@@ -3,6 +3,7 @@ local Event = require("res/lib/event")
 local json = require("res/lib/json")
 local DataManager = require("res/data/datamanager")
 local ViewManager = require("res/render/viewmanager")
+local imguix = require("imguix")
 
 --上方主菜单
 local tabMenuMainBar = {
@@ -102,7 +103,8 @@ function tabMenuMainBar.render()
                 end
 
                 if ImGui.MenuItem("showDemo") then
-                    ding.dev.show_imgui_demo()
+                    print("test aaaaaa")
+                    imguix:open_demo()
                 end
                 ImGui.EndMenu()
             end

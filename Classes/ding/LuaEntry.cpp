@@ -102,11 +102,19 @@ namespace dan {
         sol::table d = lua.create_table("ding");
 
         d.set_function("guid", new_guid);
+        d.set_function("bgSprite", [=](const std::string& filename, const Rect& rect) ->Sprite*{
+            auto img = Director::getInstance()->getTextureCache()->addImage(filename);
+            Texture2D::TexParams tp = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
+            img->setTexParameters(tp);
+            auto sp = Sprite::createWithTexture(img, rect);
+            return sp;
+        });
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );
         d.new_usertype<FileDialogUtils>("FileDialogUtils", "GetSaveFile", &FileDialogUtils::GetSaveFile,
                                         "GetOpenFile", &FileDialogUtils::GetOpenFile);
+
     }
 
     void LuaEntry::imgui_render() {
