@@ -102,7 +102,7 @@ namespace dan {
         sol::table d = lua.create_table("ding");
 
         d.set_function("guid", new_guid);
-        d.set_function("bgSprite", [=](const std::string& filename, const Rect& rect) ->Sprite*{
+        d.set_function("bgSprite", [=](const std::string& filename, const cocos2d::Rect& rect) ->Sprite*{
             auto img = Director::getInstance()->getTextureCache()->addImage(filename);
             Texture2D::TexParams tp = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
             img->setTexParameters(tp);
