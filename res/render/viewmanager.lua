@@ -206,8 +206,12 @@ function viewManager:registerEvent()
         -- 删除连线
         local list = self.data.lineList
         for i, v in pairs(list) do
-            if v:isCantainSelf(listNeedDelete) then
-                -- 删除连线页面
+            if v:isSelect() then
+                -- 删除连线
+                v:destroy()
+                list[i] = null
+            elseif v:isCantainSelf(listNeedDelete) then
+                -- 删除包含节点的连线
                 v:destroy()
                 list[i] = null
             end
