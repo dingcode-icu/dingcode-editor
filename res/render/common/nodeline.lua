@@ -4,6 +4,8 @@ local Event = require("res/lib/event")
 function NodeLine:ctor(data)
     self.data = data
     self.uuid = ding.guid()
+    self.nodeLinePointSelect = null
+    self.nodeLinePoint = null
 
     local drawNode = cc.DrawNode.create(4)
     self.view = drawNode
@@ -13,6 +15,104 @@ end
 
 function NodeLine:initView()
     self:initEvent()
+
+    local nodeLinePoint = cc.Sprite.create("texture/linePoint.png")
+    self.view:addChild(nodeLinePoint)
+    self.nodeLinePoint = nodeLinePoint
+
+    self:registerTouch()
+end
+
+
+function NodeLine:registerTouch()
+    local this = self
+    local listener = cc.EventListenerTouchOneByOne:create();
+    listener:setSwallowTouches(true);
+    listener.onTouchBegan = function(touch, event)
+
+        local isTouch = this.isTouchSelf(touch, event)
+        if isTouch then
+            return true
+        end
+        return false
+    end
+    listener.onTouchMoved = function(touch, event)
+        return false
+    end
+    listener.onTouchEnded = function(touch, event)
+
+        local isClick = this.isTouchSelf(touch, event)
+        if isClick then
+            this:ClickSelect()
+        end
+
+        return isClick
+    end
+    listener.onTouchCancelled = function(touch, event)
+
+        return false
+    end
+    local eventDispatcher = self.nodeLinePoint:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self.nodeLinePoint);
+
+end
+
+-- 是否点击自己
+function NodeLine.isTouchSelf(touch, event)
+    local target = event:getCurrentTarget()
+    local size = target:getContentSize()
+    if NodeLine.isTouchInsideNode(touch, target, size) then
+        return true
+    end
+    return false
+end
+-- 是否在自己点击范围内
+function NodeLine.isTouchInsideNode(pTouch,node,nodeSize)
+
+    local pos = pTouch:getLocation()
+    local point = node:convertToNodeSpace(pos)
+    local x,y = point.x,point.y
+    if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
+        return true
+    end
+end
+-- 是否选中
+function NodeLine:isSelect()
+    if self.nodeLinePointSelect and self.nodeLinePointSelect:isVisible() then
+        return true
+    end
+    return false
+end
+-- 初始化 选中节点
+function NodeLine:initSelectNode()
+    if not self.nodeLinePointSelect then
+        local nodeLinePointSelect = cc.Sprite.create("texture/linePointSelect.png")
+        self.nodeLinePoint:addChild(nodeLinePointSelect)
+        --local size = node:getContentSize()
+        local sizeParent = self.nodeLinePoint:getContentSize()
+        nodeLinePointSelect:setPositionX(sizeParent.width / 2)
+        nodeLinePointSelect:setPositionY(sizeParent.height / 2)
+        self.nodeLinePointSelect = nodeLinePointSelect
+    end
+end
+-- 选中
+function NodeLine:Select()
+    self:initSelectNode()
+    self.nodeLinePointSelect:setVisible(true)
+end
+-- 取消选中
+function NodeLine:UnSelect()
+    if self.nodeLinePointSelect then
+        self.nodeLinePointSelect:setVisible(false)
+    end
+end
+-- 反选
+function NodeLine:ClickSelect()
+    if self:isSelect() then
+        self:UnSelect()
+    else
+        self:Select()
+    end
 end
 
 function NodeLine:initEvent()
@@ -80,7 +180,13 @@ function NodeLine:upDrawSelf()
     local pOut = self.data.pOut
     pIn = self.view:getParent():convertToNodeSpace(pIn)
     pOut = self.view:getParent():convertToNodeSpace(pOut)
+
     local offX = pOut.x - pIn.x
+    local offY = pOut.y - pIn.y
+    self.nodeLinePoint:setPositionX(pIn.x + offX / 2)
+    self.nodeLinePoint:setPositionY(pIn.y + offY / 2)
+
+
     self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX / 2,pIn.y), cc.p(pOut.x - offX / 2,pOut.y), pOut, 30, cc.c4f(1, 1, 1, 1))
 end
 
