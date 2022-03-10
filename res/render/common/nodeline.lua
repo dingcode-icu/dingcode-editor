@@ -136,9 +136,15 @@ function NodeLine:initEvent()
             end
 
             if keyStart and keyEnd then
-                local posStart = nodeDataStart:getDropPosForKey(keyStart)
-                local posEnd = nodeDataEnd:getDropPosForKey(keyEnd)
+                local posStart, dirIn = nodeDataStart:getDropPosForKey(keyStart)
+                local posEnd, dirOut = nodeDataEnd:getDropPosForKey(keyEnd)
                 if posStart and posEnd then
+                    if dirIn then
+                        self.data.dirIn = dirIn
+                    end
+                    if dirOut then
+                        self.data.dirOut = dirOut
+                    end
                     self.data.pIn = posStart
                     self.data.pOut = posEnd
                     self:upDrawSelf()
@@ -178,16 +184,44 @@ function NodeLine:upDrawSelf()
     self.view:clear()
     local pIn = self.data.pIn
     local pOut = self.data.pOut
+    local dirIn = self.data.dirIn
+    local dirOut = self.data.dirOut
+
     pIn = self.view:getParent():convertToNodeSpace(pIn)
     pOut = self.view:getParent():convertToNodeSpace(pOut)
 
-    local offX = pOut.x - pIn.x
-    local offY = pOut.y - pIn.y
-    self.nodeLinePoint:setPositionX(pIn.x + offX / 2)
-    self.nodeLinePoint:setPositionY(pIn.y + offY / 2)
+    local offX = 200
+    local offY = 200
+    local offX1 = 0
+    local offY1 = 0
+    local offX2 = 0
+    local offY2 = 0
+    if dirIn == enum.node_direct.top then
+        offY1 = -offY
+    elseif dirIn == enum.node_direct.bottom then
+        offY1 = offY
+    elseif dirIn == enum.node_direct.left then
+        offX1 = -offX
+    elseif dirIn == enum.node_direct.right then
+        offX1 = offX
+    end
+    if dirOut == enum.node_direct.top then
+        offY2 = -offY
+    elseif dirOut == enum.node_direct.bottom then
+        offY2 = offY
+    elseif dirOut == enum.node_direct.left then
+        offX2 = -offX
+    elseif dirOut == enum.node_direct.right then
+        offX2 = offX
+    end
 
+    local t = 0.5
+    local pointX = math.pow(1 - t, 3) * pIn.x + 3 * math.pow(1 - t, 2) * t * (pIn.x + offX1 / 2) + 3 * (1 - t) * t * t * (pOut.x + offX2 / 2) + t * t * t * pOut.x;
+    local pointY = math.pow(1 - t, 3) * pIn.y + 3 * math.pow(1 - t, 2) * t * (pIn.y + offY1 / 2) + 3 * (1 - t) * t * t * (pOut.y + offY2 / 2) + t * t * t * pOut.y;
+    self.nodeLinePoint:setPositionX(pointX)
+    self.nodeLinePoint:setPositionY(pointY)
 
-    self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX / 2,pIn.y), cc.p(pOut.x - offX / 2,pOut.y), pOut, 30, cc.c4f(1, 1, 1, 1))
+    self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX1 / 2,pIn.y + offY1 / 2), cc.p(pOut.x + offX2 / 2,pOut.y + offY2 / 2), pOut, 30, cc.c4f(1, 1, 1, 1))
 end
 
 function NodeLine:removeFromParentAndCleanup(cleanup)
