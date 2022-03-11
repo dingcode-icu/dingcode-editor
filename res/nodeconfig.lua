@@ -46,7 +46,9 @@ local function requireConfig(path)
         error("error from load nodeconfig")
     end
 end
-
-requireConfig("config/nodeconfig/movenode")
+local list = require("engine/cocos/config/allnodeconfig")
+for i, v in pairs(list) do
+    requireConfig(v)
+end
 
 return nodeConfig

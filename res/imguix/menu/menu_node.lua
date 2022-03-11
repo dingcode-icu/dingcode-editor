@@ -52,7 +52,8 @@ function tabMenuNode.render()
         for indexlist, strType in pairs(listType) do
             local list = enum.logic_node_type[strType]
             if ImGui.BeginMenu(strType) then
-                for i, data in pairs(list) do
+                for i, name in pairs(enum.logic_node_list[strType]) do
+                    local data = list[name]
                     local name = data.name
                     local desc = data.desc or ""
                     if ImGui.MenuItem(name, desc) then

@@ -1,6 +1,7 @@
 enum = {
     -- 创建的节点枚举
     logic_node_type = require("nodeconfig"),
+    logic_node_list = null,                                         -- 排序过后的列表
 
     -- 事件监听枚举
     evt_keyboard = {
@@ -20,5 +21,16 @@ enum = {
         right = "right",
     },
 }
+
+local logic_node_list = {}
+enum.logic_node_list = logic_node_list
+for i, v in pairs(enum.logic_node_type) do
+    logic_node_list[i] = {}
+    for name, data in pairs(v) do
+        table.insert(logic_node_list[i], name)
+    end
+    table.sort(logic_node_list[i])
+end
+
 
 return enum
