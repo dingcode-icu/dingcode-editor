@@ -35,8 +35,8 @@ function dataBase:setData(data)
     if data then
         -- 覆盖配置文件
         if data.config.name and data.config.type then
-            if enum.logic_node_type[data.config.type] and enum.logic_node_type[data.config.type] then
-                data.config = enum.logic_node_type[data.config.type]
+            if enum.logic_node_type[data.config.type] and enum.logic_node_type[data.config.type][data.config.name] then
+                data.config = enum.logic_node_type[data.config.type][data.config.name]
             end
         end
         self.data = data
