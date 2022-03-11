@@ -9,10 +9,10 @@ local dataManager = {
 
 function dataManager:init(config)
     print("datamanager init")
-    dump(config)
-    if config then
-        if config.dataList then
-            for i, v in pairs(config.dataList) do
+    --dump(config)
+    if config and config.data then
+        if config.data.dataList then
+            for i, v in pairs(config.data.dataList) do
                 local data = DataBase.new()
                 data:setData(v)
                 self.data.dataList[data:getuuid()] = data
@@ -25,7 +25,9 @@ function dataManager:init(config)
     local ViewManager = require("res/render/viewmanager")
     ViewManager:init(config)
 end
-
+function dataManager:getDataForId(uuid)
+    return self.data.dataList[uuid]
+end
 function dataManager:get_alldata()
     local real = {
         dataList={}

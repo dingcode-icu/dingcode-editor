@@ -154,8 +154,12 @@ function tabMenuMainBar:SaveFile()
         end
         try {
             function()
-                local data = DataManager:get_alldata()
-                local strData =  json.encode(data)
+                local dataToSave = DataManager:get_alldata()
+                local viewToSave = ViewManager:get_alldata()
+                local strData =  json.encode({
+                    data = dataToSave,
+                    view = viewToSave,
+                })
                 print("========== save file")
                 --print(strData)
                 local strDesc = io.writefile(realFilePath, strData)

@@ -7,16 +7,17 @@ function dataBase:ctor(config)
     end
     self.data = {
         uuid = self:generateuuid(),
-        config = config,
 
         -- 配置信息
-
+        config = config,
 
         -- 可设置的属性
-
+        parent = null,          -- 父节点
+        childlist = {},         -- 子节点
+        input = {},             --
+        output = {}
 
         -- 扩展属性
-
 
     }
 
@@ -32,6 +33,12 @@ end
 
 function dataBase:setData(data)
     if data then
+        -- 覆盖配置文件
+        if data.config.name and data.config.type then
+            if enum.logic_node_type[data.config.type] and enum.logic_node_type[data.config.type] then
+                data.config = enum.logic_node_type[data.config.type]
+            end
+        end
         self.data = data
     end
 end

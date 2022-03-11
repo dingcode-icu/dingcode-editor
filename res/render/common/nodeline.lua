@@ -223,6 +223,15 @@ function NodeLine:upDrawSelf()
 
     self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX1 / 2,pIn.y + offY1 / 2), cc.p(pOut.x + offX2 / 2,pOut.y + offY2 / 2), pOut, 30, cc.c4f(1, 1, 1, 1))
 end
+-- 获取 需要保存的连线数据
+function NodeLine:getDataToSave()
+    return {
+        uuidStart = self.data.nodeDataStart:getuuid(),
+        uuidEnd = self.data.nodeDataEnd:getuuid(),
+        keyStart = self.data.keyStart,
+        keyEnd = self.data.keyEnd,
+    }
+end
 
 function NodeLine:removeFromParentAndCleanup(cleanup)
     if self.view then

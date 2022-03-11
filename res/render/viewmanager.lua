@@ -21,14 +21,68 @@ local viewManager = {
 }
 
 function viewManager:init(config)
-    if config then
-        if config.dataList then
-
+    if config and config.view then
+        if config.view.viewList then
+            for i, v in pairs(config.view.viewList) do
+                local uuid = v.uuid
+                local x = v.x
+                local y = v.y
+                local dataNode = DataManager:getDataForId(uuid)
+                self:createNode(dataNode, { x = x, y = y})
+            end
+        end
+        if config.view.lineList then
+            for i, v in pairs(config.view.lineList) do
+                local uuidStart = v.uuidStart
+                local uuidEnd = v.uuidEnd
+                local keyStart = v.keyStart
+                local keyEnd = v.keyEnd
+                local nodeStart = self:getNodeViewForId(uuidStart)
+                local endNodeData = self:getNodeViewForId(uuidEnd)
+                local posStart, dirIn = nodeStart:getDropPosForKey(keyStart)
+                local posEnd, dirOut = endNodeData:getDropPosForKey(keyEnd)
+                if posStart and posEnd then
+                    local data = {
+                        nodeDataStart = nodeStart,
+                        nodeDataEnd = endNodeData,
+                        keyStart = keyStart,
+                        keyEnd = keyEnd,
+                        dirOut = dirOut,
+                        dirIn = dirIn,
+                    }
+                    local lineNode = self:createLineBezier(posStart, posEnd, data)
+                    self.data.lineList[lineNode:getuuid()] = lineNode
+                end
+            end
         end
     end
 
     self.isInit = true
     self.isDropingLine = false
+end
+
+function viewManager:getNodeViewForId(uuid)
+    return self.data.viewList[uuid]
+end
+
+function viewManager:get_alldata()
+    local real = {
+        viewList = {},
+        lineList = {},
+    }
+    for i, v in pairs(self.data.viewList) do
+        local tempData = {
+            uuid = v:getuuid(),
+            x = v:getPositionX(),
+            y = v:getPositionY(),
+        }
+        real.viewList[v:getuuid()] = tempData
+    end
+    for i, v in pairs(self.data.lineList) do
+        local tempData = v:getDataToSave()
+        real.lineList[v:getuuid()] = tempData
+    end
+    return real
 end
 
 function viewManager:reset()
@@ -271,19 +325,23 @@ function viewManager:addToList(node)
     self.data.viewList[node.data:getuuid()] = node
 end
 
-function viewManager:initNodePos(node)
+function viewManager:initNodePos(node, posTab)
     if node then
         local menu_node = require("res/imguix/menu/menu_node")
-        local posMenu = menu_node:getMenuPos()
-        --dump(posMenu)
-        local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, winHeight - posMenu.y))
-        node:setPositionX(posLocal.x)
-        node:setPositionY(posLocal.y)
-
+        if posTab then
+            node:setPositionX(posTab.x)
+            node:setPositionY(posTab.y)
+        else
+            local posMenu = menu_node:getMenuPos()
+            --dump(posMenu)
+            local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, winHeight - posMenu.y))
+            node:setPositionX(posLocal.x)
+            node:setPositionY(posLocal.y)
+        end
     end
 end
 
-function viewManager:createNode(dataNode)
+function viewManager:createNode(dataNode, posTab)
 
     -- 隐藏菜单
     self:hide_imgui_menu_node()
@@ -305,7 +363,7 @@ function viewManager:createNode(dataNode)
                 local node = Node.new(dataNode)
                 local viewNode = node.view
                 self._viewParent:addChild(viewNode)
-                self:initNodePos(viewNode)
+                self:initNodePos(viewNode, posTab)
                 self:addToList(node)
             else
                 print("创建 view 失败, type = ", dataNode:getName())
