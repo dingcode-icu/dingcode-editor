@@ -86,7 +86,20 @@ function viewManager:get_alldata()
 end
 
 function viewManager:reset()
-    --TODO reload
+    for i, v in pairs(self.data.viewList) do
+        v:destroy()
+    end
+    for i, v in pairs(self.data.lineList) do
+        v:destroy()
+    end
+    self.data.viewList = {}
+    self.data.lineList = {}
+
+    self.isDropingLine = false                  -- 是否正在拖动划线
+    self.dataRropingLine = null                 -- 拖动中的数据对象
+    self.nodeDropingLine = null                 -- 拖动中的对象
+    self._isAllNodeSwallow = false
+
 end
 
 function viewManager:initViewParent()

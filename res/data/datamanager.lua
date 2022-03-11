@@ -25,6 +25,13 @@ function dataManager:init(config)
     local ViewManager = require("res/render/viewmanager")
     ViewManager:init(config)
 end
+
+function dataManager:reset()
+
+    self.data.dataList = {}
+
+end
+
 function dataManager:getDataForId(uuid)
     return self.data.dataList[uuid]
 end

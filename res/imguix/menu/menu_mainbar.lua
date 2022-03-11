@@ -78,6 +78,10 @@ function tabMenuMainBar.render()
                 ImGui.EndMenu()
             end
             if ImGui.BeginMenu("调试") then
+                if ImGui.MenuItem("重置") then
+                    DataManager:reset()
+                    ViewManager:reset()
+                end
                 if ImGui.MenuItem("打印 viewList") then
                     for i, v in pairs(ViewManager.data.viewList) do
                         print(v.data:getuuid())
