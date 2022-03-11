@@ -11,9 +11,13 @@ function dataBase:ctor(config)
         -- 配置信息
         config = config,
 
-        -- 可设置的属性
-        parent = null,          -- 父节点
-        childlist = {},         -- 子节点
+        -- 可设置的属性{id, key}
+        lineidlist = {
+            [enum.dropnode_key.parent] = {},                -- 父节点
+            [enum.dropnode_key.child] = {},                 -- 子节点
+        },
+        parentidlist = {},          -- 父节点
+        childidlist = {},         -- 子节点
         input = {},             --
         output = {}
 
@@ -26,7 +30,18 @@ end
 function dataBase:generateuuid()
     return ding.guid()
 end
-
+function dataBase:getLineIdList(dropKey)
+    if not self.data.lineidlist[dropKey] then
+        self.data.lineidlist[dropKey] = {}
+    end
+    return self.data.lineidlist[dropKey]
+end
+function dataBase:getParentIdList()
+    return self:getLineIdList(enum.dropnode_key.parent)
+end
+function dataBase:getChildIdList()
+    return self:getLineIdList(enum.dropnode_key.child)
+end
 function dataBase:getName()
     return self.data.config.name or ""
 end

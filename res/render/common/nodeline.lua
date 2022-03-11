@@ -190,25 +190,31 @@ function NodeLine:upDrawSelf()
     pIn = self.view:getParent():convertToNodeSpace(pIn)
     pOut = self.view:getParent():convertToNodeSpace(pOut)
 
-    local offX = 200
-    local offY = 200
+    local offX = math.abs(pOut.x - pIn.x) * 0.7
+    local offY = math.abs(pOut.y - pIn.y) * 0.7
+    if offX < 150 then
+        offX = 150
+    end
+    if offY < 150 then
+        offY = 150
+    end
     local offX1 = 0
     local offY1 = 0
     local offX2 = 0
     local offY2 = 0
     if dirIn == enum.node_direct.top then
-        offY1 = -offY
-    elseif dirIn == enum.node_direct.bottom then
         offY1 = offY
+    elseif dirIn == enum.node_direct.bottom then
+        offY1 = -offY
     elseif dirIn == enum.node_direct.left then
         offX1 = -offX
     elseif dirIn == enum.node_direct.right then
         offX1 = offX
     end
     if dirOut == enum.node_direct.top then
-        offY2 = -offY
-    elseif dirOut == enum.node_direct.bottom then
         offY2 = offY
+    elseif dirOut == enum.node_direct.bottom then
+        offY2 = -offY
     elseif dirOut == enum.node_direct.left then
         offX2 = -offX
     elseif dirOut == enum.node_direct.right then

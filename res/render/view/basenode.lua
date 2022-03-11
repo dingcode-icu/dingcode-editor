@@ -126,22 +126,60 @@ function BaseNode:ClickSelect()
 end
 
 function BaseNode:initTestPoint()
-    local size = self:getContentSize()
-    local nodePoint = cc.Sprite.create("texture/point.png")
-    self.view:addChild(nodePoint)
-    nodePoint:setPositionX(8)
-    nodePoint:setPositionY(size.height / 2)
-    self.listNodePoint["testPoint1"] = nodePoint
+    local isShowParent = false
+    local isShowChild = false
+    if self:getType() == enum.enum_node_type.composites then
+        isShowParent = true
+        isShowChild = true
+    elseif self:getType() == enum.enum_node_type.conditinals then
+        isShowParent = true
+        isShowChild = true
+    elseif self:getType() == enum.enum_node_type.action then
+        isShowParent = true
+    end
+    -- parent 节点
+    if isShowParent then
+        local size = self:getContentSize()
+        local nodePoint = cc.Sprite.create("texture/point.png")
+        self.view:addChild(nodePoint)
+        nodePoint:setPositionX(size.width / 2 - 30)
+        nodePoint:setPositionY(size.height - 8)
+        self.listNodePoint[enum.dropnode_key.parent] = nodePoint
+    end
 
-    local size = self:getContentSize()
-    local nodePoint = cc.Sprite.create("texture/point.png")
-    self.view:addChild(nodePoint)
-    nodePoint:setPositionX(size.width - 8)
-    nodePoint:setPositionY(size.height / 2)
-    self.listNodePoint["testPoint2"] = nodePoint
+    -- child 节点
+    if isShowChild then
+        local size = self:getContentSize()
+        local nodePoint = cc.Sprite.create("texture/point.png")
+        self.view:addChild(nodePoint)
+        nodePoint:setPositionX(size.width / 2 + 30)
+        nodePoint:setPositionY(8)
+        self.listNodePoint[enum.dropnode_key.child] = nodePoint
+    end
+
+    --local size = self:getContentSize()
+    --local nodePoint = cc.Sprite.create("texture/point.png")
+    --self.view:addChild(nodePoint)
+    --nodePoint:setPositionX(8)
+    --nodePoint:setPositionY(size.height / 2)
+    --self.listNodePoint[enum.dropnode_key.input] = nodePoint
+    --
+    --local size = self:getContentSize()
+    --local nodePoint = cc.Sprite.create("texture/point.png")
+    --self.view:addChild(nodePoint)
+    --nodePoint:setPositionX(size.width - 8)
+    --nodePoint:setPositionY(size.height / 2)
+    --self.listNodePoint[enum.dropnode_key.output] = nodePoint
 end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
+    if keyPoint == enum.dropnode_key.parent then
+        if true then
+            
+        end
+    elseif keyPoint == enum.dropnode_key.child then
+
+    end
     return true
 end
 -- 是否可以放置
@@ -153,12 +191,18 @@ end
 -- 获取放置节点的位置
 function BaseNode:getDropPosForKey(key)
     if self.listNodePoint[key] then
+        local dir = enum.node_direct.left
         local pos = self.listNodePoint[key]:getParent():convertToWorldSpace(cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY()))
-        if key == "testPoint1" then
-            return pos, enum.node_direct.left
-        else
-            return pos, enum.node_direct.right
+        if key == enum.dropnode_key.parent then
+            dir = enum.node_direct.top
+        elseif key == enum.dropnode_key.child then
+            dir = enum.node_direct.bottom
+        elseif key == enum.dropnode_key.input then
+            dir = enum.node_direct.left
+        elseif key == enum.dropnode_key.output then
+            dir = enum.node_direct.right
         end
+        return pos, dir
     end
     return null, null
 end
@@ -171,6 +215,14 @@ end
 
 function BaseNode:getuuid()
     return self.data:getuuid()
+end
+
+function BaseNode:getData()
+    return self.data
+end
+
+function BaseNode:getType()
+    return self.data:gettype()
 end
 
 -- 点击相关

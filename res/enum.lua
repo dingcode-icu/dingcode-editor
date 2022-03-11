@@ -1,7 +1,21 @@
 enum = {
     -- 创建的节点枚举
+    enum_node_type = {
+        composites = "composites",
+        decorator = "decorator",
+        conditinals = "conditinals",
+        action = "action",
+    },
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
+
+    -- 可拖动节点的key类型
+    dropnode_key = {
+        parent = "parent",
+        child = "child",
+        input = "input",
+        output = "output",
+    },
 
     -- 事件监听枚举
     evt_keyboard = {

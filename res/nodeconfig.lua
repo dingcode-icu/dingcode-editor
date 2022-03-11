@@ -25,15 +25,9 @@ local nodeConfig = {
             supposeType = "common",
         },
     },
-    decorator = {
-
-    },
-    conditinals = {
-
-    },
-    action = {
-
-    }
+    decorator = {},
+    conditinals = {},
+    action = {},
 }
 local function requireConfig(path)
     local data = require(path)
