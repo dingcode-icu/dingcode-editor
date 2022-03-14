@@ -30,22 +30,45 @@ end
 function dataBase:generateuuid()
     return ding.guid()
 end
+-- 是否已经包含某个id的节点
+function dataBase:isContainForLineList(dropKey, targetId, targetKey)
+    local list = self:getLineIdList(dropKey)
+    if list then
+        for i, v in pairs(list) do
+            if v.id == targetId and v.key == targetKey then
+                return true
+            end
+        end
+    end
+    return false
+end
+-- 添加拖动节点数据
+function dataBase:addDataToLineList(dropKey, targetId, targetKey)
+    local list = self:getLineIdList(dropKey)
+    if list then
+        table.insert(list, {id = targetId, key = targetKey})
+    end
+end
+-- 获取已经包含的节点列表
 function dataBase:getLineIdList(dropKey)
     if not self.data.lineidlist[dropKey] then
         self.data.lineidlist[dropKey] = {}
     end
     return self.data.lineidlist[dropKey]
 end
+-- 获取已经包含的父节点列表
 function dataBase:getParentIdList()
     return self:getLineIdList(enum.dropnode_key.parent)
 end
+-- 获取已经包含的子节点列表
 function dataBase:getChildIdList()
     return self:getLineIdList(enum.dropnode_key.child)
 end
+-- 获取名字
 function dataBase:getName()
     return self.data.config.name or ""
 end
-
+-- 直接设置数据 （导入时候用）
 function dataBase:setData(data)
     if data then
         -- 覆盖配置文件
@@ -57,7 +80,7 @@ function dataBase:setData(data)
         self.data = data
     end
 end
-
+-- 获取数据
 function dataBase:getData()
     return self.data
 end

@@ -174,19 +174,64 @@ end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
     if keyPoint == enum.dropnode_key.parent then
-        if true then
-            
+        if self:getType() == enum.enum_node_type.composites or self:getType() == enum.enum_node_type.conditinals then
+            -- 只能有一个父节点
+            if #self:getData():getParentIdList() >= 1 then
+                return false
+            else
+                return true
+            end
+        elseif self:getType() == enum.enum_node_type.action then
+            -- 可以有多个父节点
+            return true
         end
     elseif keyPoint == enum.dropnode_key.child then
-
+        if self:getType() == enum.enum_node_type.composites then
+            -- 可以有多个子节点
+            return true
+        elseif self:getType() == enum.enum_node_type.conditinals then
+            -- 只能有一个子节点
+            if #self:getData():getChildIdList() >= 1 then
+                return false
+            else
+                return true
+            end
+        elseif self:getType() == enum.enum_node_type.action then
+            -- 不可以有子节点
+            return false
+        end
     end
-    return true
+    return false
 end
 -- 是否可以放置
 function BaseNode:isCanDropIn(dropData, keyPointEnd)
     local nodeStart = dropData.nodeStart
     local keyPointStart = dropData.keyPoint
-    return true
+    local nodeEnd = self
+    if nodeStart:getuuid() == nodeEnd:getuuid() then
+        -- 自己不能和自己相连
+        return false
+    end
+    for i, v in pairs(enum.dropkey_canset) do
+        -- 判断类型
+        if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
+            --判断数量是否可以放
+            if self:isCanDropStart(keyPointEnd) then
+                -- 判断是否已经包含
+                if not nodeStart:getData():isContainForLineList(keyPointStart, nodeEnd:getuuid(), keyPointEnd) then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+-- key 是否是不相等的 并且处于列表
+function BaseNode:isKeyInListNotSame(list, key1, key2)
+    if (key1 == list[1] and key2 == list[2]) or (key2 == list[1] and key1 == list[2]) then
+        return true
+    end
+    return false
 end
 -- 获取放置节点的位置
 function BaseNode:getDropPosForKey(key)

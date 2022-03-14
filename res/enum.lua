@@ -16,6 +16,10 @@ enum = {
         input = "input",
         output = "output",
     },
+    -- 拖动的一一对应关系
+    dropkey_canset = {
+        {"parent", "child"},
+    },
 
     -- 事件监听枚举
     evt_keyboard = {

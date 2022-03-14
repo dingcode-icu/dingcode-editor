@@ -453,8 +453,12 @@ function viewManager:endDropingLine(endData)
             dirOut = dirOut,
             dirIn = dirIn,
         }
+        -- 创建连线
         local lineNode = self:createLineBezier(posStart, posEnd, data)
         self.data.lineList[lineNode:getuuid()] = lineNode
+        -- 维护连线数据
+        nodeStart:getData():addDataToLineList(keyPointStart, endNodeData:getuuid(), keyPointEnd)
+        endNodeData:getData():addDataToLineList(keyPointEnd, nodeStart:getuuid(), keyPointStart)
     end
     -- 清除临时的连线
     self:cancelDropingLine()
