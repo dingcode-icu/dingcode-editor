@@ -95,7 +95,6 @@ function tabMenuMainBar.render()
 
                     try {
                         function()
-                            --ViewManager:initViewParent()
                         end, catch {
                             function (err)
                                 print(err)

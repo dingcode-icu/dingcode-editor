@@ -19,7 +19,7 @@ local viewManager = {
     _viewParent = null,
     _lineParent = null,
 }
-
+---初始化root view场景
 function viewManager:init(config)
     if config and config.view then
         if config.view.viewList then
@@ -84,7 +84,7 @@ function viewManager:get_alldata()
     end
     return real
 end
-
+---销毁root view场景
 function viewManager:reset()
     for i, v in pairs(self.data.viewList) do
         v:destroy()
@@ -103,22 +103,27 @@ function viewManager:reset()
 end
 
 function viewManager:initViewParent()
-    local node = cc.Node.create()
-    node:setContentSize(cc.size(10000,10000))
-    self._viewParent = node
+    self:_initGraph()
+    self:_regEvent()
+end
+function viewManager:_initGraph()
+    local root = cc.Node.create()
+    root:setContentSize(cc.size(10000,10000))
+    self._viewParent = root
 
     local bg = ding.bgSprite("texture/grid.png", cc.rect(0, 0, display.width *100, display.height * 100))
-    node:addChild(bg)
-    node:setPositionX(display.width / 2)
-    node:setPositionY(display.height / 2)
+    root:addChild(bg)
+    root:setPositionX(display.width / 2)
+    root:setPositionY(display.height / 2)
 
     local nodelineParent = cc.Node.create()
     self._viewParent:addChild(nodelineParent)
     self._lineParent = nodelineParent
 
     local scene = cc.Director:getInstance():getRunningScene()
-    scene:addChild(node)
-
+    scene:addChild(root)
+end
+function viewManager:_regEvent()
     self:registerTouch()
     self:registerEvent()
 end
