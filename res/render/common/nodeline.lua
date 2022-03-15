@@ -115,6 +115,10 @@ function NodeLine:ClickSelect()
     end
 end
 
+function NodeLine:getData()
+    return self.data
+end
+
 function NodeLine:initEvent()
     local this = self
 

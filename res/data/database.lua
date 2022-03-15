@@ -49,6 +49,18 @@ function dataBase:addDataToLineList(dropKey, targetId, targetKey)
         table.insert(list, {id = targetId, key = targetKey})
     end
 end
+function dataBase:deleteDataFromLineList(dropKey, targetId, targetKey)
+    local list = self:getLineIdList(dropKey)
+    if list then
+        for i, v in ipairs(list) do
+            if v.id == targetId and v.key == targetKey then
+                table.remove(list, i)
+                return
+            end
+        end
+
+    end
+end
 -- 获取已经包含的节点列表
 function dataBase:getLineIdList(dropKey)
     if not self.data.lineidlist[dropKey] then

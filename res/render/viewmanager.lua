@@ -252,6 +252,23 @@ function viewManager.setAnchorOnly(node, pAnchor)
     node:setPositionY(node:getPositionY() + diffy)
     node:setAnchorPoint(pAnchor)
 end
+-- 移除线的时候 移除对应维护的数据
+function viewManager:removeDataFromDeleteLine(lineData)
+
+    local data = lineData:getData()
+    local uuidStart = data.nodeDataStart:getuuid()
+    local uuidEnd = data.nodeDataEnd:getuuid()
+    local keyStart = data.keyStart
+    local keyEnd = data.keyEnd
+    local dataStart = DataManager:getDataForId(uuidStart)
+    local dataEnd = DataManager:getDataForId(uuidEnd)
+    if dataStart then
+        dataStart:deleteDataFromLineList(keyStart, uuidEnd, keyEnd)
+    end
+    if dataEnd then
+        dataEnd:deleteDataFromLineList(keyEnd, uuidStart, keyStart)
+    end
+end
 function viewManager:registerEvent()
     local this = self
     -- 删除节点
@@ -274,10 +291,14 @@ function viewManager:registerEvent()
         local list = self.data.lineList
         for i, v in pairs(list) do
             if v:isSelect() then
+                -- 移除线的时候 移除对应维护的数据
+                this:removeDataFromDeleteLine(v)
                 -- 删除连线
                 v:destroy()
                 list[i] = null
             elseif v:isCantainSelf(listNeedDelete) then
+                -- 移除线的时候 移除对应维护的数据
+                this:removeDataFromDeleteLine(v)
                 -- 删除包含节点的连线
                 v:destroy()
                 list[i] = null
