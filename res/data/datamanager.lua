@@ -35,6 +35,7 @@ end
 function dataManager:getDataForId(uuid)
     return self.data.dataList[uuid]
 end
+-- 获取导出的工程数据
 function dataManager:get_alldata()
     local real = {
         dataList={}
@@ -44,7 +45,36 @@ function dataManager:get_alldata()
     end
     return real
 end
+function dataManager:buildChildData(data)
+    local childlist = data.lineidlist[enum.dropnode_key.child]
+    if childlist and #childlist > 0 then
+        data.childdatalist = {}
+        for i, v in ipairs(childlist) do
+            local tempChild = self:getDataForId(v.id)
+            if tempChild then
+                local tempChildSave = table.clone(tempChild:getData())
+                table.insert(data.childdatalist, tempChildSave)
+                self:buildChildData(tempChildSave)
+            end
+        end
+    end
+end
+-- 获取导出的 行为树解析数据
+function dataManager:get_export_tree()
+    local real = {
+        tree = {}
+    }
+    for i, v in pairs(self.data.dataList) do
+        local dataReal = v:getData()
+        if #v:getParentIdList() <= 0 then
+            local dataSave = table.clone(dataReal)
+            self:buildChildData(dataSave)
 
+            real.tree[i] = dataSave
+        end
+    end
+    return real
+end
 function dataManager:createData(nodeType)
 
     local data = DataBase.new(nodeType)

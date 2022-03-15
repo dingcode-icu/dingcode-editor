@@ -160,16 +160,19 @@ function tabMenuMainBar:SaveFile()
             function()
                 local dataToSave = DataManager:get_alldata()
                 local viewToSave = ViewManager:get_alldata()
+                local treeToSave = DataManager:get_export_tree()
                 local strData =  json.encode({
                     data = dataToSave,
                     view = viewToSave,
+                    tree = treeToSave,
                 })
                 print("========== save file")
                 --print(strData)
                 local strDesc = io.writefile(realFilePath, strData)
             end, catch {
-                function ()
+                function (err)
                     print("保存文件出现错误")
+                    print(err)
                 end
             }
         }

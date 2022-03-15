@@ -16,8 +16,6 @@ function dataBase:ctor(config)
             [enum.dropnode_key.parent] = {},                -- 父节点
             [enum.dropnode_key.child] = {},                 -- 子节点
         },
-        parentidlist = {},          -- 父节点
-        childidlist = {},         -- 子节点
         input = {},             --
         output = {}
 

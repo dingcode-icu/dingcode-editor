@@ -37,6 +37,25 @@ function empty(value)
     if value == '' or value == 0 or value == {} or value == nil then return true end
 end
 
+function table.clone( object )
+    local lookup_table = {}
+    local function copyObj( object )
+        if type( object ) ~= "table" then
+            return object
+        elseif lookup_table[object] then
+            return lookup_table[object]
+        end
+
+        local new_table = {}
+        lookup_table[object] = new_table
+        for key, value in pairs( object ) do
+            new_table[copyObj( key )] = copyObj( value )
+        end
+        return setmetatable( new_table, getmetatable( object ) )
+    end
+    return copyObj( object )
+end
+
 --[[table方法扩展:连接多个数组
 @param list 首个字符串
 @param ... 数组或者数据
