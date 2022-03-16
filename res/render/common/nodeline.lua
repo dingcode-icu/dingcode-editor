@@ -1,5 +1,5 @@
 local NodeLine = class("NodeLine")
-local Event = require("/lib/event")
+local Event = require("lib/event")
 
 function NodeLine:ctor(data)
     self.data = data

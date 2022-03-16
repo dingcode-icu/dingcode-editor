@@ -13,7 +13,7 @@ function Lang:init(args)
     end
 
     if self.data.language == "zh_cn" then
-        self.data.config[self.data.language] = require("/lib/language/" .. self.data.language)
+        self.data.config[self.data.language] = require("lib/language/" .. self.data.language)
     end
 
 end

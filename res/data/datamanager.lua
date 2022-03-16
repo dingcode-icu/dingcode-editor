@@ -1,4 +1,4 @@
-local DataBase = require("/data/database")
+local DataBase = require("data/database")
 
 local dataManager = {
     data = {
@@ -22,7 +22,7 @@ function dataManager:init(config)
 
     self.isInit = true
 
-    local ViewManager = require("/render/viewmanager")
+    local ViewManager = require("render/viewmanager")
     ViewManager:init(config)
 end
 

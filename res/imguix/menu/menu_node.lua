@@ -1,6 +1,6 @@
-local Lang = require("/lib/language/Lang")
-local DataManager = require("/data/datamanager")
-local ViewManager = require("/render/viewmanager")
+local Lang = require("lib/language/Lang")
+local DataManager = require("data/datamanager")
+local ViewManager = require("render/viewmanager")
 local enum = require("enum")
 
 -- node菜单
