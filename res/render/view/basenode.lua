@@ -1,5 +1,5 @@
 local BaseNode = class("BaseNode")
-local Event = require("lib/event")
+local Event = require("res/lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
 local d = display
