@@ -10,11 +10,12 @@ using namespace cocos2d;
 
 namespace sol_cocos2d {
     inline void Init(sol::state_view& lua);
-    //sprite
+    //lable
     inline Label* createWithTTF(const std::string& text, const std::string& fontFile, float fontSize){return Label::createWithTTF(text, fontFile, fontSize);}
     //fileutil
     inline auto getSearchPath(){return sol::as_table(FileUtils::getInstance()->getSearchPaths());}
     inline auto setSearchPaths(sol::as_table_t<std::vector<std::string>> o){return FileUtils::getInstance()->setSearchPaths(o.value());}
+
 };
 
 
@@ -25,6 +26,18 @@ inline void Init(sol::state_view& lua){
     sol::table CC = lua.create_named_table("cc");
 
 #pragma region ENUM
+
+    CC.create_named("TextVAlignment",
+        "TOP", TextVAlignment::TOP,
+        "CENTER", TextVAlignment::CENTER,
+        "BOTTOM", TextVAlignment::BOTTOM
+            );
+
+    CC.create_named("TextHAlignment",
+                    "LEFT", TextHAlignment::LEFT,
+                    "CENTER", TextHAlignment::CENTER,
+                    "RIGHT", TextHAlignment::RIGHT
+                    );
 
     CC.create_named("KeyBoardCode",
                     "KEY_NONE", EventKeyboard::KeyCode::KEY_NONE,
@@ -314,9 +327,11 @@ inline void Init(sol::state_view& lua){
 #pragma region Node
      auto node_tb = CC.new_usertype<Node>("Node",
                            "create", &Node::create,
-                           "addChild", sol::overload(sol::resolve<void(Node*)>(&Node::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int)>(&Node::addChild)),
-                                        sol::overload(sol::resolve<void(Node*, int, int)>(&Node::addChild)),
+                           "addChild", sol::overload(
+                                   sol::resolve<void(Node*)>(&Node::addChild),
+                                   sol::resolve<void(Node*, int)>(&Node::addChild),
+                                   sol::resolve<void(Node*, int, int)>(&Node::addChild)
+                                           ),
                            "removeFromParentAndCleanup", &Node::removeFromParentAndCleanup,
                            "removeFromParent", &Node::removeFromParent,
                            "setContentSize", &Node::setContentSize,
@@ -326,6 +341,15 @@ inline void Init(sol::state_view& lua){
                            "getPositionY", &Node::getPositionY,
                            "setPositionX", &Node::setPositionX,
                            "setPositionY", &Node::setPositionY,
+                           "setPosition", sol::overload(
+                                   sol::resolve<void(float, float)>(&Node::setPosition),
+                                   sol::resolve<void(const cocos2d::Vec2&)>(&Node::setPosition)
+                                   ),
+                           "getPosition", sol::overload(
+                                   [](Node& inc){
+                                       return inc.getPosition();
+                                   }
+                                   ),
                            "getBoundingBox", &Node::getBoundingBox,
                            "convertToNodeSpaceAR", &Node::convertToNodeSpaceAR,
                            "convertToNodeSpace", &Node::convertToNodeSpace,
@@ -338,8 +362,13 @@ inline void Init(sol::state_view& lua){
                            "setVisible", &Node::setVisible,
                            "setColor", &Node::setColor,
                            "getScale", &Node::getScale,
-                           "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale)),
-                           "getParent", sol::overload(sol::resolve<Node*()>(&Node::getParent)),
+                           "setOpacity", &Node::setOpacity,
+                           "setScale", sol::overload(
+                                   sol::resolve<void(float )>(&Node::setScale)
+                                           ),
+                           "getParent", sol::overload(
+                                   sol::resolve<Node*()>(&Node::getParent)
+                                           ),
                            "setOnEnterCallback", &Node::setOnEnterCallback
                            );
 //     node_tb.set_function("setOnEnterCallback", &Node::setOnEnterCallback);
@@ -398,11 +427,20 @@ inline void Init(sol::state_view& lua){
 
 #pragma region Label
     CC.new_usertype<Label>("Label",
-                           "create", sol::overload(sol::resolve<Label*()>(&Label::create)),
-                           "createWithTTF", sol::overload(sol::resolve<Label*(const std::string& text, const std::string& fontFile, float fontSize)>(createWithTTF)),
+                           "create", sol::overload(
+                                   sol::resolve<Label*()>(&Label::create)
+                                           ),
+                           "createWithTTF", sol::overload(
+                                   sol::resolve<Label*(const std::string& text, const std::string& fontFile, float fontSize)>(createWithTTF)
+                                           ),
                            sol::base_classes, sol::bases<Node>(),
                            "setString", &Label::setString,
-                           "setColor", &Label::setColor
+                           "setAlignment", sol::overload(
+                                   sol::resolve<void(TextHAlignment)>(&Label::setAlignment),
+                                   sol::resolve<void(TextHAlignment, TextVAlignment)>(&Label::setAlignment)
+                                   ) ,
+                           "setHorizontalAlignment", &Label::setHorizontalAlignment,
+                           "setVerticalAlignment", &Label::setVerticalAlignment
                            );
 #pragma endregion Label
 
