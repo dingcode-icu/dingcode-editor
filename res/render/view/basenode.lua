@@ -1,6 +1,6 @@
 local BaseNode = class("BaseNode")
 local Event = require("res/lib/event")
-local ViewManager = require("render/viewmanager")
+local ViewManager = require("res/render/viewmanager")
 local theme = require("lib/theme")
 local d = display
 local enum = enum
@@ -160,6 +160,7 @@ function BaseNode:initDefaultView()
     local sp_bg = cc.Sprite.create(theme.texture("bg_frame.png"))
     sp_bg:setContentSize(cc.size(self.width, self.height))
     sp_bg:setOpacity(170)
+    sp_bg:setPosition(self.width / 2, self.height / 2)
 
     --tittle
     local sp_tbg = cc.Sprite.create(theme.texture("bg_frame.png"))
@@ -195,18 +196,18 @@ function BaseNode:initTreePoint()
     -- parent 节点
     if isShowParent then
         local sp_p = cc.Sprite.create(theme.texture("triangle.png"))
-        sp_p:setPosition(0, self.height / 2 + 8)
+        sp_p:setPosition(self.width / 2, self.height + 8)
         self.view:addChild(sp_p)
-        self.listNodePoint[enum.dropnode_key.parent] = nodePoint
+        self.listNodePoint[enum.dropnode_key.parent] = sp_p
     end
 
     -- child 节点
     if isShowChild then
         local sp_p = cc.Sprite.create(theme.texture("triangle.png"))
-        sp_p:setPosition(0, -self.height / 2 - 8)
+        sp_p:setPosition(self.width / 2, - 8)
         sp_p:setScale(1, -1)
         self.view:addChild(sp_p)
-        self.listNodePoint[enum.dropnode_key.child] = nodePoint
+        self.listNodePoint[enum.dropnode_key.child] = sp_p
     end
     self:initInOutPoint()
 end
@@ -371,7 +372,6 @@ function BaseNode:registerTouch()
         if ViewManager and ViewManager.isDropingLine then
             return true
         end
-
         if this._touchStart then
             if not this:isSelect() then
                 -- 未选中 拖动自己
