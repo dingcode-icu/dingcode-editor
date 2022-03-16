@@ -2,7 +2,7 @@
 -- 在funcitons.lua中已经扩展过 这里
 -- 是额外的
 --==================================
-require("res/lib/functions")
+require("/lib/functions")
 
 --[[同functins.lua 中的handler]]
 --[[不同：参数通过了clone不篡改原参数；命名安全点]]

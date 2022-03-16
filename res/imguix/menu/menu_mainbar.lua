@@ -1,8 +1,8 @@
-local Lang = require("res/lib/language/Lang")
-local Event = require("res/lib/event")
-local json = require("res/lib/json")
-local DataManager = require("res/data/datamanager")
-local ViewManager = require("res/render/viewmanager")
+local Lang = require("/lib/language/Lang")
+local Event = require("/lib/event")
+local json = require("/lib/json")
+local DataManager = require("/data/datamanager")
+local ViewManager = require("/render/viewmanager")
 local imguix = require("imguix")
 
 --上方主菜单

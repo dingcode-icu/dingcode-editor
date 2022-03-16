@@ -2,11 +2,11 @@
 local function main()
     require("path")
     require("lib")
-    require("res/enum")
-    require("res/release")
-    require("res/imguix/init"):init()
-    require("res/render/init"):init()
-    require("res/imguix/menu/menu_all")
+    require("/enum")
+    require("/release")
+    require("/imguix/init"):init()
+    require("/render/init"):init()
+    require("/imguix/menu/menu_all")
 
 end
 

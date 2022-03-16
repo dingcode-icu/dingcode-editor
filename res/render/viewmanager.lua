@@ -1,5 +1,5 @@
-local DataManager = require("res/data/datamanager")
-local Event = require("res/lib/event")
+local DataManager = require("/data/datamanager")
+local Event = require("/lib/event")
 local enum = enum
 local winWidth = cc.Director:getInstance():getWinSize().width
 local winHeight = cc.Director:getInstance():getWinSize().height
@@ -215,8 +215,8 @@ function viewManager:registerTouch()
     end
 
     listener.onMouseScroll = function(event)
-        local menu_node = require("res/imguix/menu/menu_node")
-        --local menu_mainbar = require("res/imguix/menu/menu_mainbar")
+        local menu_node = require("/imguix/menu/menu_node")
+        --local menu_mainbar = require("/imguix/menu/menu_mainbar")
         if menu_node:isShow() then
             return
         end
@@ -366,7 +366,7 @@ end
 
 function viewManager:initNodePos(node, posTab)
     if node then
-        local menu_node = require("res/imguix/menu/menu_node")
+        local menu_node = require("/imguix/menu/menu_node")
         if posTab then
             node:setPositionX(posTab.x)
             node:setPositionY(posTab.y)

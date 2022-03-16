@@ -38,7 +38,7 @@ end
 function imguiUI:init()
     self._drawList = {}
 
-    local Event = require("res/lib/event")
+    local Event = require("/lib/event")
     Event:bind(self)
 end
 

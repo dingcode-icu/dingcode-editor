@@ -1,8 +1,8 @@
 local render = {}
 
-require("res/render/memory")
-local Event = require("res/lib/event")
-local ViewManager = require("res/render/viewmanager")
+require("/render/memory")
+local Event = require("/lib/event")
+local ViewManager = require("/render/viewmanager")
 local MEMORY = MEMORY
 local d = display
 local dir_inc = cc.Director:getInstance()

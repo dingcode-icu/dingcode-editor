@@ -1,4 +1,4 @@
-local Lang = require("res/lib/language/Lang")
+local Lang = require("/lib/language/Lang")
 local enum = require("enum")
 
 -- node菜单
