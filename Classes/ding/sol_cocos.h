@@ -11,8 +11,6 @@ using namespace cocos2d;
 namespace sol_cocos2d {
     inline void Init(sol::state_view& lua);
     //sprite
-    inline Sprite* spriteCreate1(const std::string& filename){ return Sprite::create(filename);}
-    inline Sprite* spriteCreate2(const std::string& filename, const cocos2d::Rect& rect){ return Sprite::create(filename, rect);}
     inline Label* createWithTTF(const std::string& text, const std::string& fontFile, float fontSize){return Label::createWithTTF(text, fontFile, fontSize);}
     //fileutil
     inline auto getSearchPath(){return sol::as_table(FileUtils::getInstance()->getSearchPaths());}
@@ -272,6 +270,11 @@ inline void Init(sol::state_view& lua){
     fu.set_function("getSearchPaths", getSearchPath);
     fu.set_function("setSearchPaths", setSearchPaths);
 
+
+    CC.new_usertype<UserDefault>("UserDefault",
+                                 "getInstance", &UserDefault::getInstance
+                                 );
+
 #pragma endregion Instance
 
 
@@ -333,6 +336,7 @@ inline void Init(sol::state_view& lua){
                            "getAnchorPoint", &Node::getAnchorPoint,
                            "isVisible", &Node::isVisible,
                            "setVisible", &Node::setVisible,
+                           "setColor", &Node::setColor,
                            "getScale", &Node::getScale,
                            "setScale", sol::overload(sol::resolve<void(float )>(&Node::setScale)),
                            "getParent", sol::overload(sol::resolve<Node*()>(&Node::getParent)),
@@ -360,11 +364,16 @@ inline void Init(sol::state_view& lua){
 #pragma endregion DrawNode
 
 
-#pragma region Layer
-     CC.new_usertype<Layer>("Layer",
-                           "create", &Layer::create
-                           );
-#pragma endregion Layer
+#pragma region LayerColor
+     auto layer_tb = CC.new_usertype<LayerColor>("LayerColor",
+                                 sol::base_classes, sol::bases<Node>()
+                                 );
+
+     layer_tb.set_function("create", sol::overload(
+             sol::resolve<LayerColor*(const Color4B&)>(&LayerColor::create),
+             sol::resolve<LayerColor*(const Color4B& , GLfloat, GLfloat)>(&LayerColor::create)
+             ));
+#pragma endregion LayerColor
 
 
 #pragma region Sprite
@@ -372,8 +381,9 @@ inline void Init(sol::state_view& lua){
                                         sol::base_classes, sol::bases<Node>()
                                        );
      sp_tb.set_function("create", sol::overload(
-             sol::resolve<Sprite*(const std::string& filename)>(&Sprite::create),
-             sol::resolve<Sprite*(const std::string &, const cocos2d::Rect &)>(&Sprite::create)
+             sol::resolve<Sprite*()>(&Sprite::create),
+             sol::resolve<Sprite*(const std::string&)>(&Sprite::create),
+             sol::resolve<Sprite*(const std::string&, const cocos2d::Rect &)>(&Sprite::create)
              ));
 
      sp_tb.set_function("createWithTexture",
