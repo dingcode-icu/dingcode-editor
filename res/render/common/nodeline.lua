@@ -225,7 +225,7 @@ function NodeLine:upDrawSelf()
         offX2 = offX
     end
 
-    local t = 0.5
+    local t = 0.45
     local pointX = math.pow(1 - t, 3) * pIn.x + 3 * math.pow(1 - t, 2) * t * (pIn.x + offX1 / 2) + 3 * (1 - t) * t * t * (pOut.x + offX2 / 2) + t * t * t * pOut.x;
     local pointY = math.pow(1 - t, 3) * pIn.y + 3 * math.pow(1 - t, 2) * t * (pIn.y + offY1 / 2) + 3 * (1 - t) * t * t * (pOut.y + offY2 / 2) + t * t * t * pOut.y;
     self.nodeLinePoint:setPositionX(pointX)
