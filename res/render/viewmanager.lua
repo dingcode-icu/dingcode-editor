@@ -386,7 +386,7 @@ function viewManager:createNode(dataNode, posTab)
     self:hide_imgui_menu_node()
 
     if not self or not self._viewParent then
-        print("创建node 失败")
+        print("开始 创建node 失败")
         return
     end
     print("创建node， type = ", dataNode:getName())

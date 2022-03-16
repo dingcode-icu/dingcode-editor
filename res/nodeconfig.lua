@@ -32,7 +32,7 @@ local nodeConfig = {
             desc = "小数",
             supposeType = "common",
             input = {
-                {
+                in_1 = {
                     direct = "left",
                     key = "input_float",
                     numMax = 0,
@@ -46,7 +46,7 @@ local nodeConfig = {
             desc = "整数",
             supposeType = "common",
             input = {
-                {
+                in_1 = {
                     direct = "left",
                     key = "input_int",
                     numMax = 0,
@@ -60,7 +60,7 @@ local nodeConfig = {
             desc = "文本",
             supposeType = "common",
             input = {
-                {
+                in_1 = {
                     direct = "left",
                     key = "input_text",
                     numMax = 0,

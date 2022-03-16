@@ -12,6 +12,7 @@ BaseNode.TYPE_COLOR = {
     [enum.enum_node_type.decorator] = cc.c3b(204,255,255),
     [enum.enum_node_type.conditinals] = cc.c3b(255,204,204),
     [enum.enum_node_type.action] = cc.c3b(153,204,204),
+    [enum.enum_node_type.input] = cc.c3b(0,204,204),
     ["unknown"] = cc.c3b(255,255,255)
 }
 local T_HEIGHT = 32  --字体大小
@@ -212,6 +213,23 @@ function BaseNode:initTreePoint()
     self:initInOutPoint()
 end
 function BaseNode:initInOutPoint()
+    local listinput = self:getData():getListInput()
+    if listinput then
+        local i = 0
+        for key, v in pairs(listinput) do
+            i = i + 1
+            local data = {
+                parent = self,
+                key = key,
+            }
+            local NodeIn = require("render/common/nodein")
+            local nodein = NodeIn.new(data)
+            self.view:addChild(nodein.view)
+            nodein.view:setPositionX(8)
+            nodein.view:setPositionY(self.height - (50 + (i - 1) * 20))
+            self.listNodePoint[key] = nodein
+        end
+    end
 end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
@@ -246,13 +264,13 @@ function BaseNode:isCanDropStart(keyPoint)
         -- 默认 在可拖动配对数组内的， 只能放置一个
         for i, v in pairs(enum.dropkey_canset) do
             -- 判断类型
-            if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
-                --判断数量是否可以拖动
-                if self:getData():getLineIdList(keyPoint) <= 0 then
-                    -- 默认只能和一个连接
-                    return true
-                end
-            end
+            --if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
+            --    --判断数量是否可以拖动
+            --    if self:getData():getLineIdList(keyPoint) <= 0 then
+            --        -- 默认只能和一个连接
+            --        return true
+            --    end
+            --end
         end
     end
     return false
