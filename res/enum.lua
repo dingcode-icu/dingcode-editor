@@ -5,14 +5,31 @@ enum = {
         decorator = "decorator",
         conditinals = "conditinals",
         action = "action",
+        input = "const",
     },
+    list_node_type = {"composites", "decorator", "conditinals", "action", "const"},
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
 
     -- 可拖动节点的key类型
     dropnode_key = {
-        parent = "parent",
-        child = "child",
+        parent = "parent",                      -- 父节点
+        child = "child",                        -- 子节点
+
+        input_int = "input_int",                -- 点击 输入 int
+        input_int = "input_float",                -- 点击 输入 float
+        input_int = "input_text",                -- 点击 输入 text
+
+        in_int = "in_int",                      -- 输入 int
+        out_int = "out_int",                    -- 输出 int
+        in_float = "in_float",                      -- 输入 float
+        out_float = "out_float",                    -- 输出 float
+        in_text = "in_text",                      -- 输入 text
+        out_text = "out_text",                    -- 输出 text
+
+
+
+        -- 测试功能节点
         input = "input",
         output = "output",
     },

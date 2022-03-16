@@ -48,7 +48,7 @@ function tabMenuNode.render()
         ImGui.SetNextWindowPos(tabMenuNode.data._posX, tabMenuNode.data._posY, ImGui.ImGuiCond.Always)
         ImGui.Begin(Lang:Lang("menu_node", "node"), true, ImGui.ImGuiWindowFlags.NoTitleBar)
 
-        local listType = {"composites", "decorator", "conditinals", "action"}
+        local listType = enum.list_node_type
         for indexlist, strType in pairs(listType) do
             local list = enum.logic_node_type[strType]
             if ImGui.BeginMenu(strType) then

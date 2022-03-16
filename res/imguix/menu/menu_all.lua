@@ -23,6 +23,10 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_node, function(event)
 
 end)
 
+-- 输入菜单
+local menu_input = require("res/imguix/menu/menu_input")
+menu_input:hide()
+
 
 
 

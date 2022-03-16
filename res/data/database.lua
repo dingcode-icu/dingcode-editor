@@ -78,6 +78,14 @@ end
 function dataBase:getName()
     return self.data.config.name or ""
 end
+-- 获取输入的列表
+function dataBase:getListInput()
+    return self.data.config.input or {}
+end
+-- 获取输出的列表
+function dataBase:getListOutput()
+    return self.data.config.output or {}
+end
 -- 直接设置数据 （导入时候用）
 function dataBase:setData(data)
     if data then

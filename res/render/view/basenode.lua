@@ -157,6 +157,7 @@ function BaseNode:initTestPoint()
         self.listNodePoint[enum.dropnode_key.child] = nodePoint
     end
 
+
     --local size = self:getContentSize()
     --local nodePoint = cc.Sprite.create("texture/point.png")
     --self.view:addChild(nodePoint)
@@ -170,6 +171,26 @@ function BaseNode:initTestPoint()
     --nodePoint:setPositionX(size.width - 8)
     --nodePoint:setPositionY(size.height / 2)
     --self.listNodePoint[enum.dropnode_key.output] = nodePoint
+
+    self:initInOutPoint()
+end
+function BaseNode:initInOutPoint()
+    --local listinput = self:getData():getListInput()
+    --if listinput and #listinput > 0 then
+    --    for i, v in ipairs(listinput) do
+    --        direct = "left",
+    --        key = "input_float",
+    --        numMax = 0,
+    --
+    --        local size = self:getContentSize()
+    --        local nodePoint = cc.Sprite.create("texture/point.png")
+    --        self.view:addChild(nodePoint)
+    --        nodePoint:setPositionX(8)
+    --        nodePoint:setPositionY(8 + (i - 1) * 20)
+    --        self.listNodePoint[enum.dropnode_key.child] = nodePoint
+    --    end
+    --end
+
 end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
@@ -199,6 +220,18 @@ function BaseNode:isCanDropStart(keyPoint)
         elseif self:getType() == enum.enum_node_type.action then
             -- 不可以有子节点
             return false
+        end
+    else
+        -- 默认 在可拖动配对数组内的， 只能放置一个
+        for i, v in pairs(enum.dropkey_canset) do
+            -- 判断类型
+            if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
+                --判断数量是否可以拖动
+                if self:getData():getLineIdList(keyPoint) <= 0 then
+                    -- 默认只能和一个连接
+                    return true
+                end
+            end
         end
     end
     return false
