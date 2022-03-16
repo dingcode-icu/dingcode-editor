@@ -121,7 +121,14 @@ function viewManager:_initGraph()
     self._lineParent = nodelineParent
 
     local scene = cc.Director:getInstance():getRunningScene()
-    scene:addChild(root)
+    --scene:addChild(root)
+
+           --debug
+         local node = require("render/common/nodeframe").new({
+             width = 500,
+             height = 500
+         })
+        scene:addChild(node.view)
 end
 function viewManager:_regEvent()
     self:registerTouch()

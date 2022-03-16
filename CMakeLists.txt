@@ -58,7 +58,7 @@ file(GLOB_RECURSE IMGUIEXT_CPP_CLASSES Classes/ImGuiExt/**.cpp Classes/ImGuiExt/
 set(DING_SRC_CLASSES)
 file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
 
-add_definitions(-DSOL_NO_EXCEPTIONS=1 -DSOL_IMGUI_IMPLEMENTATION=1)
+add_definitions(-DSOL_NO_EXCEPTIONS=0 -DSOL_IMGUI_IMPLEMENTATION=1)
 
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
