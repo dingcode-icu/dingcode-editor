@@ -1,8 +1,20 @@
 local BaseNode = class("BaseNode")
-local Event = require("res/lib/event")
-local ViewManager = require("res/render/viewmanager")
+local Event = require("lib/event")
+local ViewManager = require("render/viewmanager")
+local theme = require("lib/theme")
+local d = display
 local enum = enum
 local MEMORY = MEMORY
+
+--枚举对应颜色
+BaseNode.TYPE_COLOR = {
+    [enum.enum_node_type.composites] = cc.c3b(255,255,204),
+    [enum.enum_node_type.decorator] = cc.c3b(204,255,255),
+    [enum.enum_node_type.conditinals] = cc.c3b(255,204,204),
+    [enum.enum_node_type.action] = cc.c3b(153,204,204),
+    ["unknown"] = cc.c3b(255,255,255)
+}
+local T_HEIGHT = 32  --字体大小
 
 function BaseNode:ctor(data)
     self.data = data
@@ -10,16 +22,18 @@ function BaseNode:ctor(data)
     self.selectNode = null              -- 选中的节点（null/active=false 表示未选中）
     self.listNodePoint = {}
 
-    local node = cc.Node.create()
-    node:setAnchorPoint(cc.p(0.5, 0.5))
-    self.view = node
+    self.width = 0                       --节点的宽高
+    self.height = 0
+    self.view = nil
+    self:initDefaultView()
+    self:registerTouch()
 end
 
 function BaseNode:ShowName()
     if self.view then
         local lab = cc.Label.createWithTTF(self:getNameForType(), "font/FZLanTYJW.TTF", 15)
         self.view:addChild(lab)
-        --lab:setString(self.__cname)
+
         local size = self.view:getContentSize()
         lab:setPositionX(size.width / 2)
         lab:setPositionY(size.height / 2)
@@ -124,8 +138,49 @@ function BaseNode:ClickSelect()
         self:Select()
     end
 end
+---使用默认节点表现初始化,
+---通用节点内置节点都由此实现,
+---当有特殊表现逻辑时，单独通过复写initView处理
+---@return nil
+function BaseNode:initDefaultView()
+    if self.initView then
+        self:initView()
+        return
+    end
+    --root
+    local root = cc.Node.create()
+    self.view = root
+    root:setAnchorPoint(cc.p(0.5, 0.5))
+    local w = string.len(self.data:getName()) *T_HEIGHT/2
+    self.width = w < 120 and 120 or w
+    self.height = 120
+    self.color = BaseNode.TYPE_COLOR[self:getType()]
+    root:setContentSize(cc.size(self.width, self.height))
+    --bg
+    local sp_bg = cc.Sprite.create(theme.texture("bg_frame.png"))
+    sp_bg:setContentSize(cc.size(self.width, self.height))
+    sp_bg:setOpacity(170)
 
-function BaseNode:initTestPoint()
+    --tittle
+    local sp_tbg = cc.Sprite.create(theme.texture("bg_frame.png"))
+    sp_tbg:setContentSize(cc.size(self.width, T_HEIGHT))
+    sp_tbg:setPosition(cc.p(self.width / 2,  self.height - T_HEIGHT / 2))
+    sp_tbg:setColor(self.color)
+
+    local lab_title = d.labelL(self.data:getName(), d.DEFAULT_TTF_FONT, nil)
+    lab_title:pos(self.width / 2, T_HEIGHT / 2)
+    lab_title:setColor(d.COLOR_BLACK)
+
+    --point
+    self:initTreePoint()
+    root:addChild(sp_bg)
+    sp_bg:addChild(sp_tbg)
+    sp_tbg:addChild(lab_title)
+
+end
+---创建层级逻辑关系节点表现
+---@return nil
+function BaseNode:initTreePoint()
     local isShowParent = false
     local isShowChild = false
     if self:getType() == enum.enum_node_type.composites then
@@ -139,58 +194,23 @@ function BaseNode:initTestPoint()
     end
     -- parent 节点
     if isShowParent then
-        local size = self:getContentSize()
-        local nodePoint = cc.Sprite.create("texture/point.png")
-        self.view:addChild(nodePoint)
-        nodePoint:setPositionX(size.width / 2 - 30)
-        nodePoint:setPositionY(size.height - 8)
+        local sp_p = cc.Sprite.create(theme.texture("triangle.png"))
+        sp_p:setPosition(0, self.height / 2 + 8)
+        self.view:addChild(sp_p)
         self.listNodePoint[enum.dropnode_key.parent] = nodePoint
     end
 
     -- child 节点
     if isShowChild then
-        local size = self:getContentSize()
-        local nodePoint = cc.Sprite.create("texture/point.png")
-        self.view:addChild(nodePoint)
-        nodePoint:setPositionX(size.width / 2 + 30)
-        nodePoint:setPositionY(8)
+        local sp_p = cc.Sprite.create(theme.texture("triangle.png"))
+        sp_p:setPosition(0, -self.height / 2 - 8)
+        sp_p:setScale(1, -1)
+        self.view:addChild(sp_p)
         self.listNodePoint[enum.dropnode_key.child] = nodePoint
     end
-
-
-    --local size = self:getContentSize()
-    --local nodePoint = cc.Sprite.create("texture/point.png")
-    --self.view:addChild(nodePoint)
-    --nodePoint:setPositionX(8)
-    --nodePoint:setPositionY(size.height / 2)
-    --self.listNodePoint[enum.dropnode_key.input] = nodePoint
-    --
-    --local size = self:getContentSize()
-    --local nodePoint = cc.Sprite.create("texture/point.png")
-    --self.view:addChild(nodePoint)
-    --nodePoint:setPositionX(size.width - 8)
-    --nodePoint:setPositionY(size.height / 2)
-    --self.listNodePoint[enum.dropnode_key.output] = nodePoint
-
     self:initInOutPoint()
 end
 function BaseNode:initInOutPoint()
-    --local listinput = self:getData():getListInput()
-    --if listinput and #listinput > 0 then
-    --    for i, v in ipairs(listinput) do
-    --        direct = "left",
-    --        key = "input_float",
-    --        numMax = 0,
-    --
-    --        local size = self:getContentSize()
-    --        local nodePoint = cc.Sprite.create("texture/point.png")
-    --        self.view:addChild(nodePoint)
-    --        nodePoint:setPositionX(8)
-    --        nodePoint:setPositionY(8 + (i - 1) * 20)
-    --        self.listNodePoint[enum.dropnode_key.child] = nodePoint
-    --    end
-    --end
-
 end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)

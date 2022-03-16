@@ -364,7 +364,8 @@ inline void Init(sol::state_view& lua){
                            "getScale", &Node::getScale,
                            "setOpacity", &Node::setOpacity,
                            "setScale", sol::overload(
-                                   sol::resolve<void(float )>(&Node::setScale)
+                                           sol::resolve<void(float )>(&Node::setScale),
+                                           sol::resolve<void(float, float)>(&Node::setScale)
                                            ),
                            "getParent", sol::overload(
                                    sol::resolve<Node*()>(&Node::getParent)

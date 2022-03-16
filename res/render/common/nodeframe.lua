@@ -2,40 +2,33 @@ local NodeFrame = class("NodeFrame")
 
 local nf = NodeFrame
 local d = display
+local T_HEIGHT = 32  --字体大小
+local theme = require("lib/theme")
+
+
+
 
 function nf:ctor(data)
-    dump(data, "-->data")
-    self.width = data.width or 120
-    self.height = data.height or 120
+    self:_chkData(data)
     self.view = cc.Node.create()
-    self._data = data
-    --
     self:_initGraph()
 end
 
 
 function nf:_initGraph()
-    local color = cc.c4b(255, 255, 255, 255)
-    self._bg = cc.LayerColor.create(color, 400,400)
-    --self._bg:setContentSize(cc.size(400, 400))
-    self.view:addChild(self._bg)
 
-    local sp = cc.Sprite.create("texture/linePointSelect.png")
-    self.view:addChild(sp)
-    sp:setPositionX(200)
-    sp:setPositionY(200)
-    --
-    ----tittle
-    --local nickname = self._data["name"] or "unknow node"
-    --
-    --self._lab_title = d.labelL(nickname, d.DEFAULT_TTF_FONT, nil)
-    --self._bg:addChild(self._lab_title)
-    --local w, h = self._lab_title:size()
-    --self._lab_title:pos(10, h - 10 - h/2)
-    --
-    ----line
-    --local node_line = cc.DrawNode.create(2)
-    --node_line:drawLine(cc.p(0, 0), cc.p(100, 100), cc.c4f(1, 1, 0.5, 1))
+end
+
+
+function nf:_chkData(data)
+    data["name"] = data["name"] or "unknown-name"
+    data["type"] = data["type"] or "unknown"
+    self.width = string.len(data.name) * T_HEIGHT/2 < 120 and 120 or string.len(data.name) * T_HEIGHT/2
+    self.height = 120
+    self.color = NodeFrame.TYPE_COLOR[data["type"]]
+
+    self.is_p = data[""]
+    self._data = data
 end
 
 return nf
