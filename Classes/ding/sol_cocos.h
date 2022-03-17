@@ -423,7 +423,11 @@ inline void Init(sol::state_view& lua){
 #pragma region Sprite
      auto sp_tb = CC.new_usertype<Sprite>("Sprite",
                                          sol::base_classes, sol::bases<Node>(),
-                                        "setGLProgramState", &Sprite::setGLProgramState
+                                        "setGLProgramState", &Sprite::setGLProgramState,
+                                        "setTexture", sol::overload(
+                                                sol::resolve<void(Texture2D *)>(&Sprite::setTexture),
+                                                sol::resolve<void(const std::string&)>(&Sprite::setTexture)
+                                                )
                                        );
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*()>(&Sprite::create),
@@ -555,7 +559,7 @@ inline void Init(sol::state_view& lua){
                                             sol::resolve<GLProgramState*(const std::string&, Texture2D*)>(&GLProgramState::getOrCreateWithGLProgramName),
                                             sol::resolve<GLProgramState*(const std::string&)>(&GLProgramState::getOrCreateWithGLProgramName)
                                             ),
-                                    "getOrCreateWithGLProgram", &GLProgramState::getOrCreateWithGLProgram
+                                    "getOrCreateWithGLProgram", &GLProgramState::getOrCreateWithGLProgram,
                                     "setUniformVec3", sol::overload(
                                             sol::resolve<void(const std::string&, const cocos2d::Vec3&)>(&GLProgramState::setUniformVec3)
                                             ),

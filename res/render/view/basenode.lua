@@ -218,6 +218,14 @@ function BaseNode:initTreePoint()
     end
     self:initInOutPoint()
 end
+---切换tree-point节点的显示状态
+function BaseNode:selTreePoint(dk, iss)
+    local sp = self.listNodePoint[dk]
+    if sp then
+        local tp = iss and theme.texture("circle.png") or theme.texture("triangle.png")
+        sp:setTexture(tp)
+    end
+end
 function BaseNode:initInOutPoint()
     local listinput = self:getData():getListInput()
     if listinput then
