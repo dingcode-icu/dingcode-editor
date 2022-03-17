@@ -24,6 +24,12 @@ local nodeConfig = {
             desc = "描述",
             supposeType = "common",
         },
+        root = {
+            name = "root",
+            type = "composites",
+            desc = "根节点",
+            supposeType = "common",
+        },
     },
     const = {
         float = {
