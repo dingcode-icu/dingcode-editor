@@ -1515,5 +1515,9 @@ void Director::setAnimationInterval(float interval, SetIntervalReason reason)
     }
 }
 
+void Director::reSetWinSize(int width, int height) {
+    this->_winSizeInPoints.width = width;
+    this->_winSizeInPoints.height = height;
+}
 NS_CC_END
 

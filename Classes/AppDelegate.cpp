@@ -7,6 +7,34 @@
 USING_NS_CC;
 static const int SCREEN_MIN_WIDTH = 960;
 static const int SCREEN_MIN_HEIGHT = 640;
+
+
+void onWinResizeCallback(GLFWwindow *win, int width, int height) {
+    cocos2d::log("on win-resize width = %d, height =%d", width, height);
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if(glview) {
+        glview->setDesignResolutionSize((float)width, (float)height, ResolutionPolicy::SHOW_ALL);
+        glview->setFrameSize((float)width, (float)height);
+        director->reSetWinSize(width, height);
+        director->setViewport();
+    };
+}
+
+void onWinMaximizeCallback(GLFWwindow* win, int maximize){
+    int width;
+    int height;
+    glfwGetWindowSize(win, &width, &height);
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if(glview) {
+        glview->setDesignResolutionSize((float)width, (float)height, ResolutionPolicy::SHOW_ALL);
+        glview->setFrameSize((float)width, (float)height);
+        director->reSetWinSize(width, height);
+        director->setViewport();
+    };
+}
+
 AppDelegate::AppDelegate() 
 {
 }
@@ -38,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    director->getOpenGLView()->setDesignResolutionSize(SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT, ResolutionPolicy::EXACT_FIT);
+    director->getOpenGLView()->setDesignResolutionSize(SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT, ResolutionPolicy::SHOW_ALL);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -74,6 +102,10 @@ void AppDelegate::applicationWillEnterForeground() {
 void AppDelegate::init_glview(GLView* glview){
     auto impl = (GLViewImpl*)glview;
     auto win = impl->getWindow();
+    glfwSetWindowSizeCallback(win, onWinResizeCallback);
+    glfwSetWindowMaximizeCallback(win, onWinMaximizeCallback);
+
+
     //设置窗口大小
     int scene_cnt;
     GLFWmonitor** p = glfwGetMonitors(&scene_cnt);
@@ -83,5 +115,5 @@ void AppDelegate::init_glview(GLView* glview){
     glfwSetWindowPos(win, mode->width / 2 - SCREEN_MIN_WIDTH / 2, mode->height / 2 - SCREEN_MIN_HEIGHT / 2);
     glfwSetWindowSizeLimits(win, SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT, GLFW_DONT_CARE, GLFW_DONT_CARE);
     glfwShowWindow(win);
-
 }
+

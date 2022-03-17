@@ -723,6 +723,12 @@ protected:
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
+
+public:
+    //=================
+    // change engine
+    //=================
+    void reSetWinSize(int width, int height);
 };
 
 // FIXME: Added for backward compatibility in case
