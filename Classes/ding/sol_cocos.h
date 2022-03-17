@@ -3,6 +3,7 @@
 #include <string>
 #include "cocos2d.h"
 #include "platform/CCGLView.h"
+#include "ui/UIScale9Sprite.h"
 
 #define SOL_DEFAULT_PASS_ON_ERROR 1
 #include "sol/sol.hpp"
@@ -38,6 +39,13 @@ inline void Init(sol::state_view& lua){
                     "CENTER", TextHAlignment::CENTER,
                     "RIGHT", TextHAlignment::RIGHT
                     );
+
+    CC.create_named("Scale9SpriteState",
+                    "Normal", ui::Scale9Sprite::State::NORMAL,
+                    "Gray", ui::Scale9Sprite::State::GRAY);
+
+    CC.create_named("GLProgramStateE",
+                    "SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP",GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
     CC.create_named("KeyBoardCode",
                     "KEY_NONE", EventKeyboard::KeyCode::KEY_NONE,
@@ -240,6 +248,12 @@ inline void Init(sol::state_view& lua){
     point["x"] = &Vec2::x;
     point["y"] = &Vec2::y;
 
+    auto point3  = CC.new_usertype<Vec3>("vec3",
+                sol::call_constructor, sol::constructors<sol::types<float, float, float>>());
+    point3["x"] = &Vec3::x;
+    point3["y"] = &Vec3::y;
+    point3["z"] = &Vec3::z;
+
     auto rect = CC.new_usertype<cocos2d::Rect>("rect",
                                       sol::call_constructor, sol::constructors<sol::types<float, float, float, float>>(),
                                       "containsPoint", &cocos2d::Rect::containsPoint,
@@ -407,8 +421,9 @@ inline void Init(sol::state_view& lua){
 
 
 #pragma region Sprite
-     auto sp_tb =CC.new_usertype<Sprite>("Sprite",
-                                        sol::base_classes, sol::bases<Node>()
+     auto sp_tb = CC.new_usertype<Sprite>("Sprite",
+                                         sol::base_classes, sol::bases<Node>(),
+                                        "setGLProgramState", &Sprite::setGLProgramState
                                        );
      sp_tb.set_function("create", sol::overload(
              sol::resolve<Sprite*()>(&Sprite::create),
@@ -421,7 +436,16 @@ inline void Init(sol::state_view& lua){
                                 sol::resolve<Sprite*(Texture2D*)>(&Sprite::createWithTexture),
                                 sol::resolve<Sprite*(Texture2D*, const cocos2d::Rect&, bool)>(&Sprite::createWithTexture)));
 
-
+    auto sp9_tb = CC.new_usertype<ui::Scale9Sprite>("Scale9Sprite",
+                                                    sol::base_classes, sol::bases<Node, Sprite>(),
+                                                    "setScale9Enabled", &ui::Scale9Sprite::setScale9Enabled,
+                                                    "setState", &ui::Scale9Sprite::setState,
+                                                    "create", sol::overload(
+                                                            sol::resolve<ui::Scale9Sprite*(const std::string&, const cocos2d::Rect&, const cocos2d::Rect&)>(&ui::Scale9Sprite::create),
+                                                            sol::resolve<ui::Scale9Sprite*(const std::string&, const cocos2d::Rect&)>(&ui::Scale9Sprite::create),
+                                                            sol::resolve<ui::Scale9Sprite*(const std::string&)>(&ui::Scale9Sprite::create)
+                                                            )
+    );
 
 #pragma endregion Sprite
 
@@ -518,6 +542,28 @@ inline void Init(sol::state_view& lua){
 //                                   "addImageAsync", &TextureCache::addImageAsync);
 #pragma endregion TextureCache
 
+
+#pragma region GLProgram
+    CC.new_usertype<GLProgram>("GLProgram",
+                               "createWithFilenames", sol::overload(
+                                       sol::resolve<GLProgram*(const std::string&, const std::string&)>(&GLProgram::createWithFilenames),
+                                       sol::resolve<GLProgram*(const std::string&, const std::string&, const std::string&, const std::string&)>(&GLProgram::createWithFilenames),
+                                       sol::resolve<GLProgram*(const std::string&, const std::string&,const std::string&)>(&GLProgram::createWithFilenames)
+                                        ));
+    CC.new_usertype<GLProgramState>("GLProgramState",
+                                    "getOrCreateWithGLProgramName", sol::overload(
+                                            sol::resolve<GLProgramState*(const std::string&, Texture2D*)>(&GLProgramState::getOrCreateWithGLProgramName),
+                                            sol::resolve<GLProgramState*(const std::string&)>(&GLProgramState::getOrCreateWithGLProgramName)
+                                            ),
+                                    "getOrCreateWithGLProgram", &GLProgramState::getOrCreateWithGLProgram
+                                    "setUniformVec3", sol::overload(
+                                            sol::resolve<void(const std::string&, const cocos2d::Vec3&)>(&GLProgramState::setUniformVec3)
+                                            ),
+                                   "setUniformFloat", sol::overload(
+                                            sol::resolve<void(const std::string&, float)>(&GLProgramState::setUniformFloat)
+                                            )
+                                            );
+#pragma endregion GLProgram
 }
 }
 #endif

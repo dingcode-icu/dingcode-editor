@@ -17,17 +17,23 @@ BaseNode.TYPE_COLOR = {
     [enum.enum_node_type.input] = cc.c3b(0,204,204),
     ["unknown"] = cc.c3b(255,255,255)
 }
+
+BaseNode.STATE ={
+    NORMAL = 1,
+    SELECT = 2
+}
 local T_HEIGHT = 32  --字体大小
 
 function BaseNode:ctor(data)
     self.data = data
     self.touchListener = null           -- 点击监听
-    self.selectNode = null              -- 选中的节点（null/active=false 表示未选中）
+    self._state  = BaseNode.STATE.NORMAL -- 是否选中状态
     self.listNodePoint = {}
 
     self.width = 0                       --节点的宽高
     self.height = 0
     self.view = nil
+    self.sp_bg = nil                     --节点主要的背景，有选中鲜果 单独提出来
     self:initDefaultView()
     self:registerTouch()
 end
@@ -105,39 +111,35 @@ function BaseNode:destroy()
 end
 -- 是否选中
 function BaseNode:isSelect()
-    if self.selectNode and self.selectNode:isVisible() then
-        return true
-    end
-    return false
+    print(BaseNode.STATE.SELECT)
+    return self._state == BaseNode.STATE.SELECT
 end
 -- 初始化 选中节点
 function BaseNode:initSelectNode()
-    if not self.selectNode then
-        local node = cc.Sprite.create("texture/select.png")
-        self.view:addChild(node)
-        --local size = node:getContentSize()
-        local sizeParent = self:getContentSize()
-        node:setPositionX(sizeParent.width / 2)
-        node:setPositionY(sizeParent.height / 2)
-        self.selectNode = node
+    if self._state == BaseNode.STATE.NORMAL then
+        local out_state =  ShaderMgr:getInc():getEffect("outline")
+        self.sp_bg:setGLProgramState(out_state)
     end
 end
 -- 选中
 function BaseNode:Select()
     self:initSelectNode()
-    self.selectNode:setVisible(true)
+    self._state = BaseNode.STATE.SELECT
 end
 -- 取消选中
 function BaseNode:UnSelect()
-    if self.selectNode then
-        self.selectNode:setVisible(false)
-    end
+    print("load unselect")
+    local state = cc.GLProgramState.getOrCreateWithGLProgramName(cc.GLProgramStateE.SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)
+    self.sp_bg:setGLProgramState(state)
+    self._state = BaseNode.STATE.NORMAL
 end
 -- 反选
 function BaseNode:ClickSelect()
+    print(self:isSelect(), "-->>isselect")
     if self:isSelect() then
         self:UnSelect()
     else
+        print('a13123123')
         self:Select()
     end
 end
@@ -160,13 +162,15 @@ function BaseNode:initDefaultView()
     self.color = BaseNode.TYPE_COLOR[self:getType()]
     root:setContentSize(cc.size(self.width, self.height))
     --bg
-    local sp_bg = cc.Sprite.create(theme.texture("bg_frame.png"))
+    local sp_bg = cc.Scale9Sprite.create(theme.texture("bg_frame.png"))
     sp_bg:setContentSize(cc.size(self.width, self.height))
     sp_bg:setOpacity(170)
     sp_bg:setPosition(self.width / 2, self.height / 2)
+    self.sp_bg = sp_bg
+
 
     --tittle
-    local sp_tbg = cc.Sprite.create(theme.texture("bg_frame.png"))
+    local sp_tbg = cc.Scale9Sprite.create(theme.texture("bg_frame.png"))
     sp_tbg:setContentSize(cc.size(self.width, T_HEIGHT))
     sp_tbg:setPosition(cc.p(self.width / 2,  self.height - T_HEIGHT / 2))
     sp_tbg:setColor(self.color)
