@@ -5,9 +5,10 @@ enum = {
         decorator = "decorator",
         conditinals = "conditinals",
         action = "action",
-        input = "const",
+        const = "const",
+        root = "root",
     },
-    list_node_type = {"composites", "decorator", "conditinals", "action", "const"},
+    list_node_type = {"root", "composites", "decorator", "conditinals", "action", "const"},
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
 

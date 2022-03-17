@@ -14,7 +14,8 @@ BaseNode.TYPE_COLOR = {
     [enum.enum_node_type.decorator] = cc.c3b(204,255,255),
     [enum.enum_node_type.conditinals] = cc.c3b(255,204,204),
     [enum.enum_node_type.action] = cc.c3b(153,204,204),
-    [enum.enum_node_type.input] = cc.c3b(0,204,204),
+    [enum.enum_node_type.const] = cc.c3b(0,204,204),
+    [enum.enum_node_type.root] = cc.c3b(0,204,204),
     ["unknown"] = cc.c3b(255,255,255)
 }
 
@@ -159,7 +160,7 @@ function BaseNode:initDefaultView()
     local w = string.len(self.data:getName()) *T_HEIGHT/2
     self.width = w < 120 and 120 or w
     self.height = 120
-    self.color = BaseNode.TYPE_COLOR[self:getType()]
+    self.color = BaseNode.TYPE_COLOR[self:getType()] or BaseNode.TYPE_COLOR["unknown"]
     root:setContentSize(cc.size(self.width, self.height))
     --bg
     local sp_bg = cc.Scale9Sprite.create(theme.texture("bg_frame.png"))
@@ -199,6 +200,8 @@ function BaseNode:initTreePoint()
         isShowChild = true
     elseif self:getType() == enum.enum_node_type.action then
         isShowParent = true
+    elseif self:getType() == enum.enum_node_type.root then
+        isShowChild = true
     end
     -- parent 节点
     if isShowParent then
@@ -264,7 +267,7 @@ function BaseNode:isCanDropStart(keyPoint)
         if self:getType() == enum.enum_node_type.composites then
             -- 可以有多个子节点
             return true
-        elseif self:getType() == enum.enum_node_type.conditinals then
+        elseif self:getType() == enum.enum_node_type.conditinals or self:getType() == enum.enum_node_type.root then
             -- 只能有一个子节点
             if #self:getData():getChildIdList() >= 1 then
                 return false
@@ -467,7 +470,7 @@ function BaseNode:registerTouch()
         for key, nodePoint in pairs(this.listNodePoint) do
             if nodePoint and not this:isCanDropStart(key) then
                 local size = nodePoint:getContentSize()
-                if this.isTouchInsideNode(touch, nodePoint, size) then
+                if this.isTouchInsideNode(touch, nodePoint, size) and nodePoint.getConfigKey then
                     local keyConfig = nodePoint:getConfigKey()
                     if keyConfig == enum.dropnode_key.input_int or keyConfig == enum.dropnode_key.input_float or keyConfig == enum.dropnode_key.input_text then
                         Event:dispatchEvent({

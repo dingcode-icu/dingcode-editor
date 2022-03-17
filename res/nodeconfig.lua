@@ -1,5 +1,20 @@
 local nodeConfig = {
-
+    root = {
+        root_str = {
+            name = "root_str",
+            type = "root",
+            desc = "根节点",
+            supposeType = "common",
+            input = {
+                in_1 = {
+                    direct = "left",
+                    key = "input_text",
+                    numMax = 0,
+                },
+            },
+            output = {},
+        },
+    },
     composites = {
         sequence = {
             name = "sequence",
@@ -23,12 +38,6 @@ local nodeConfig = {
             name = "decorator",
             type = "composites",
             desc = "描述",
-            supposeType = "common",
-        },
-        root = {
-            name = "root",
-            type = "composites",
-            desc = "根节点",
             supposeType = "common",
         },
     },
