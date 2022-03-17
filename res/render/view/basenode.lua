@@ -2,6 +2,8 @@ local BaseNode = class("BaseNode")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
+local NodeIn = require("render/common/nodein")
+local MenuInput = require("imguix/menu/menu_input")
 local d = display
 local enum = enum
 local MEMORY = MEMORY
@@ -222,7 +224,7 @@ function BaseNode:initInOutPoint()
                 parent = self,
                 key = key,
             }
-            local NodeIn = require("render/common/nodein")
+
             local nodein = NodeIn.new(data)
             self.view:addChild(nodein.view)
             nodein.view:setPositionX(8)
@@ -442,6 +444,34 @@ function BaseNode:registerTouch()
                             return true
                         end
                     end
+                end
+            end
+        end
+
+        -- 判断 按钮上的点击事件
+        for key, nodePoint in pairs(this.listNodePoint) do
+            if nodePoint and not this:isCanDropStart(key) then
+                local size = nodePoint:getContentSize()
+                if this.isTouchInsideNode(touch, nodePoint, size) then
+        --            Event:dispatchEvent({
+        --                name = enum.evt_keyboard.imgui_menu_input,
+        --                finishFunc = nil,
+        --                typeinput = MenuInput.enuminput.float,
+        --
+        --                 if args.typeinput then
+        --    self.data._typeinput = args.typeinput
+        --else
+        --    self.data._typeinput = self.enuminput.int
+        --end
+        --self.data._isInputed = false
+        --self.data._lab = nil
+        --self.data._isEnd = false
+        --            })
+
+                    if not ViewManager.isDropingLine then
+                        ViewManager:setAllNodeSwallowTouch(true)
+                    end
+                    return true
                 end
             end
         end

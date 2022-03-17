@@ -16,7 +16,7 @@ function NodeIn:init()
     local parent = self.data.parent
     local key = self.data.key
 
-    --self:setContentSize(cc.size(30, 20))
+    self:setContentSize(cc.size(30, 20))
 
     local size = self.view:getContentSize()
 
@@ -36,6 +36,16 @@ end
 function NodeIn:setContentSize(size)
     if self.view then
         self.view:setContentSize(size)
+    end
+end
+function NodeIn:getContentSize()
+    if self.view then
+        return self.view:getContentSize()
+    end
+end
+function NodeIn:convertToNodeSpace(pos)
+    if self.view then
+        return self.view:convertToNodeSpace(pos)
     end
 end
 function NodeIn:getParent()
