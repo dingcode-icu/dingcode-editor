@@ -159,7 +159,7 @@ function viewManager:registerTouch()
         if this.isDropingLine then
             this:cancelDropingLine()
         end
-        this:hide_imgui_menu_node()
+        this:hide_imgui_menu_all()
         this:unSelectAll()
         print("viewmanager touch end")
 
@@ -343,11 +343,21 @@ function viewManager:unRegisterEvent()
     Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_delete_node)
     Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_mode_node)
 end
-
+function viewManager:hide_imgui_menu_all()
+    self:hide_imgui_menu_node()
+    self:hide_imgui_menu_input()
+end
 -- 隐藏菜单
 function viewManager:hide_imgui_menu_node()
     Event:dispatchEvent({
         name = enum.evt_keyboard.imgui_menu_node,
+        isHide = true,
+    })
+end
+-- 隐藏 弹出菜单
+function viewManager:hide_imgui_menu_input()
+    Event:dispatchEvent({
+        name = enum.evt_keyboard.imgui_menu_input,
         isHide = true,
     })
 end
@@ -383,7 +393,7 @@ end
 function viewManager:createNode(dataNode, posTab)
 
     -- 隐藏菜单
-    self:hide_imgui_menu_node()
+    self:hide_imgui_menu_all()
 
     if not self or not self._viewParent then
         print("开始 创建node 失败")

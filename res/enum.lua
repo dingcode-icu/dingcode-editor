@@ -17,8 +17,8 @@ enum = {
         child = "child",                        -- 子节点
 
         input_int = "input_int",                -- 点击 输入 int
-        input_int = "input_float",                -- 点击 输入 float
-        input_int = "input_text",                -- 点击 输入 text
+        input_float = "input_float",                -- 点击 输入 float
+        input_text = "input_text",                -- 点击 输入 text
 
         in_int = "in_int",                      -- 输入 int
         out_int = "out_int",                    -- 输出 int

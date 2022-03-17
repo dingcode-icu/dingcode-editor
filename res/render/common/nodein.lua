@@ -30,7 +30,18 @@ function NodeIn:init()
     lab:setPositionX(size.width / 2)
     lab:setPositionY(size.height / 2)
     lab:setColor(cc.c3b(0,255,0))
+    self._labValue = lab
 
+end
+function NodeIn:getConfigKey()
+    return self.data.keyconfig.key or ""
+end
+
+function NodeIn:setValue(value)
+    if self._labValue then
+        value = GetPreciseDecimal(value, 3)
+        self._labValue:setString("" .. value)
+    end
 end
 
 function NodeIn:setContentSize(size)

@@ -235,6 +235,7 @@ function BaseNode:initInOutPoint()
             local data = {
                 parent = self,
                 key = key,
+                keyconfig = v,
             }
 
             local nodein = NodeIn.new(data)
@@ -460,25 +461,23 @@ function BaseNode:registerTouch()
             end
         end
 
+        this._touchStart = null
+
         -- 判断 按钮上的点击事件
         for key, nodePoint in pairs(this.listNodePoint) do
             if nodePoint and not this:isCanDropStart(key) then
                 local size = nodePoint:getContentSize()
                 if this.isTouchInsideNode(touch, nodePoint, size) then
-        --            Event:dispatchEvent({
-        --                name = enum.evt_keyboard.imgui_menu_input,
-        --                finishFunc = nil,
-        --                typeinput = MenuInput.enuminput.float,
-        --
-        --                 if args.typeinput then
-        --    self.data._typeinput = args.typeinput
-        --else
-        --    self.data._typeinput = self.enuminput.int
-        --end
-        --self.data._isInputed = false
-        --self.data._lab = nil
-        --self.data._isEnd = false
-        --            })
+                    local keyConfig = nodePoint:getConfigKey()
+                    if keyConfig == enum.dropnode_key.input_int or keyConfig == enum.dropnode_key.input_float or keyConfig == enum.dropnode_key.input_text then
+                        Event:dispatchEvent({
+                            name = enum.evt_keyboard.imgui_menu_input,
+                            finishFunc = function(lab)
+                                nodePoint:setValue(lab)
+                            end,
+                            typeinput = keyConfig,
+                        })
+                    end
 
                     if not ViewManager.isDropingLine then
                         ViewManager:setAllNodeSwallowTouch(true)
@@ -487,9 +486,6 @@ function BaseNode:registerTouch()
                 end
             end
         end
-
-
-        this._touchStart = null
 
         local isClick = this.isTouchSelf(touch, event)
         if isClick then

@@ -13,11 +13,6 @@ local tabInputNode = {
         _lab = nil,
         _isEnd = false,
     },
-    enuminput = {
-        int,
-        float,
-        text,
-    },
 }
 
 --显示菜单
@@ -41,7 +36,7 @@ function tabInputNode:show(args)
         if args.typeinput then
             self.data._typeinput = args.typeinput
         else
-            self.data._typeinput = self.enuminput.int
+            self.data._typeinput = enum.dropnode_key.input_text
         end
         self.data._isInputed = false
         self.data._lab = nil
@@ -67,36 +62,34 @@ function tabInputNode.render()
     if tabInputNode.data._isShow then
         ImGui.SetNextWindowPos(tabInputNode.data._posX, tabInputNode.data._posY, ImGui.ImGuiCond.Always)
         ImGui.Begin("tabInputNode", true, ImGui.ImGuiWindowFlags.NoTitleBar)
-        if tabInputNode.data._typeinput == tabInputNode.enuminput.float then
-            local curNum = 0
-            if tabInputNode.data._lab ~= nil then
-                curNum = tabInputNode.data._lab
-            end
-            local lab,isInputed = ImGui.InputFloat("float", curNum, 0.1, 1);
-            if not tabInputNode.data._isEnd then
-                if isInputed then
-                    tabInputNode.data._isInputed = true
-                    tabInputNode.data._lab = lab
-                else
-                    if tabInputNode.data._isInputed then
-                        tabInputNode.data._isEnd = true
-                        tabInputNode:hide()
-                        if tabInputNode.data._finishFunc then
-                            tabInputNode.data._finishFunc(tabInputNode.data._lab)
-                        end
-                    end
-                end
-            end
-
-        elseif tabInputNode.data._typeinput == tabInputNode.enuminput.text then
-
-        else
-
+        local curNum = nil
+        local lab,isInputed
+        if tabInputNode.data._typeinput == enum.dropnode_key.input_float then
+            curNum = 0
+            lab,isInputed = ImGui.InputFloat("float", curNum);
+        elseif tabInputNode.data._typeinput == enum.dropnode_key.input_text then
+            curNum = ""
+            lab,isInputed = ImGui.InputText("text", curNum, 100);
+        elseif tabInputNode.data._typeinput == enum.dropnode_key.input_int then
+            curNum = 0
+            lab,isInputed = ImGui.InputInt("int", curNum);
         end
 
-        --local num,isF = ImGui.InputText("input float", "0", 12)
-        --if isF then
-        --print(num, isF)
+        if not tabInputNode.data._isEnd then
+            if isInputed then
+                tabInputNode.data._isInputed = true
+                tabInputNode.data._lab = lab
+            else
+                if tabInputNode.data._isInputed then
+                    if tabInputNode.data._finishFunc then
+                        tabInputNode.data._finishFunc(tabInputNode.data._lab)
+                    end
+
+                    tabInputNode.data._isEnd = true
+                    tabInputNode:hide()
+                end
+            end
+        end
 
         ImGui.End()
     end

@@ -1,4 +1,5 @@
 local nodeConfig = {
+
     composites = {
         sequence = {
             name = "sequence",

@@ -1071,8 +1071,10 @@ namespace sol_ImGui
     // Widgets: Input with Keyboard
     inline std::tuple<std::string, bool> InputText(const std::string &label, std::string text, unsigned int buf_size)
     {
-        bool selected = ImGui::InputText(label.c_str(), &text[0], buf_size);
-        return std::make_tuple(text, selected);
+        char buf[32] = "text";
+        strcpy(buf, text.c_str());
+        bool selected = ImGui::InputText(label.c_str(), buf, IM_ARRAYSIZE(buf));
+        return std::make_tuple(buf, selected);
     }
     inline std::tuple<std::string, bool> InputText(const std::string &label, std::string text, unsigned int buf_size, int flags)
     {

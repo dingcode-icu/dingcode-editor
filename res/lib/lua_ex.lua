@@ -207,3 +207,17 @@ end
 function string.starts(String,Start)
    return string.sub(String,1,string.len(Start))==Start
 end
+
+-- 保留N位小数
+function GetPreciseDecimal(nNum, n)
+    if type(nNum) ~= "number" then
+        return nNum;
+    end
+
+    n = n or 0;
+    n = math.floor(n)
+    local fmt = '%.' .. n .. 'f'
+    local nRet = tonumber(string.format(fmt, nNum))
+
+    return nRet;
+end
