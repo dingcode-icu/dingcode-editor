@@ -20,7 +20,7 @@ return {
         addnode_selector = "selector",
         addnode_parallel = "parallel",
         addnode_decorator = "decorator",
-        addnode_conditinals = "conditinals",
+        addnode_conditionals = "conditionals",
 
 
         addnode_action = "action",

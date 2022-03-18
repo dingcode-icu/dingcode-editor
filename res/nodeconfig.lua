@@ -33,13 +33,7 @@ local nodeConfig = {
             type = "composites",
             desc = "描述",
             supposeType = "common",
-        },
-        decorator = {
-            name = "decorator",
-            type = "composites",
-            desc = "描述",
-            supposeType = "common",
-        },
+        }
     },
     const = {
         float = {
@@ -85,8 +79,15 @@ local nodeConfig = {
             output = {},
         },
     },
-    decorator = {},
-    conditinals = {},
+    decorator = {
+        --decorator = {
+        --    name = "decorator",
+        --    type = "composites",
+        --    desc = "描述",
+        --    supposeType = "common",
+        --},
+    },
+    conditionals = {},
     action = {},
 }
 local function requireConfig(path)
