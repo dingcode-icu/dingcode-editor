@@ -88,7 +88,7 @@ function tabMenuMainBar.render()
                     end
                 end
                 if ImGui.MenuItem("打印 dataList") then
-                    dump(DataManager.data)
+                    dump(DataManager.data, nil, 8)
                 end
 
                 if ImGui.MenuItem("初始化parent节点") then

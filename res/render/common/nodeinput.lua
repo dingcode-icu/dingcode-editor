@@ -1,12 +1,11 @@
-local NodeIn = class("NodeIn")
+local BaseNodePoint = require("render/common/base_nodepoint")
+local NodeIn = class("NodeIn", BaseNodePoint)
 local ViewManager = require("render/viewmanager")
 local enum = enum
 
 function NodeIn:ctor(data)
-    self.data = data
 
-    local root = cc.Node.create()
-    self.view = root
+    self.super.ctor(self, data)
 
     self:init()
 
@@ -33,42 +32,17 @@ function NodeIn:init()
     self._labValue = lab
 
 end
-function NodeIn:getConfigKey()
-    return self.data.keyconfig.key or ""
-end
 
 function NodeIn:setValue(value)
     if self._labValue then
         value = GetPreciseDecimal(value, 3)
+        -- 设置数据
+        local dataNode = self.data.parent:getData()
+        local key = self.data.key
+        dataNode:setListInputForId(key, {value})
+        -- 设置页面
         self._labValue:setString("" .. value)
     end
-end
-
-function NodeIn:setContentSize(size)
-    if self.view then
-        self.view:setContentSize(size)
-    end
-end
-function NodeIn:getContentSize()
-    if self.view then
-        return self.view:getContentSize()
-    end
-end
-function NodeIn:convertToNodeSpace(pos)
-    if self.view then
-        return self.view:convertToNodeSpace(pos)
-    end
-end
-function NodeIn:getParent()
-    return self.view:getParent()
-end
-function NodeIn:getPositionX()
-    -- TODO 返回拖动节点的位置
-    return self.view:getPositionX()
-end
-function NodeIn:getPositionY()
-    -- TODO 返回拖动节点的位置
-    return self.view:getPositionY()
 end
 
 return NodeIn

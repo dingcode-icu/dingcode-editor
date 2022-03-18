@@ -2,7 +2,7 @@ local BaseNode = class("BaseNode")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
-local NodeIn = require("render/common/nodein")
+local NodeInput = require("render/common/nodeinput")
 local MenuInput = require("imguix/menu/menu_input")
 local d = display
 local enum = enum
@@ -230,7 +230,7 @@ function BaseNode:selTreePoint(dk, iss)
     end
 end
 function BaseNode:initInOutPoint()
-    local listinput = self:getData():getListInput()
+    local listinput = self:getData():getListInputConfig()
     if listinput then
         local i = 0
         for key, v in pairs(listinput) do
@@ -241,7 +241,7 @@ function BaseNode:initInOutPoint()
                 keyconfig = v,
             }
 
-            local nodein = NodeIn.new(data)
+            local nodein = NodeInput.new(data)
             self.view:addChild(nodein.view)
             nodein.view:setPositionX(8)
             nodein.view:setPositionY(self.height - (50 + (i - 1) * 20))

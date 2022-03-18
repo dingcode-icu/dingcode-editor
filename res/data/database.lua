@@ -16,7 +16,7 @@ function dataBase:ctor(config)
             [enum.dropnode_key.parent] = {},                -- 父节点
             [enum.dropnode_key.child] = {},                 -- 子节点
         },
-        input = {},             --
+        input = {},             --   输入值 (数组) input = {int_1 = {1}}
         output = {}
 
         -- 扩展属性
@@ -74,16 +74,38 @@ end
 function dataBase:getChildIdList()
     return self:getLineIdList(enum.dropnode_key.child)
 end
+-- 设置输入的列表配置
+function dataBase:setListInputForId(id, list)
+    self.data.input[id] = list
+end
+-- 设置输出的列表配置
+function dataBase:setListOutputForId(id, list)
+    self.data.output[id] = list
+end
+-- 获取输入的列表配置
+function dataBase:getListInputForId(id)
+    if not self.data.input[id] then
+        self.data.input[id] = {}
+    end
+    return self.data.input[id]
+end
+-- 获取输出的列表配置
+function dataBase:getListOutputForId(id)
+    if not self.data.output[id] then
+        self.data.output[id] = {}
+    end
+    return self.data.output[id]
+end
 -- 获取名字
 function dataBase:getName()
     return self.data.config.name or ""
 end
--- 获取输入的列表
-function dataBase:getListInput()
+-- 获取输入的列表配置
+function dataBase:getListInputConfig()
     return self.data.config.input or {}
 end
--- 获取输出的列表
-function dataBase:getListOutput()
+-- 获取输出的列表配置
+function dataBase:getListOutputConfig()
     return self.data.config.output or {}
 end
 -- 直接设置数据 （导入时候用）
