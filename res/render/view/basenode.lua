@@ -2,7 +2,7 @@ local BaseNode = class("BaseNode")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
-local NodeInput = require("render/common/nodeinput")
+local NodePointInput = require("nodepointinput")
 local MenuInput = require("imguix/menu/menu_input")
 local d = display
 local enum = enum
@@ -241,7 +241,7 @@ function BaseNode:initInOutPoint()
                 keyconfig = v,
             }
 
-            local nodein = NodeInput.new(data)
+            local nodein = NodePointInput.new(data)
             self.view:addChild(nodein.view)
             nodein.view:setPositionX(8)
             nodein.view:setPositionY(self.height - (50 + (i - 1) * 20))
