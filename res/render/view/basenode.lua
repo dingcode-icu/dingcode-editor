@@ -12,7 +12,7 @@ local MEMORY = MEMORY
 BaseNode.TYPE_COLOR = {
     [enum.enum_node_type.composites] = cc.c3b(255,255,204),
     [enum.enum_node_type.decorator] = cc.c3b(204,255,255),
-    [enum.enum_node_type.conditinals] = cc.c3b(255,204,204),
+    [enum.enum_node_type.conditionals] = cc.c3b(255,204,204),
     [enum.enum_node_type.action] = cc.c3b(153,204,204),
     [enum.enum_node_type.const] = cc.c3b(0,204,204),
     [enum.enum_node_type.root] = cc.c3b(0,204,204),
@@ -195,7 +195,7 @@ function BaseNode:initTreePoint()
     if self:getType() == enum.enum_node_type.composites then
         isShowParent = true
         isShowChild = true
-    elseif self:getType() == enum.enum_node_type.conditinals then
+    elseif self:getType() == enum.enum_node_type.conditionals then
         isShowParent = true
         isShowChild = true
     elseif self:getType() == enum.enum_node_type.action then
@@ -252,7 +252,7 @@ end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
     if keyPoint == enum.dropnode_key.parent then
-        if self:getType() == enum.enum_node_type.composites or self:getType() == enum.enum_node_type.conditinals then
+        if self:getType() == enum.enum_node_type.composites or self:getType() == enum.enum_node_type.conditionals then
             -- 只能有一个父节点
             if #self:getData():getParentIdList() >= 1 then
                 return false
@@ -267,7 +267,7 @@ function BaseNode:isCanDropStart(keyPoint)
         if self:getType() == enum.enum_node_type.composites then
             -- 可以有多个子节点
             return true
-        elseif self:getType() == enum.enum_node_type.conditinals or self:getType() == enum.enum_node_type.root then
+        elseif self:getType() == enum.enum_node_type.conditionals or self:getType() == enum.enum_node_type.root then
             -- 只能有一个子节点
             if #self:getData():getChildIdList() >= 1 then
                 return false

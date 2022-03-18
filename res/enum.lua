@@ -3,12 +3,12 @@ enum = {
     enum_node_type = {
         composites = "composites",
         decorator = "decorator",
-        conditinals = "conditinals",
+        conditionals = "conditionals",
         action = "action",
         const = "const",
         root = "root",
     },
-    list_node_type = {"root", "composites", "decorator", "conditinals", "action", "const"},
+    list_node_type = {"root", "composites", "decorator", "conditionals", "action", "const"},
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
 
