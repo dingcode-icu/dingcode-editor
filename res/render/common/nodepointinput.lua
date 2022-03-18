@@ -1,9 +1,9 @@
 local BaseNodePoint = require("render/common/base_nodepoint")
-local NodeIn = class("NodeIn", BaseNodePoint)
+local NodeInput = class("NodeInput", BaseNodePoint)
 local ViewManager = require("render/viewmanager")
 local enum = enum
 
-function NodeIn:ctor(data)
+function NodeInput:ctor(data)
 
     self.super.ctor(self, data)
 
@@ -11,7 +11,7 @@ function NodeIn:ctor(data)
 
 end
 
-function NodeIn:init()
+function NodeInput:init()
     local parent = self.data.parent
     local key = self.data.key
 
@@ -33,7 +33,7 @@ function NodeIn:init()
 
 end
 
-function NodeIn:setValue(value)
+function NodeInput:setValue(value)
     if self._labValue then
         value = GetPreciseDecimal(value, 3)
         -- 设置数据
@@ -45,4 +45,4 @@ function NodeIn:setValue(value)
     end
 end
 
-return NodeIn
+return NodeInput

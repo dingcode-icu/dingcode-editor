@@ -7,6 +7,9 @@ function BaseNodePoint:ctor(data)
     self.view = root
 end
 
+function BaseNodePoint:select(isSelect)
+    print("子类需要实现 BaseNodePoint:select", isSelect)
+end
 function BaseNodePoint:getConfigKey()
     return self.data.keyconfig.key or ""
 end

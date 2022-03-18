@@ -108,6 +108,19 @@ end
 function dataBase:getListOutputConfig()
     return self.data.config.output or {}
 end
+function dataBase:getConfigForKey(key)
+    for i, v in pairs(self:getListInputConfig()) do
+        if i == key then
+            return v
+        end
+    end
+    for i, v in pairs(self:getListOutputConfig()) do
+        if i == key then
+            return v
+        end
+    end
+    return nil
+end
 -- 直接设置数据 （导入时候用）
 function dataBase:setData(data)
     if data then

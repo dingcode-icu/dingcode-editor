@@ -3,6 +3,7 @@ local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
 local NodePointInput = require("render/common/nodepointinput")
+local NodePointDefault = require("render/common/nodepoint_default")
 local MenuInput = require("imguix/menu/menu_input")
 local d = display
 local enum = enum
@@ -244,12 +245,21 @@ function BaseNode:selTreePoint(dk, iss)
                 local tp = iss and theme.texture("circle.png") or theme.texture("triangle.png")
                 sp:setTexture(tp)
             else
-                print("todo 选中状态")
+                sp:select(iss)
             end
         end
         -- 维护内存数据
         self:setPointstate(dk, iss)
     end
+end
+function BaseNode:newNodePoint(data)
+    local node = nil
+    if data.keyconfig and (data.keyconfig.key == enum.dropnode_key.input_int or data.keyconfig.key == enum.dropnode_key.input_float or data.keyconfig.key == enum.dropnode_key.input_text) then
+        node = NodePointInput.new(data)
+    else
+        node = NodePointDefault.new(data)
+    end
+    return node
 end
 function BaseNode:initInOutPoint()
     local listinput = self:getData():getListInputConfig()
@@ -263,9 +273,30 @@ function BaseNode:initInOutPoint()
                 keyconfig = v,
             }
 
-            local nodein = NodePointInput.new(data)
+            local nodein = self:newNodePoint(data)
             self.view:addChild(nodein.view)
-            nodein.view:setPositionX(8)
+            nodein.view:setAnchorPoint(cc.p(0.5, 0.5))
+            nodein.view:setPositionX(20)
+            nodein.view:setPositionY(self.height - (50 + (i - 1) * 20))
+            self.listNodePoint[key] = nodein
+        end
+    end
+
+    local listoutput = self:getData():getListOutputConfig()
+    if listoutput then
+        local i = 0
+        for key, v in pairs(listoutput) do
+            i = i + 1
+            local data = {
+                parent = self,
+                key = key,
+                keyconfig = v,
+            }
+
+            local nodein = self:newNodePoint(data)
+            self.view:addChild(nodein.view)
+            nodein.view:setAnchorPoint(cc.p(0.5, 0.5))
+            nodein.view:setPositionX(self.width - 20)
             nodein.view:setPositionY(self.height - (50 + (i - 1) * 20))
             self.listNodePoint[key] = nodein
         end
@@ -304,14 +335,24 @@ function BaseNode:isCanDropStart(keyPoint)
         -- 默认 在可拖动配对数组内的， 只能放置一个
         for i, v in pairs(enum.dropkey_canset) do
             -- 判断类型
-            --if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
-            --    --判断数量是否可以拖动
-            --    if self:getData():getLineIdList(keyPoint) <= 0 then
-            --        -- 默认只能和一个连接
-            --        return true
-            --    end
-            --end
+            local config = self:getData():getConfigForKey(keyPoint)
+            if config then
+                if self:isKeyInList(v, config.key) then
+                    --判断数量是否可以拖动
+                    if #self:getData():getLineIdList(keyPoint) < config.numMax then
+                        -- 默认只能和一个连接
+                        return true
+                    end
+                end
+            end
         end
+    end
+    return false
+end
+-- key 是否是不相等的 并且处于列表
+function BaseNode:isKeyInList(list, key1)
+    if (key1 == list[1]) or (key1 == list[2]) then
+        return true
     end
     return false
 end
@@ -320,13 +361,27 @@ function BaseNode:isCanDropIn(dropData, keyPointEnd)
     local nodeStart = dropData.nodeStart
     local keyPointStart = dropData.keyPoint
     local nodeEnd = self
+    local keyTypeStart = keyPointStart
+    local keyTypeEnd = keyPointEnd
     if nodeStart:getuuid() == nodeEnd:getuuid() then
         -- 自己不能和自己相连
         return false
     end
+    if keyTypeStart ~= enum.dropnode_key.child and keyTypeStart ~= enum.dropnode_key.parent then
+        local config = nodeStart:getData():getConfigForKey(keyTypeStart)
+        if config then
+            keyTypeStart = config.key
+        end
+    end
+    if keyTypeEnd ~= enum.dropnode_key.child and keyTypeEnd ~= enum.dropnode_key.parent then
+        local config = nodeEnd:getData():getConfigForKey(keyTypeEnd)
+        if config then
+            keyTypeEnd = config.key
+        end
+    end
     for i, v in pairs(enum.dropkey_canset) do
         -- 判断类型
-        if self:isKeyInListNotSame(v, keyPointStart, keyPointEnd) then
+        if self:isKeyInListNotSame(v, keyTypeStart, keyTypeEnd) then
             --判断数量是否可以放
             if self:isCanDropStart(keyPointEnd) then
                 -- 判断是否已经包含

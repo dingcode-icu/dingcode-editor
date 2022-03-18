@@ -1,6 +1,6 @@
 return {
-    name = "action_movenode",
-    type = "action",
+    name = "cond_movenode",
+    type = "conditionals",
     desc = "移动",
     supposeType = "graph",
 }

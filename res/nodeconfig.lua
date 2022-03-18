@@ -48,7 +48,13 @@ local nodeConfig = {
                     numMax = 0,
                 },
             },
-            output = {},
+            output = {
+                out_float_1 = {
+                    direct = "right",
+                    key = "out_float",
+                    numMax = 1,
+                },
+            },
         },
         int = {
             name = "int",
@@ -62,7 +68,13 @@ local nodeConfig = {
                     numMax = 0,
                 },
             },
-            output = {},
+            output = {
+                out_int_1 = {
+                    direct = "right",
+                    key = "out_int",
+                    numMax = 1,
+                },
+            },
         },
         text = {
             name = "text",
@@ -76,7 +88,13 @@ local nodeConfig = {
                     numMax = 0,
                 },
             },
-            output = {},
+            output = {
+                out_text_1 = {
+                    direct = "right",
+                    key = "out_text",
+                    numMax = 1,
+                },
+            },
         },
     },
     decorator = {

@@ -37,6 +37,9 @@ enum = {
     -- 拖动的一一对应关系
     dropkey_canset = {
         {"parent", "child"},
+        {"in_int", "out_int"},
+        {"in_float", "out_float"},
+        {"in_text", "out_text"},
     },
 
     -- 事件监听枚举
