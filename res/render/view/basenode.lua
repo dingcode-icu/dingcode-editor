@@ -2,7 +2,7 @@ local BaseNode = class("BaseNode")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
 local theme = require("lib/theme")
-local NodePointInput = require("nodepointinput")
+local NodePointInput = require("render/common/nodepointinput")
 local MenuInput = require("imguix/menu/menu_input")
 local d = display
 local enum = enum
@@ -30,6 +30,7 @@ function BaseNode:ctor(data)
     self.touchListener = null           -- 点击监听
     self._state  = BaseNode.STATE.NORMAL -- 是否选中状态
     self.listNodePoint = {}
+    self.listStatePoint = {}            --  点的可选状态是否显示
 
     self.width = 0                       --节点的宽高
     self.height = 0
@@ -221,12 +222,33 @@ function BaseNode:initTreePoint()
     end
     self:initInOutPoint()
 end
+function BaseNode:isPointSelect(key)
+    if not self.listStatePoint[key] then
+        self.listStatePoint[key] = BaseNode.STATE.NORMAL
+    end
+    return self.listStatePoint[key] == BaseNode.STATE.SELECT
+end
+function BaseNode:setPointstate(key, isSelect)
+    if isSelect then
+        self.listStatePoint[key] = BaseNode.STATE.SELECT
+    else
+        self.listStatePoint[key] = BaseNode.STATE.NORMAL
+    end
+end
 ---切换tree-point节点的显示状态
 function BaseNode:selTreePoint(dk, iss)
     local sp = self.listNodePoint[dk]
     if sp then
-        local tp = iss and theme.texture("circle.png") or theme.texture("triangle.png")
-        sp:setTexture(tp)
+        if iss ~= self:isPointSelect(dk) then
+            if dk == enum.dropnode_key.parent or dk == enum.dropnode_key.child then
+                local tp = iss and theme.texture("circle.png") or theme.texture("triangle.png")
+                sp:setTexture(tp)
+            else
+                print("todo 选中状态")
+            end
+        end
+        -- 维护内存数据
+        self:setPointstate(dk, iss)
     end
 end
 function BaseNode:initInOutPoint()
@@ -406,6 +428,25 @@ function BaseNode:registerTouch()
     end
     listener.onTouchMoved = function(touch, event)
         if ViewManager and ViewManager.isDropingLine then
+            for key, nodePoint in pairs(this.listNodePoint) do
+                if nodePoint then
+                    local size = nodePoint:getContentSize()
+                    if this.isTouchInsideNode(touch, nodePoint, size) then
+                        local dropData = {
+                            keyPoint = key,
+                            endNodeData = this,
+                        }
+                        if ViewManager:isCanDropEnd(dropData) then
+                            this:selTreePoint(key, true)
+                        else
+                            this:selTreePoint(key, false)
+                        end
+                    else
+                        this:selTreePoint(key, false)
+                    end
+                end
+            end
+
             return true
         end
         if this._touchStart then
@@ -448,6 +489,9 @@ function BaseNode:registerTouch()
 
             for key, nodePoint in pairs(this.listNodePoint) do
                 if nodePoint then
+
+                    this:selTreePoint(key, false)
+
                     local size = nodePoint:getContentSize()
 
                     if this.isTouchInsideNode(touch, nodePoint, size) then
