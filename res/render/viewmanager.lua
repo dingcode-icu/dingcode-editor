@@ -57,8 +57,25 @@ function viewManager:init(config)
         end
     end
 
-    self.isInit = true
+    self:setIsInit(true)
     self.isDropingLine = false
+end
+
+function viewManager:getIsInit()
+    if not self.isInit then
+        --print("请先 创建or打开 工程")
+    end
+    return self.isInit
+end
+
+function viewManager:setIsInit(isInit)
+    self.isInit = isInit
+    if isInit then
+        Event:dispatchEvent({
+            name = enum.evt_keyboard.imgui_menu_start,
+            isHide = true,
+        })
+    end
 end
 
 function viewManager:getNodeViewForId(uuid)
@@ -100,6 +117,7 @@ function viewManager:reset()
     self.nodeDropingLine = null                 -- 拖动中的对象
     self._isAllNodeSwallow = false
 
+    self:setIsInit(true)
 end
 
 function viewManager:initViewParent()
@@ -145,9 +163,15 @@ function viewManager:registerTouch()
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function()
+        if not this:getIsInit() then
+             return true
+        end
         return true
     end
     listener.onTouchMoved = function(touch, event)
+        if not this:getIsInit() then
+             return true
+        end
         if this.isDropingLine then
             this:upStartDropingline(touch:getLocation())
             return true
@@ -155,6 +179,9 @@ function viewManager:registerTouch()
         return false
     end
     listener.onTouchEnded = function(touch, event)
+        if not this:getIsInit() then
+             return true
+        end
         --local mouseType = event:getButton()
         if this.isDropingLine then
             this:cancelDropingLine()
@@ -166,6 +193,9 @@ function viewManager:registerTouch()
         return true
     end
     listener.onTouchCancelled = function()
+        if not this:getIsInit() then
+             return true
+        end
         --print("4")
         if this.isDropingLine then
             this:cancelDropingLine()
@@ -177,6 +207,9 @@ function viewManager:registerTouch()
     -- 注册 右键点击
     local listener = cc.EventListenerMouse:create();
     listener.onMouseDown = function(event)
+        if not this:getIsInit() then
+             return true
+        end
         local mouseType = event:getMouseButton()
         if mouseType == 1 and this._viewParent then
             this._mouseStart = event:getLocation()
@@ -185,6 +218,9 @@ function viewManager:registerTouch()
         end
     end
     listener.onMouseMove = function(event)
+        if not this:getIsInit() then
+             return true
+        end
         local mouseType = event:getMouseButton()
         if mouseType == 1 and this._viewParent then
             local pos = event:getLocation()
@@ -195,6 +231,9 @@ function viewManager:registerTouch()
 
     end
     listener.onMouseUp = function(event)
+        if not this:getIsInit() then
+             return true
+        end
         local mouseType = event:getMouseButton()
         if mouseType == 0 then
             --print("左键点击")
@@ -215,6 +254,9 @@ function viewManager:registerTouch()
     end
 
     listener.onMouseScroll = function(event)
+        if not this:getIsInit() then
+             return true
+        end
         local menu_node = require("imguix/menu/menu_node")
         --local menu_mainbar = require("imguix/menu/menu_mainbar")
         if menu_node:isShow() then

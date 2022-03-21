@@ -34,6 +34,17 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_input, function(event)
     end
 end)
 
+--创建菜单
+local menu_start = require("imguix/menu/menu_start")
+menu_start:show()
+Event:addEventListener(enum.evt_keyboard.imgui_menu_start, function(event)
+    if event and event.isHide then
+        menu_start:hide()
+    else
+        menu_start:show(event)
+    end
+end)
+
 
 
 

@@ -36,20 +36,9 @@ function tabMenuMainBar.render()
     if tabMenuMainBar.data._isShow then
         if ImGui.BeginMainMenuBar() then
             if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "file")) then
-                if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "new")) then
-                    if ImGui.MenuItem(Lang:Lang("menu_mainbar", "proj")) then
-                        tabMenuMainBar:SaveFile()
-                    end
 
-                    if ImGui.MenuItem(Lang:Lang("menu_node", "node")) then
-                        Event:dispatchEvent({
-                            name = enum.evt_keyboard.imgui_menu_node,
-                            posX = math.random() * 300 + 100,
-                            posY = math.random() * 300 + 100,
-                        })
-                    end
-
-                    ImGui.EndMenu()
+                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "new"), "") then
+                    tabMenuMainBar:SaveFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "import"), "") then
@@ -147,7 +136,7 @@ function tabMenuMainBar:OpenFile()
 end
 
 -- 保存文件
-function tabMenuMainBar:SaveFile()
+function tabMenuMainBar:SaveFile(isNew)
     local filePath = ding.FileDialogUtils.GetSaveFile()
     print(filePath)
     if filePath and string.len(filePath) > 0 then
@@ -157,6 +146,11 @@ function tabMenuMainBar:SaveFile()
         end
         try {
             function()
+                if isNew then
+                    -- 如果是新建 重置数据
+                    DataManager:reset()
+                    ViewManager:reset()
+                end
                 local dataToSave = DataManager:get_alldata()
                 local viewToSave = ViewManager:get_alldata()
                 local treeToSave = DataManager:get_export_tree()
