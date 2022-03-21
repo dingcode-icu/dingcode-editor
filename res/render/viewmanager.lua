@@ -344,7 +344,7 @@ function viewManager:registerEvent()
             end
         end
         -- 删除连线
-        local list = self.data.lineList
+        local list = this.data.lineList
         for i, v in pairs(list) do
             if v:isSelect() then
                 -- 移除线的时候 移除对应维护的数据
@@ -389,6 +389,20 @@ function viewManager:registerEvent()
         end
 
     end)
+
+    Event:addEventListener(enum.evt_keyboard.sys_exit, function(event)
+        -- 退出程序
+        this:exitGame()
+    end)
+    Event:addEventListener(enum.evt_keyboard.sys_autosave, function(event)
+        -- 自动保存
+        local menu_mainbar = require("imguix/menu/menu_mainbar")
+        menu_mainbar:AutoSaveFile()
+    end)
+end
+-- 退出程序
+function viewManager:exitGame()
+    os.exit(0)
 end
 function viewManager:unRegisterEvent()
     Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_delete_node)

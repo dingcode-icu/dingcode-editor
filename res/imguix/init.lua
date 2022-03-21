@@ -40,6 +40,8 @@ function imguiUI:init()
 
     local Event = require("lib/event")
     Event:bind(self)
+
+    require("imguix/menu/menu_all")
 end
 
 function imguiUI:open_demo()

@@ -33,13 +33,15 @@ local SINGLE_KEY_MAP  = {
 local MULTI_KEY_MAP = {
     [cc.KeyBoardCode.KEY_LEFT_CTRL] = {
         [cc.KeyBoardCode.KEY_0] = enum.evt_keyboard.imgui_delete_node,
+        [cc.KeyBoardCode.KEY_Q] = enum.evt_keyboard.sys_exit,
+        [cc.KeyBoardCode.KEY_S] = enum.evt_keyboard.sys_autosave,
     }
 }
 
 ---cocos渲染层初始化
 -- @return nil
 function render:init()
-
+    print("=================", debug.traceback())
     --init displayex 
     d.setDefFont("font/FZLanTYJW.TTF")
 
@@ -75,11 +77,13 @@ function render:init()
             comb_key = keycode
         end
         if comb_cnt >=1 then
-            if evt[keycode] then
-                 Event:dispatchEvent({
-                                    name = evt,
-                                    data = data
-                                })
+            if MULTI_KEY_MAP[comb_key] then
+                if MULTI_KEY_MAP[comb_key][keycode] then
+                     Event:dispatchEvent({
+                                        name = MULTI_KEY_MAP[comb_key][keycode],
+                                        data = data
+                                    })
+                end
             end
         end
 

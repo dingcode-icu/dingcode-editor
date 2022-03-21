@@ -5,8 +5,7 @@ local function main()
     require("enum")
     require("release")
     require("imguix/init"):init()
-    require("render/init"):init()
-    require("imguix/menu/menu_all")
+    require("render/init")
 
 end
 

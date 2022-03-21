@@ -52,6 +52,9 @@ enum = {
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
 
         imgui_move_node_to_line = "imgui_move_node_to_line",        -- 移动节点 - 对应移动连线
+
+        sys_exit = "sys_exit",                                      -- 退出程序
+        sys_autosave = "sys_autosave",                              -- 自动保存
     },
 
     -- 节点可拖动的方向

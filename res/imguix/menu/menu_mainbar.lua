@@ -54,7 +54,7 @@ function tabMenuMainBar.render()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "quit"), "ctrl+Q") then
-                    print("quit")
+                    ViewManager:exitGame()
                 end
 
                 ImGui.EndMenu()
