@@ -409,10 +409,11 @@ function BaseNode:getDropPosForKey(key)
             dir = enum.node_direct.top
         elseif key == enum.dropnode_key.child then
             dir = enum.node_direct.bottom
-        elseif key == enum.dropnode_key.input then
-            dir = enum.node_direct.left
-        elseif key == enum.dropnode_key.output then
-            dir = enum.node_direct.right
+        else
+            local config = self:getData():getConfigForKey(key)
+            if config and config.direct then
+                dir = config.direct
+            end
         end
         return pos, dir
     end
