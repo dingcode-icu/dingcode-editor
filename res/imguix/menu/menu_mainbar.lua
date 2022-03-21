@@ -50,7 +50,7 @@ function tabMenuMainBar.render()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "save"), "ctrl+S") then
-                    print("click save ")
+                    tabMenuMainBar:AutoSaveFile()
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "quit"), "ctrl+Q") then
@@ -123,6 +123,8 @@ function tabMenuMainBar:OpenFile()
                 print("============= open file")
 
                 DataManager:init(jsonData)
+                -- 设置保存的路径
+                ViewManager:setSaveFilePath(filePath)
             end, catch {
                 function ()
                     print("请选择正确的配置文件")
@@ -162,6 +164,9 @@ function tabMenuMainBar:SaveFile(isNew)
                 print("========== save file")
                 --print(strData)
                 local strDesc = io.writefile(realFilePath, strData)
+                -- 设置保存的路径
+                ViewManager:setSaveFilePath(realFilePath)
+
             end, catch {
                 function (err)
                     print("保存文件出现错误")
@@ -172,6 +177,27 @@ function tabMenuMainBar:SaveFile(isNew)
 
     end
 
+end
+
+function tabMenuMainBar:AutoSaveFile()
+    local realFilePath = ViewManager:getSaveFilePath()
+    if realFilePath and string.len(realFilePath) > 0 then
+        local dataToSave = DataManager:get_alldata()
+        local viewToSave = ViewManager:get_alldata()
+        local treeToSave = DataManager:get_export_tree()
+        local strData =  json.encode({
+            data = dataToSave,
+            view = viewToSave,
+            tree = treeToSave,
+        })
+        print("========== save file")
+        --print(strData)
+        local strDesc = io.writefile(realFilePath, strData)
+        -- 设置保存的路径
+        ViewManager:setSaveFilePath(realFilePath)
+    else
+        print("error tabMenuMainBar:AutoSaveFile 路径不存在")
+    end
 end
 
 

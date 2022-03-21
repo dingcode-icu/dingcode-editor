@@ -10,6 +10,7 @@ local viewManager = {
         lineList = {},                      -- 线
     },
     isInit = false,                         -- 是否已经初始化
+    strsavefilepath = "",                   -- 打开/保存的文件路径
 
     isDropingLine = false,                  -- 是否正在拖动划线
     dataRropingLine = null,                 -- 拖动中的数据对象
@@ -60,14 +61,14 @@ function viewManager:init(config)
     self:setIsInit(true)
     self.isDropingLine = false
 end
-
+-- 页面是否创建成功
 function viewManager:getIsInit()
     if not self.isInit then
         --print("请先 创建or打开 工程")
     end
     return self.isInit
 end
-
+-- 设置 页面是否创建成功
 function viewManager:setIsInit(isInit)
     self.isInit = isInit
     if isInit then
@@ -77,11 +78,19 @@ function viewManager:setIsInit(isInit)
         })
     end
 end
-
+-- 获取打开/自动保存的文件路径
+function viewManager:getSaveFilePath()
+    return self.strsavefilepath
+end
+-- 设置打开/自动保存的文件路径
+function viewManager:setSaveFilePath(path)
+    self.strsavefilepath = path
+end
+-- 根据id 获取页面上的显示节点
 function viewManager:getNodeViewForId(uuid)
     return self.data.viewList[uuid]
 end
-
+-- 获取保存的数据
 function viewManager:get_alldata()
     local real = {
         viewList = {},
@@ -101,7 +110,7 @@ function viewManager:get_alldata()
     end
     return real
 end
----销毁root view场景
+--- 销毁root view场景
 function viewManager:reset()
     for i, v in pairs(self.data.viewList) do
         v:destroy()
