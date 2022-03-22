@@ -119,6 +119,10 @@ function tabMenuMainBar:OpenFile()
 
         try {
             function()
+                -- 打开之前 先还原
+                DataManager:reset()
+                ViewManager:reset()
+
                 local jsonData = json.decode(strDesc)
                 print("============= open file")
 

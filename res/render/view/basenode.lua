@@ -131,10 +131,12 @@ function BaseNode:Select()
 end
 -- 取消选中
 function BaseNode:UnSelect()
-    print("load unselect")
-    local state = cc.GLProgramState.getOrCreateWithGLProgramName(cc.GLProgramStateE.SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)
-    self.sp_bg:setGLProgramState(state)
-    self._state = BaseNode.STATE.NORMAL
+    if self:isSelect() then
+        print("load unselect")
+        local state = cc.GLProgramState.getOrCreateWithGLProgramName(cc.GLProgramStateE.SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)
+        self.sp_bg:setGLProgramState(state)
+        self._state = BaseNode.STATE.NORMAL
+    end
 end
 -- 反选
 function BaseNode:ClickSelect()
@@ -579,6 +581,7 @@ function BaseNode:registerTouch()
                                 nodePoint:setValue(lab)
                             end,
                             typeinput = keyConfig,
+                            valueOld = nodePoint:getValue(),
                         })
                     end
 

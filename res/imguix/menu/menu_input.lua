@@ -12,6 +12,7 @@ local tabInputNode = {
         _isInputed = false,
         _lab = nil,
         _isEnd = false,
+        _valueOld = nil,
     },
 }
 
@@ -38,6 +39,9 @@ function tabInputNode:show(args)
         else
             self.data._typeinput = enum.dropnode_key.input_text
         end
+        if args.valueOld then
+            self.data._valueOld = args.valueOld
+        end
         self.data._isInputed = false
         self.data._lab = nil
         self.data._isEnd = false
@@ -51,6 +55,7 @@ function tabInputNode:hide()
     self.data._lab = nil
     self.data._isEnd = true
     self.data._isShow = false
+    self.data._valueOld = nil
 end
 
 -- 是否在显示
@@ -62,6 +67,17 @@ function tabInputNode.render()
     if tabInputNode.data._isShow then
         ImGui.SetNextWindowPos(tabInputNode.data._posX, tabInputNode.data._posY, ImGui.ImGuiCond.Always)
         ImGui.Begin("tabInputNode", true, ImGui.ImGuiWindowFlags.NoTitleBar)
+
+        -- 当前值
+        local strOldValue = "当前值： "
+        if tabInputNode.data._valueOld then
+            strOldValue = strOldValue .. tabInputNode.data._valueOld
+        else
+            strOldValue = strOldValue .. "未输入"
+        end
+        ImGui.Text(strOldValue);
+        ImGui.Separator();
+
         local curNum = nil
         local lab,isInputed
         if tabInputNode.data._typeinput == enum.dropnode_key.input_float then

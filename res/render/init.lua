@@ -41,7 +41,6 @@ local MULTI_KEY_MAP = {
 ---cocos渲染层初始化
 -- @return nil
 function render:init()
-    print("=================", debug.traceback())
     --init displayex 
     d.setDefFont("font/FZLanTYJW.TTF")
 
