@@ -45,6 +45,19 @@ function dataManager:get_alldata()
     end
     return real
 end
+-- 排序子节点
+function dataManager:sortChild(childlist)
+    local ViewManager = require("render/viewmanager")
+    local sortFunc = function(left, right)
+        local viewLeft = ViewManager:getNodeViewForId(left.uuid)
+        local viewRight = ViewManager:getNodeViewForId(right.uuid)
+        if viewLeft and viewRight and viewLeft:getPositionX() < viewRight:getPositionX() then
+            return true
+        end
+        return false
+    end
+    table.sort(childlist, sortFunc)
+end
 function dataManager:buildChildData(data)
     local childlist = data.lineidlist[enum.dropnode_key.child]
     if childlist and #childlist > 0 then
@@ -57,6 +70,7 @@ function dataManager:buildChildData(data)
                 self:buildChildData(tempChildSave)
             end
         end
+        self:sortChild(data.childdatalist)
     end
 end
 -- 获取导出的 行为树解析数据
