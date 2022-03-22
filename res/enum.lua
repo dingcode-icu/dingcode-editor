@@ -64,6 +64,13 @@ enum = {
         left = "left",
         right = "right",
     },
+
+    -- 节点userdefault 枚举
+    userdefault = {
+        menu_pathlist = "menu_pathlist",                        -- 之前打开的文件路径列表
+    },
+
+
 }
 
 local logic_node_list = {}

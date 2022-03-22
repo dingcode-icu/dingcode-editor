@@ -114,21 +114,29 @@ function tabMenuMainBar:OpenFile()
     dump(ding, "-->>ding")
     local filePath = ding.FileDialogUtils.GetOpenFile()
     print(filePath)
+    self:OpenFileForPath(filePath)
+end
+
+function tabMenuMainBar:OpenFileForPath(filePath)
     if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
         local strDesc = io.readfile(filePath)
-
         try {
             function()
-                -- 打开之前 先还原
-                DataManager:reset()
-                ViewManager:reset()
 
                 local jsonData = json.decode(strDesc)
                 print("============= open file")
 
+                -- 打开之前 先还原
+                DataManager:reset()
+                ViewManager:reset()
+
                 DataManager:init(jsonData)
                 -- 设置保存的路径
                 ViewManager:setSaveFilePath(filePath)
+
+                -- 保存路径到 下次打开的菜单
+                local fileutils = require("imguix/fileutils")
+                fileutils:addMenuPathToList(filePath)
             end, catch {
                 function ()
                     print("请选择正确的配置文件")
@@ -170,6 +178,10 @@ function tabMenuMainBar:SaveFile(isNew)
                 local strDesc = io.writefile(realFilePath, strData)
                 -- 设置保存的路径
                 ViewManager:setSaveFilePath(realFilePath)
+
+                -- 保存路径到 下次打开的菜单
+                local fileutils = require("imguix/fileutils")
+                fileutils:addMenuPathToList(realFilePath)
 
             end, catch {
                 function (err)

@@ -61,6 +61,26 @@ function tabStartNode.render()
             menu_mainbar:OpenFile()
         end
 
+        ImGui.Separator();
+        ImGui.Text("快速打开： ");
+        -- 本地已经打开过的菜单
+        local fileutils = require("imguix/fileutils")
+        local list = fileutils:getListMenuPath()
+        for i, v in ipairs(list) do
+            if string.len(v) > 0 then
+                local strFile = v
+                local listName = string.split(strFile, "/")
+                if not ding.isMac() then
+                    listName = string.split(strFile, "\\")
+                end
+                if ImGui.MenuItem(listName[#listName]) then
+                    local menu_mainbar = require("imguix/menu/menu_mainbar")
+                    menu_mainbar:OpenFileForPath(strFile)
+                end
+                ImGui.Text(strFile);
+            end
+        end
+
         ImGui.End()
     end
 

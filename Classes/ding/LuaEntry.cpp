@@ -133,6 +133,9 @@ namespace dan {
             auto sp = Sprite::createWithTexture(img, rect);
             return sp;
         });
+        d.set_function("isMac", [=](void) ->bool {
+            return CC_TARGET_PLATFORM == CC_PLATFORM_MAC;
+        });
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );

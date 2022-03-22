@@ -299,7 +299,9 @@ inline void Init(sol::state_view& lua){
 
 
     CC.new_usertype<UserDefault>("UserDefault",
-                                 "getInstance", &UserDefault::getInstance
+                                 "getInstance", &UserDefault::getInstance,
+                                 "getStringForKey", sol::overload( sol::resolve<std::string (const char*)>(&UserDefault::getStringForKey) ),
+                                 "setStringForKey", &UserDefault::setStringForKey
                                  );
 
 #pragma endregion Instance

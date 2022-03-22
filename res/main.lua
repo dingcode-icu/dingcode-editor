@@ -6,7 +6,6 @@ local function main()
     require("release")
     require("imguix/init"):init()
     require("render/init")
-
 end
 
 ---打印报错及堆栈
