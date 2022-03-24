@@ -80,7 +80,8 @@ function dataManager:get_export_tree()
     }
     for i, v in pairs(self.data.dataList) do
         local dataReal = v:getData()
-        if #v:getParentIdList() <= 0 then
+        --if #v:getParentIdList() <= 0 then
+        if v:gettype() == enum.enum_node_type.root then
             local dataSave = table.clone(dataReal)
             self:buildChildData(dataSave)
 
