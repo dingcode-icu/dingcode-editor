@@ -38,7 +38,7 @@ function tabMenuMainBar.render()
             if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "file")) then
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "new"), "") then
-                    tabMenuMainBar:SaveFile()
+                    tabMenuMainBar:SaveFile(true)
                 end
 
                 if ImGui.MenuItem(Lang:Lang("menu_mainbar", "import"), "") then
