@@ -138,7 +138,9 @@ function NodeLine:initEvent()
                     break
                 end
             end
-
+            if not isIn then
+                return
+            end
             if keyStart and keyEnd then
                 local posStart, dirIn = nodeDataStart:getDropPosForKey(keyStart)
                 local posEnd, dirOut = nodeDataEnd:getDropPosForKey(keyEnd)
