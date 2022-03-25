@@ -586,4 +586,33 @@ function viewManager:createLineBezier(pIn, pOut, data)
     return node
 end
 
+function viewManager:toCenterForId(id)
+    local viewData = self:getNodeViewForId(id)
+    if viewData then
+        local posX = viewData:getPositionX()
+        local posY = viewData:getPositionY()
+        local parent = viewData:getParent()
+
+        if parent then
+            local posWorld = parent:convertToWorldSpace(cc.p(posX, posY))
+            local width = cc.Director:getInstance():getWinSize().width
+            local height = cc.Director:getInstance():getWinSize().height
+
+            local offX =  width / 2 - posWorld.x
+            local offY =  height / 2 - posWorld.y
+            local posOffLocal = self._viewParent:getParent():convertToNodeSpace(cc.p(offX, offY))
+            self._viewParent:setPositionX(self._viewParent:getPositionX() + posOffLocal.x)
+            self._viewParent:setPositionY(self._viewParent:getPositionY() + posOffLocal.y)
+        end
+
+        --local mouseType = event:getMouseButton()
+        --if mouseType == 1 and this._viewParent then
+        --    local pos = event:getLocation()
+        --    local pStart = this._mouseStart
+        --    this._viewParent:setPositionX(this._parPosStartX + pos.x - pStart.x)
+        --    this._viewParent:setPositionY(this._parPosStartY - pos.y + pStart.y)
+        --end
+    end
+end
+
 return viewManager

@@ -46,6 +46,24 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_start, function(event)
 end)
 
 
+--节点的树形结构
+local menu_tree = require("imguix/menu/menu_tree")
+menu_tree:hide()
+Event:addEventListener(enum.evt_keyboard.imgui_menu_tree, function(event)
+    if event and event.isHide then
+        menu_tree:hide()
+    elseif event and event.isReversedSelect then
+        if menu_tree:isShow() then
+            menu_tree:hide()
+        else
+            menu_tree:show(event)
+        end
+    else
+        menu_tree:show(event)
+    end
+end)
+
+
 
 
 

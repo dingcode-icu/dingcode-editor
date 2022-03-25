@@ -32,6 +32,10 @@ function dataManager:reset()
 
 end
 
+function dataManager:getList()
+    return self.data.dataList
+end
+
 function dataManager:getDataForId(uuid)
     return self.data.dataList[uuid]
 end

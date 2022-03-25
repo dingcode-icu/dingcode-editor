@@ -72,6 +72,12 @@ function BaseNode:getContentSize()
     end
     return null
 end
+function BaseNode:getParent()
+    if self.view then
+        return self.view:getParent()
+    end
+    return null
+end
 function BaseNode:getPositionX()
     if self.view then
         return self.view:getPositionX()

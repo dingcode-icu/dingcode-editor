@@ -2650,6 +2650,7 @@ namespace sol_ImGui
         ImGui.set_function("TreeNode", sol::overload(
                                            sol::resolve<bool(const std::string &)>(TreeNode),
                                            sol::resolve<bool(const std::string &, const std::string &)>(TreeNode)));
+        ImGui.set_function("TreePop", &TreePop);
         ImGui.set_function("TreeNodeEx", sol::overload(
                                              sol::resolve<bool(const std::string &)>(TreeNodeEx),
                                              sol::resolve<bool(const std::string &, int)>(TreeNodeEx),

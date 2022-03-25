@@ -48,6 +48,7 @@ enum = {
         imgui_menu_node = "imgui_menu_node",                        -- 显示右键节点列表
         imgui_menu_input = "imgui_menu_input",                      -- 显示输入
         imgui_menu_start = "imgui_menu_start",                      -- 显示主菜单
+        imgui_menu_tree = "imgui_menu_tree",                        -- 显示树形结构列表
         imgui_delete_node = "imgui_delete_node",                    -- 删除节点
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
 

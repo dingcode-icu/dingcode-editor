@@ -61,8 +61,11 @@ function tabMenuMainBar.render()
             end
 
             if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "setting")) then
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "settAudio")) then
-                    print("click audio setting ")
+                if ImGui.MenuItem("树形结构") then
+                    Event:dispatchEvent({
+                        name = enum.evt_keyboard.imgui_menu_tree,
+                        isReversedSelect = true,
+                    })
                 end
                 ImGui.EndMenu()
             end
