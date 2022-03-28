@@ -94,13 +94,18 @@ function tabMenuMainBar.render()
                         }
                     }
 
-
                 end
 
                 if ImGui.MenuItem("showDemo") then
                     print("test aaaaaa")
                     imguix:open_demo()
                 end
+
+                if ImGui.MenuItem("showTip") then
+                    ding.showToast("message")
+                end
+
+
                 ImGui.EndMenu()
             end
 

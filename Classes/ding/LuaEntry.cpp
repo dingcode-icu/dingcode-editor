@@ -136,6 +136,34 @@ namespace dan {
         d.set_function("isMac", [=](void) ->bool {
             return CC_TARGET_PLATFORM == CC_PLATFORM_MAC;
         });
+        d.set_function("showToast", [=](string desc){
+            auto node = Node::create();
+            node->setScale(0.7);
+            auto scene = Director::getInstance()->getRunningScene();
+            scene->addChild(node);
+
+            auto bg = Sprite::create("texture/bgtoast.png");
+            node->addChild(bg);
+            auto lab = Label::createWithTTF(desc, "font/FZLanTYJW.TTF", 30);
+            node->addChild(lab);
+            lab->setColor(Color3B::BLACK);
+            auto labsize = lab->getContentSize();
+            bg->setContentSize(cocos2d::Size(labsize.width + 30, labsize.height + 20));
+
+            auto width = Director::getInstance()->getWinSize().width;
+            auto height = Director::getInstance()->getWinSize().height;
+            node->setPosition(width / 2, height / 2);
+
+            auto scale1 = ScaleTo::create(0.1, 1.3);
+            auto scale2 = ScaleTo::create(0.05, 1);
+            auto delay = DelayTime::create(1.5);
+            auto moveby = MoveBy::create(0.3f, Vec2(0, 100));
+            auto call = CallFunc::create([=](){
+                node->removeFromParentAndCleanup(true);
+            });
+            auto seq = Sequence::create(scale1, scale2, delay, moveby, call, NULL);
+            node->runAction(seq);
+        });
         d.new_usertype<SVGSprite>("SVGSprite",
                                   "create", &SVGSprite::create
                                   );

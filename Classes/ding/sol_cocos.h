@@ -16,7 +16,9 @@ namespace sol_cocos2d {
     //fileutil
     inline auto getSearchPath(){return sol::as_table(FileUtils::getInstance()->getSearchPaths());}
     inline auto setSearchPaths(sol::as_table_t<std::vector<std::string>> o){return FileUtils::getInstance()->setSearchPaths(o.value());}
-
+    inline Sequence* createSequence(DelayTime* a, MoveBy* b, CallFunc* c){
+        return Sequence::create(a, b, c);
+    }
 };
 
 
@@ -386,12 +388,46 @@ inline void Init(sol::state_view& lua){
                            "getParent", sol::overload(
                                    sol::resolve<Node*()>(&Node::getParent)
                                            ),
-                           "setOnEnterCallback", &Node::setOnEnterCallback
+                           "setOnEnterCallback", &Node::setOnEnterCallback,
+                           "runAction", &Node::runAction
                            );
 //     node_tb.set_function("setOnEnterCallback", &Node::setOnEnterCallback);
 
 #pragma endregion Node
 
+#pragma endregion Action
+        CC.new_usertype<Action>("Action",
+                                  "stop", &Action::stop
+                                 );
+//        CC.new_usertype<FiniteTimeAction>("FiniteTimeAction",
+//                                sol::base_classes, sol::bases<Action>()
+//                                 );
+
+        CC.new_usertype<Sequence>("Sequence",
+                                  sol::base_classes, sol::bases<FiniteTimeAction>(),
+                                  "create", sol::overload(
+                                           sol::resolve<Sequence*(const Vector<FiniteTimeAction*>&)>(&Sequence::create)
+                                           ),
+                                  "createSequence",  &createSequence
+                                 );
+        CC.new_usertype<MoveBy>("MoveBy",
+                                  sol::base_classes, sol::bases<FiniteTimeAction>(),
+                                  "create", sol::overload(
+                                           sol::resolve<MoveBy *(float, const Vec2&)>(&MoveBy::create)
+                                           )
+                                 );
+        CC.new_usertype<CallFunc>("CallFunc",
+                                  sol::base_classes, sol::bases<ActionInstant>(),
+                                  "create", sol::overload(
+                                           sol::resolve<CallFunc *(const std::function<void()>&)>(&CallFunc::create)
+                                           )
+                                 );
+        CC.new_usertype<DelayTime>("DelayTime",
+                                  sol::base_classes, sol::bases<FiniteTimeAction>(),
+                                  "create", &DelayTime::create
+                                 );
+
+#pragma endregion Action
 
 #pragma region DrawNode
         CC.new_usertype<DrawNode>("DrawNode",
