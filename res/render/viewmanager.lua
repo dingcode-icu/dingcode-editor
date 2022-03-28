@@ -585,7 +585,7 @@ function viewManager:createLineBezier(pIn, pOut, data)
 
     return node
 end
-
+-- 跳转到 view 中心
 function viewManager:toCenterForId(id)
     local viewData = self:getNodeViewForId(id)
     if viewData then
