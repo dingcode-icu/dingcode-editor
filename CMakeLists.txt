@@ -58,7 +58,12 @@ file(GLOB_RECURSE IMGUIEXT_CPP_CLASSES Classes/ImGuiExt/**.cpp Classes/ImGuiExt/
 set(DING_SRC_CLASSES)
 file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
 
-add_definitions(-DSOL_NO_EXCEPTIONS=0 -DSOL_IMGUI_IMPLEMENTATION=1)
+#LOGGER
+set(LOGGER_SRC_CLASSES)
+file(GLOB_RECURSE LOGGER_SRC_CLASSES Classes/logger/**.h Classes/logger/**.cc)
+
+
+add_definitions(-DSOL_NO_EXCEPTIONS=0 -DSOL_IMGUI_IMPLEMENTATION=1 -DWIN32_LEAN_AND_MEAN=1)
 
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
@@ -140,6 +145,7 @@ set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
         ${DING_SRC_CLASSES}
+        ${LOGGER_SRC_CLASSES}
     )
 
 # mark app complie info
@@ -177,6 +183,7 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
+    message(${GAME_RES_FOLDER},"-->>>from")
     cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 
