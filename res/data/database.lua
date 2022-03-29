@@ -28,6 +28,19 @@ end
 function dataBase:generateuuid()
     return ding.guid()
 end
+-- 是否可以导出
+function dataBase:isCanExport(key)
+    if key == enum.dropnode_key.parent then
+        if self:gettype() ~= enum.enum_node_type.root then
+            -- 除了root 节点 都应该有父节点
+            local list = self:getLineIdList(key)
+            if list and #list <= 0 then
+                return false
+            end
+        end
+    end
+    return true
+end
 -- 是否已经包含某个id的节点
 function dataBase:isContainForLineList(dropKey, targetId, targetKey)
     local list = self:getLineIdList(dropKey)

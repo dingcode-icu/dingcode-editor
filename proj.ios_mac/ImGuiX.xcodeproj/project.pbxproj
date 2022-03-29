@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0421401F279FA52B00C441DF /* res in Resources */ = {isa = PBXBuildFile; fileRef = 0421401D279FA52B00C441DF /* res */; };
 		042DDE7C27C629DE004BCD5B /* libnfd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042DDE7B27C629DE004BCD5B /* libnfd.a */; };
+		046ACC9A27F2AC6E00528670 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 046ACC9727F2AC6E00528670 /* libwebsockets.a */; };
+		046ACC9D27F2B17900528670 /* RemoteDebuger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 046ACC9B27F2B17900528670 /* RemoteDebuger.cpp */; };
 		04EEB9DF27D772E2009A6D40 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EEB9A027D772E2009A6D40 /* AppDelegate.cpp */; };
 		04EEB9E027D772E2009A6D40 /* CCIMGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EEB9A427D772E2009A6D40 /* CCIMGUI.cpp */; };
 		04EEB9E127D772E2009A6D40 /* CCImGuiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EEB9A627D772E2009A6D40 /* CCImGuiLayer.cpp */; };
@@ -84,6 +86,9 @@
 /* Begin PBXFileReference section */
 		0421401D279FA52B00C441DF /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../res; sourceTree = "<group>"; };
 		042DDE7B27C629DE004BCD5B /* libnfd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnfd.a; path = ../third/libnfd/lib/mac/libnfd.a; sourceTree = "<group>"; };
+		046ACC9727F2AC6E00528670 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../third/libwebsockets/lib/mac/libwebsockets.a; sourceTree = "<group>"; };
+		046ACC9B27F2B17900528670 /* RemoteDebuger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteDebuger.cpp; sourceTree = "<group>"; };
+		046ACC9C27F2B17900528670 /* RemoteDebuger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteDebuger.h; sourceTree = "<group>"; };
 		04EEB9A027D772E2009A6D40 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		04EEB9A127D772E2009A6D40 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04EEB9A227D772E2009A6D40 /* TEST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TEST.hpp; sourceTree = "<group>"; };
@@ -175,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046ACC9A27F2AC6E00528670 /* libwebsockets.a in Frameworks */,
 				84791725261033A1001E992A /* libluajit.a in Frameworks */,
 				5087E76B17EB910900C73F5D /* AudioToolbox.framework in Frameworks */,
 				ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */,
@@ -344,6 +350,8 @@
 				04EEBA2527D8B1D3009A6D40 /* FileDialogUtils.h */,
 				04EEBA2627D8B1D3009A6D40 /* Display.hpp */,
 				04EEBA2727D8B1D3009A6D40 /* IniParser.hpp */,
+				046ACC9B27F2B17900528670 /* RemoteDebuger.cpp */,
+				046ACC9C27F2B17900528670 /* RemoteDebuger.h */,
 			);
 			path = sys;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				046ACC9727F2AC6E00528670 /* libwebsockets.a */,
 				042DDE7B27C629DE004BCD5B /* libnfd.a */,
 				84791724261033A0001E992A /* libluajit.a */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
@@ -543,6 +552,7 @@
 				04EEBA2C27D8B1D3009A6D40 /* StringUtil.cpp in Sources */,
 				04EEB9E527D772E2009A6D40 /* imgui_widgets.cpp in Sources */,
 				04EEBA2A27D8B1D3009A6D40 /* guid.cpp in Sources */,
+				046ACC9D27F2B17900528670 /* RemoteDebuger.cpp in Sources */,
 				04EEBA2927D8B1D3009A6D40 /* LuaEntry.cpp in Sources */,
 				04EEB9E927D772E2009A6D40 /* imgui_impl_cocos2dx.cpp in Sources */,
 				04EEB9F527D772E2009A6D40 /* nanosvg.cpp in Sources */,
@@ -585,12 +595,16 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../third/libnfd/include/",
+					"$(SRCROOT)/../third/libwebsockets/include/",
+					"$(SRCROOT)/../third/openssl/include/",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../cocos2d/external/luajit/prebuilt/mac/",
 					/Users/mac/data0/private_work/imguix/exlib,
 					"$(SRCROOT)/../third/libnfd/lib/mac",
+					"$(SRCROOT)/../third/libwebsockets/lib/mac",
+					"$(SRCROOT)/../third/openssl/lib/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
@@ -628,12 +642,16 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../third/libnfd/include/",
+					"$(SRCROOT)/../third/libwebsockets/include/",
+					"$(SRCROOT)/../third/openssl/include/",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../cocos2d/external/luajit/prebuilt/mac/",
 					/Users/mac/data0/private_work/imguix/exlib,
 					"$(SRCROOT)/../third/libnfd/lib/mac",
+					"$(SRCROOT)/../third/libwebsockets/lib/mac",
+					"$(SRCROOT)/../third/openssl/lib/mac",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (

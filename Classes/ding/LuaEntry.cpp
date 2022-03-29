@@ -10,6 +10,7 @@
 #include "ImGuiExt/CCIMGUI.h"
 #include "ding/sys/FileDialogUtils.h"
 #include "ding/guid/guid.h"
+#include "sys/RemoteDebuger.h"
 
 using namespace std;
 USING_NS_CC;
@@ -95,6 +96,10 @@ namespace dan {
 
         imgui_render();
         ImGuiLayer::createAndKeepOnTop();
+
+        // 初始化 socket
+        SmartSingleton<RemoteDebuger>::GetInstance()->init();
+
         return true;
     }
 
@@ -135,6 +140,9 @@ namespace dan {
         });
         d.set_function("isMac", [=](void) ->bool {
             return CC_TARGET_PLATFORM == CC_PLATFORM_MAC;
+        });
+        d.set_function("setOnRecviedCallback", [=](const std::function<void(std::string str)>& callback){
+            SmartSingleton<RemoteDebuger>::GetInstance()->setOnRecviedCallback(callback);
         });
         d.set_function("showToast", [=](string desc){
             auto node = Node::create();
