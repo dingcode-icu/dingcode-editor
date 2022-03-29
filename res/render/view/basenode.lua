@@ -190,6 +190,16 @@ function BaseNode:initDefaultView()
     lab_title:pos(self.width / 2, T_HEIGHT / 2)
     lab_title:setColor(d.COLOR_BLACK)
 
+    --[[dev]]
+    if RELEASE.IS_BASENODE_DEBUGGRAPH then
+        local lab_dev = d.labelL(self:getuuid(), d.DEFAULT_TTF_FONT, nil)
+        lab_dev:pos(self.width,  T_HEIGHT / 2)
+        lab_dev:setFontSize(20)
+        lab_dev:setColor(d.COLOR_YELLOW)
+        sp_tbg:addChild(lab_dev)
+    end
+
+
     --point
     self:initTreePoint()
     root:addChild(sp_bg)

@@ -13,3 +13,5 @@ proj.win32/.vs/
 .idea/
 cmake-build-*/
 ._*
+dpms_/
+*.log

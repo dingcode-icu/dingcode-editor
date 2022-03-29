@@ -507,7 +507,8 @@ inline void Init(sol::state_view& lua){
                                    sol::resolve<void(TextHAlignment, TextVAlignment)>(&Label::setAlignment)
                                    ) ,
                            "setHorizontalAlignment", &Label::setHorizontalAlignment,
-                           "setVerticalAlignment", &Label::setVerticalAlignment
+                           "setVerticalAlignment", &Label::setVerticalAlignment,
+                           "setFontSize", &Label::setBMFontSize
                            );
 #pragma endregion Label
 
