@@ -24,6 +24,12 @@ namespace dan{
          lua启动入口
          */
         bool entry();
+
+        /****
+         * 初始logger
+         * @return bool 是否成功
+         */
+        bool init_logger();
         /*
          * dev helper
          * */

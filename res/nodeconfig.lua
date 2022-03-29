@@ -2,7 +2,7 @@ local nodeConfig = {
     root = {
         root_str = {
             name = "root_str",
-            type = "root",
+            type =  "root",
             desc = "根节点",
             supposeType = "common",
             input = {
@@ -117,16 +117,23 @@ local nodeConfig = {
 }
 local function requireConfig(path)
     local data = require(path)
-    if data and data.type then
-        if not nodeConfig[data.type] then
-            nodeConfig[data.type] = {}
+    local function add_node(data_)
+        if not nodeConfig[data_.type] then
+            nodeConfig[data_.type] = {}
         end
-        nodeConfig[data.type][data.name] = data
-    else
-        error("error from load nodeconfig")
+        nodeConfig[data_.type][data_.name] = data_
+    end
+    if not data then return end
+    --single
+    if data.type then
+        add_node(data)
+    end
+    --list
+    for _, c in ipairs(data) do
+        add_node(c)
     end
 end
-local list = require("engine/cocos/config/allnodeconfig")
+local list = require("engine/cocos/all_config")
 for i, v in pairs(list) do
     requireConfig(v)
 end
