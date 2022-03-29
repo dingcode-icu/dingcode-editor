@@ -1,0 +1,1 @@
+start %~dp0dpms_\dingcode_editor.exe
