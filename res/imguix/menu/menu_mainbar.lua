@@ -101,8 +101,11 @@ function tabMenuMainBar.render()
                     imguix:open_demo()
                 end
 
-                if ImGui.MenuItem("showTip") then
+                if ImGui.MenuItem("showToast") then
                     ding.showToast("message")
+                end
+                if ImGui.MenuItem("showTip") then
+                    ViewManager:showTip("message")
                 end
 
 

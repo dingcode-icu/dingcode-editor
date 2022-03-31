@@ -19,6 +19,7 @@ local viewManager = {
 
     _viewParent = null,
     _lineParent = null,
+    _tipParent = null,
 }
 ---初始化root view场景
 function viewManager:init(config)
@@ -149,6 +150,9 @@ function viewManager:_initGraph()
 
     local scene = cc.Director:getInstance():getRunningScene()
     scene:addChild(root)
+
+    self._tipParent = cc.Node.create()
+    scene:addChild(self._tipParent)
 end
 function viewManager:_regEvent()
     self:registerTouch()
@@ -615,6 +619,28 @@ function viewManager:toCenterForId(id)
     end
 end
 
+-- 左下角提示
+function viewManager:showTip(message)
+    local node = self._tipParent
+
+    if not self._tipLab then
+        local lab = cc.Label.createWithTTF(message, "font/FZLanTYJW.TTF", 25)
+        node:addChild(lab)
+        lab:setAnchorPoint(cc.p(0,0))
+        lab:setPositionX(20)
+        lab:setPositionY(10)
+        lab:setColor(cc.c3b(255,255,255))
+        self._tipLab = lab
+    else
+        self._tipLab:setString(message)
+    end
+
+    self._tipLab:setVisible(true)
+    node:unschedule("showTip")
+    node:scheduleOnce(function()
+        self._tipLab:setVisible(false)
+    end, 2, "showTip")
+end
 
 -- 移除所有 debug调试显示状态
 function viewManager:resetAllDebugState()

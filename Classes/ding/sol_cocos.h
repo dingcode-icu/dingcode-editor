@@ -389,7 +389,13 @@ inline void Init(sol::state_view& lua){
                                    sol::resolve<Node*()>(&Node::getParent)
                                            ),
                            "setOnEnterCallback", &Node::setOnEnterCallback,
-                           "runAction", &Node::runAction
+                           "runAction", &Node::runAction,
+                           "scheduleOnce", sol::overload(
+                                   sol::resolve<void(const std::function<void(float)> &, float, const std::string &)>(&Node::scheduleOnce)
+                                   ),
+                           "unschedule", sol::overload(
+                                   sol::resolve<void(const std::string &)>(&Node::unschedule)
+                                   )
                            );
 //     node_tb.set_function("setOnEnterCallback", &Node::setOnEnterCallback);
 
