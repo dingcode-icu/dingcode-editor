@@ -148,15 +148,19 @@ function tabMenuMainBar:OpenFileForPath(filePath)
                 -- 保存路径到 下次打开的菜单
                 local fileutils = require("imguix/fileutils")
                 fileutils:addMenuPathToList(filePath)
+
+                ViewManager:showTip("打开成功, " .. filePath)
             end, catch {
                 function ()
                     print("请选择正确的配置文件")
+                    ViewManager:showTip("请选择正确的配置文件")
                 end
             }
         }
 
     else
         print("文件 不是 配置文件")
+        ViewManager:showTip("所选文件不是配置文件")
     end
 end
 
@@ -194,10 +198,13 @@ function tabMenuMainBar:SaveFile(isNew)
                 local fileutils = require("imguix/fileutils")
                 fileutils:addMenuPathToList(realFilePath)
 
+                ViewManager:showTip("保存文件成功")
+
             end, catch {
                 function (err)
                     print("保存文件出现错误")
                     print(err)
+                    ViewManager:showTip("保存文件出错")
                 end
             }
         }
@@ -224,6 +231,7 @@ function tabMenuMainBar:AutoSaveFile()
         ViewManager:setSaveFilePath(realFilePath)
     else
         print("error tabMenuMainBar:AutoSaveFile 路径不存在")
+        ViewManager:showTip("保存文件失败 请点击菜单保存")
     end
 end
 
