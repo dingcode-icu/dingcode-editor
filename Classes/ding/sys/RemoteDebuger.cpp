@@ -6,12 +6,13 @@
 //
 
 #include "RemoteDebuger.h"
-
+#include "cocos2d.h"
 
 #include "libwebsockets.h"
 #include <signal.h>
 #include <string.h>
 #include<thread>
+using namespace cocos2d;
 
 
 namespace dan {
@@ -46,7 +47,8 @@ namespace dan {
     static int
     protocol_my_callback(struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len) {
         struct session_data *data = (struct session_data *) user;
-        void* result = NULL;
+        void* payload = NULL;
+        char* result = NULL;
         std::string strResult;
         switch (reason) {
             case LWS_CALLBACK_ESTABLISHED:       // 当服务器和客户端完成握手后
@@ -66,15 +68,23 @@ namespace dan {
                 data->len = len;
 //                printf("recvied message:%s\n", in);
 
-                result = malloc(LWS_PRE + len);
-                result = memcpy((char *)result + LWS_PRE, in, len);
-                strResult = (char*)result;
-
-                printf("recvied message:%s\n", result);
-
-                if (SmartSingleton<RemoteDebuger>::GetInstance()->getOnRecviedCallback()){
-                    SmartSingleton<RemoteDebuger>::GetInstance()->getOnRecviedCallback()(strResult);
+                payload = malloc(LWS_PRE + len);
+                result = (char*)memcpy((char *)payload + LWS_PRE, in, len);
+//                payload = malloc(len);
+//                result = (char*)memcpy((char *)payload, in, len);
+                strResult = "";
+                for (int i = 0; i < len; ++i) {
+                    strResult += result[i];
                 }
+//                printf("recvied message %d:%s\n", len, result);
+
+                Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                    if (SmartSingleton<RemoteDebuger>::GetInstance()->getOnRecviedCallback()){
+                        SmartSingleton<RemoteDebuger>::GetInstance()->getOnRecviedCallback()(strResult);
+                    }
+                });
+
+
 
                 // 需要给客户端应答时，触发一次写回调
                 lws_callback_on_writable(wsi);

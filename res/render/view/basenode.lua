@@ -665,5 +665,41 @@ function BaseNode.isClickForTouch(touch)
 end
 
 
+-- 设置 调试模式的状态
+function BaseNode:setDebugState(state)
+
+    if not self.sprDebugState and state ~= enum.debug_state.none then
+        --local sp_p = cc.Sprite.create(theme.texture("running.png"))
+        local sp_p = cc.Sprite.create()
+        sp_p:setPosition(self.width / 2, self.height / 2)
+        sp_p:setScale(0.4)
+        self.view:addChild(sp_p)
+        self.sprDebugState = sp_p
+    end
+
+    if state == enum.debug_state.none then
+        if self.sprDebugState then
+            self.sprDebugState:setVisible(false)
+        end
+    elseif state == enum.debug_state.runing then
+        if self.sprDebugState then
+            self.sprDebugState:setVisible(true)
+            self.sprDebugState:setTexture(theme.texture("running.png"))
+        end
+    elseif state == enum.debug_state.success then
+        if self.sprDebugState then
+            self.sprDebugState:setVisible(true)
+            self.sprDebugState:setTexture(theme.texture("success.png"))
+
+        end
+    elseif state == enum.debug_state.fail then
+        if self.sprDebugState then
+            self.sprDebugState:setVisible(true)
+            self.sprDebugState:setTexture(theme.texture("fail.png"))
+        end
+    else
+        print("setDebugState error, state = ", state)
+    end
+end
 
 return BaseNode

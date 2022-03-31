@@ -71,7 +71,17 @@ enum = {
         menu_pathlist = "menu_pathlist",                        -- 之前打开的文件路径列表
     },
 
-
+    debug_state = {
+        none = "1",                                               -- 远程调试的默认状态
+        runing = "2",                                             -- 远程调试的运行中状态
+        success = "3",                                            -- 远程调试的运行成功状态
+        fail = "4",                                               -- 远程调试的运行失败状态
+    },
+    debug_type = {
+        none = "1",
+        reset = "2",                                                -- debug 消息类型 - 重置所有状态
+        setstate = "3",
+    },
 }
 
 local logic_node_list = {}

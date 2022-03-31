@@ -615,4 +615,15 @@ function viewManager:toCenterForId(id)
     end
 end
 
+
+-- 移除所有 debug调试显示状态
+function viewManager:resetAllDebugState()
+    local viewList = self.data.viewList
+    if viewList then
+        for i, v in pairs(viewList) do
+            v:setDebugState(enum.debug_state.none)
+        end
+    end
+end
+
 return viewManager
