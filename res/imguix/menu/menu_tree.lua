@@ -57,6 +57,9 @@ function tabNodeTree:addTree(dataBase)
         self:addBtn(dataBase:getuuid())
         local childList = dataBase:getChildIdList()
         if #childList > 0 then
+            -- 排序
+            DataManager:sortChild(childList)
+
             if ImGui.TreeNodeEx(dataBase:getName() .. "##" .. tabNodeTree._btnIndex, ImGui.ImGuiTreeNodeFlags.DefaultOpen, dataBase:getName()) then
                 for i, v in ipairs(childList) do
                     local id = v.id

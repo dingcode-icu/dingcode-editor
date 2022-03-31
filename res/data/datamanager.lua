@@ -53,8 +53,18 @@ end
 function dataManager:sortChild(childlist)
     local ViewManager = require("render/viewmanager")
     local sortFunc = function(left, right)
-        local viewLeft = ViewManager:getNodeViewForId(left.uuid)
-        local viewRight = ViewManager:getNodeViewForId(right.uuid)
+        local viewLeft = nil
+        local viewRight = nil
+        if left.uuid then
+            ViewManager:getNodeViewForId(left.uuid)
+            viewRight = ViewManager:getNodeViewForId(right.uuid)
+        else
+            if left.id then
+                viewLeft = ViewManager:getNodeViewForId(left.id)
+                viewRight = ViewManager:getNodeViewForId(right.id)
+            end
+        end
+
         if viewLeft and viewRight and viewLeft:getPositionX() < viewRight:getPositionX() then
             return true
         end
