@@ -119,7 +119,7 @@ namespace dan {
         signal(SIGTERM, sighdl);
 
         struct lws_context_creation_info ctx_info = {0};
-        ctx_info.port = 8000;
+        ctx_info.port = 8787;
         ctx_info.iface = NULL; // 在所有网络接口上监听
         ctx_info.protocols = protocols;
         ctx_info.gid = -1;

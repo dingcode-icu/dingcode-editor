@@ -697,6 +697,10 @@ function BaseNode:setDebugState(state)
             self.sprDebugState:setVisible(true)
             self.sprDebugState:setTexture(theme.texture("fail.png"))
         end
+    elseif state == enum.debug_state.endrun then
+        if self.sprDebugState then
+        self.sprDebugState:setVisible(true)
+        self.sprDebugState:setTexture(theme.texture("end.png"))
     else
         print("setDebugState error, state = ", state)
     end

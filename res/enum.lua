@@ -76,6 +76,7 @@ enum = {
         runing = "2",                                             -- 远程调试的运行中状态
         success = "3",                                            -- 远程调试的运行成功状态
         fail = "4",                                               -- 远程调试的运行失败状态
+        endrun = "5",
     },
     debug_type = {
         none = "1",
