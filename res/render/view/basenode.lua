@@ -217,7 +217,6 @@ function BaseNode:initTreePoint()
         isShowChild = true
     elseif self:getType() == enum.enum_node_type.conditionals then
         isShowParent = true
-        isShowChild = true
     elseif self:getType() == enum.enum_node_type.action then
         isShowParent = true
     elseif self:getType() == enum.enum_node_type.root then

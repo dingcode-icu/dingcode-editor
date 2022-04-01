@@ -1,10 +1,10 @@
 return {
 
-    -- --node cell 
-    -- "engine/cocos/action/move_forward",
-    -- "engine/cocos/cond/is_active",
+    -- common
+    "engine/cocos/action/move_forward",
+    "engine/cocos/action/stop_move",
 
     -- --demo 
-    -- "engine/cocos/demo_traffic", 
-    "engine/cocos/demo_dev",
+    "engine/cocos/demo_traffic", 
+    -- "engine/cocos/demo_dev",
 }

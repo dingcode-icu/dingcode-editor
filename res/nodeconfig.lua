@@ -1,9 +1,9 @@
 local nodeConfig = {
     root = {
-        root_str = {
-            name = "root_str",
+        entry = {
+            name = "entry",
             type =  "root",
-            desc = "根节点",
+            desc = "绑定单个渲染对象入口",
             supposeType = "common",
             input = {
                 input_text_1 = {
@@ -15,24 +15,40 @@ local nodeConfig = {
             },
             output = {},
         },
+        entrys = {
+            name = "entrys",
+            type =  "root",
+            desc = "绑定多个渲染对象入口",
+            supposeType = "common",
+            input = {
+                input_text_1 = {
+                    direct = "left",
+                    key = "input_text",
+                    numMax = 0,
+                    desc = "输入名字,会做模糊匹配",
+                },
+            },
+            output = {},
+        }
+        
     },
     composites = {
         sequence = {
             name = "sequence",
             type = "composites",
-            desc = "描述",
+            desc = "顺序",
             supposeType = "common",
         },
         selector = {
             name = "selector",
             type = "composites",
-            desc = "描述",
+            desc = "选择",
             supposeType = "common",
         },
         parallel = {
             name = "parallel",
             type = "composites",
-            desc = "描述",
+            desc = "并行",
             supposeType = "common",
         }
     },
@@ -105,15 +121,48 @@ local nodeConfig = {
         },
     },
     decorator = {
-        --decorator = {
-        --    name = "decorator",
-        --    type = "composites",
-        --    desc = "描述",
-        --    supposeType = "common",
-        --},
+        loop = {
+            name = "loop", 
+            type = "decorator", 
+            desc = "重复执行",
+            supposeType = "common"
+        },
+        inverter = {
+            name = "inverter", 
+            type = "decorator", 
+            desc = "取反",
+            supposeType = "common"
+        },
+        return_failure = {
+            name = "return_failure", 
+            type = "decorator", 
+            desc = "一直返回失败", 
+            supposeType = "common"
+        },
+        return_success = {
+            name = "return_success", 
+            type = "decorator", 
+            desc = "一直返回成功", 
+            supposeType = "common"
+        },
+        util_failure = {
+            name = "util_failure", 
+            type = "decorator", 
+            desc = "一直执行直到返回失败", 
+            supposeType = "common"
+        },
+        util_success = {
+            name = "util_success", 
+            type = "decorator", 
+            desc = "一直执行直到返回成功", 
+            supposeType = "common"
+        }
+        
     },
     conditionals = {},
     action = {},
+    --proj 
+    demo_traffic = {}
 }
 local function requireConfig(path)
     local data = require(path)
@@ -123,9 +172,10 @@ local function requireConfig(path)
         end
         nodeConfig[data_.type][data_.name] = data_
     end
-    if not data then return end
+    if type(data) ~= "table" then return end
     --single
     if data.type then
+        dump(data, "--->>single")
         add_node(data)
     end
     --list
@@ -137,5 +187,7 @@ local list = require("engine/cocos/all_config")
 for i, v in pairs(list) do
     requireConfig(v)
 end
+
+dump(nodeConfig, "-->>nodeConfig")
 
 return nodeConfig

@@ -4,7 +4,7 @@
 //
 //  Created by Mac on 2022/3/29.
 //
-
+#if TARGET_OS_MAC
 #ifndef RemoteDebuger_h
 #define RemoteDebuger_h
 
@@ -36,3 +36,4 @@ namespace dan {
 }
 
 #endif /* RemoteDebuger_h */
+#endif

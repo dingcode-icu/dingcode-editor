@@ -11,7 +11,11 @@ INITIALIZE_EASYLOGGINGPP
 #include "ding/sol_cocos.h"
 #include "ding/sys/FileDialogUtils.h"
 #include "ding/guid/guid.h"
+
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "sys/RemoteDebuger.h"
+#endif
 //imgui
 #include "ImGuiExt/sol_imgui.h"
 #include "ImGuiExt/CCImGuiLayer.h"
@@ -105,7 +109,9 @@ namespace dan {
         ImGuiLayer::createAndKeepOnTop();
 
         // 初始化 socket
+        #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         SmartSingleton<RemoteDebuger>::GetInstance()->init();
+        #endif
 
         return true;
     }
@@ -146,9 +152,15 @@ namespace dan {
         d.set_function("isMac", [=](void) -> bool {
             return CC_TARGET_PLATFORM == CC_PLATFORM_MAC;
         });
+
         d.set_function("setOnRecviedCallback", [=](const std::function<void(std::string str)>& callback){
+            #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
             SmartSingleton<RemoteDebuger>::GetInstance()->setOnRecviedCallback(callback);
+            #endif
         });
+
+
+
         d.set_function("showToast", [=](string desc){
             auto node = Node::create();
             node->setScale(0.7);

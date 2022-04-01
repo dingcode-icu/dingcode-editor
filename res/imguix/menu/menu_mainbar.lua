@@ -129,7 +129,7 @@ function tabMenuMainBar:OpenFile()
 end
 
 function tabMenuMainBar:OpenFileForPath(filePath)
-    if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding") then
+    if filePath and string.len(filePath) > 0 and string.ends(filePath, ".ding.json") then
         local strDesc = io.readfile(filePath)
         try {
             function()
@@ -170,8 +170,8 @@ function tabMenuMainBar:SaveFile(isNew)
     print(filePath)
     if filePath and string.len(filePath) > 0 then
         local realFilePath = filePath
-        if not string.ends(filePath, ".ding") then
-             realFilePath = filePath .. ".ding"
+        if not string.ends(filePath, ".ding.json") then
+             realFilePath = filePath .. ".ding.json"
         end
         try {
             function()
