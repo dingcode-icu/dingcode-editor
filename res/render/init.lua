@@ -35,6 +35,11 @@ local MULTI_KEY_MAP = {
         [cc.KeyBoardCode.KEY_0] = enum.evt_keyboard.imgui_delete_node,
         [cc.KeyBoardCode.KEY_Q] = enum.evt_keyboard.sys_exit,
         [cc.KeyBoardCode.KEY_S] = enum.evt_keyboard.sys_autosave,
+    },
+    [cc.KeyBoardCode.KEY_HYPER] = {
+        [cc.KeyBoardCode.KEY_0] = enum.evt_keyboard.imgui_delete_node,
+        [cc.KeyBoardCode.KEY_Q] = enum.evt_keyboard.sys_exit,
+        [cc.KeyBoardCode.KEY_S] = enum.evt_keyboard.sys_autosave,
     }
 }
 
@@ -64,7 +69,7 @@ function render:init()
         end
 
         -- 是否按下 ctrl
-        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL then
+        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL or keycode == cc.KeyBoardCode.KEY_HYPER then
             MEMORY.isCtrlDown = false
             ViewManager:setAllNodeSwallowTouch(false)
         end
@@ -85,9 +90,8 @@ function render:init()
                 end
             end
         end
-
         -- 是否按下 ctrl
-        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL then
+        if keycode == cc.KeyBoardCode.KEY_LEFT_CTRL or keycode == cc.KeyBoardCode.KEY_RIGHT_CTRL or keycode == cc.KeyBoardCode.KEY_HYPER then
             MEMORY.isCtrlDown = true
             ViewManager:setAllNodeSwallowTouch(true)
         end
