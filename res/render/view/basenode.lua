@@ -120,7 +120,7 @@ function BaseNode:destroy()
 end
 -- 是否选中
 function BaseNode:isSelect()
-    print(BaseNode.STATE.SELECT)
+    --print(BaseNode.STATE.SELECT)
     return self._state == BaseNode.STATE.SELECT
 end
 -- 初始化 选中节点
@@ -461,8 +461,9 @@ function BaseNode:registerTouch()
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(false);
     listener.onTouchBegan = function(touch, event)
+        ViewManager:setAllNodeSwallowTouch(false)
         if not MEMORY.isCtrlDown then
-            ViewManager:setAllNodeSwallowTouch(false)
+
             if ViewManager and ViewManager.isDropingLine then
                 return true
             end
@@ -487,7 +488,8 @@ function BaseNode:registerTouch()
 
 
         local isTouch = this.isTouchSelf(touch, event)
-        if isTouch then
+        if isTouch and not ViewManager.isDropingNode then
+            ViewManager.isDropingNode = true
             local target = event:getCurrentTarget()
             this._touchStart = target:getParent():convertToNodeSpace(touch:getLocation())
             this._pStartX = target:getPositionX()
@@ -537,7 +539,7 @@ function BaseNode:registerTouch()
                     list = {this},
                 })
 
-                return false
+                return true
             else
                 -- 选中 拖动所有已选中的点
                 local pos = touch:getLocation()
@@ -552,6 +554,7 @@ function BaseNode:registerTouch()
                     offX = offX,
                     offY = offY,
                 })
+                return true
             end
         end
         return false
@@ -581,8 +584,6 @@ function BaseNode:registerTouch()
             end
         end
 
-        this._touchStart = null
-
         -- 判断 按钮上的点击事件
         for key, nodePoint in pairs(this.listNodePoint) do
             if nodePoint and not this:isCanDropStart(key) then
@@ -609,7 +610,7 @@ function BaseNode:registerTouch()
         end
 
         local isClick = this.isTouchSelf(touch, event)
-        if isClick then
+        if isClick and this._touchStart then
             if this.isClickForTouch(touch) then
                 print("click node", this.data:getuuid())
                 this:ClickSelect()
@@ -619,6 +620,9 @@ function BaseNode:registerTouch()
             end
         end
 
+        this._touchStart = null
+        ViewManager.isDropingNode = false
+
         return isClick
     end
     listener.onTouchCancelled = function(touch, event)
@@ -627,6 +631,8 @@ function BaseNode:registerTouch()
         end
 
         this._touchStart = null
+        ViewManager.isDropingNode = false
+
         return false
     end
     local eventDispatcher = self.view:getEventDispatcher()
