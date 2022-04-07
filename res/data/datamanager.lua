@@ -56,7 +56,7 @@ function dataManager:sortChild(childlist)
         local viewLeft = nil
         local viewRight = nil
         if left.uuid then
-            ViewManager:getNodeViewForId(left.uuid)
+            viewLeft = ViewManager:getNodeViewForId(left.uuid)
             viewRight = ViewManager:getNodeViewForId(right.uuid)
         else
             if left.id then
@@ -64,7 +64,7 @@ function dataManager:sortChild(childlist)
                 viewRight = ViewManager:getNodeViewForId(right.id)
             end
         end
-
+        --print(viewLeft, viewRight)
         if viewLeft and viewRight and viewLeft:getPositionX() < viewRight:getPositionX() then
             return true
         end
