@@ -212,15 +212,18 @@ end
 function BaseNode:initTreePoint()
     local isShowParent = false
     local isShowChild = false
-    if self:getType() == enum.enum_node_type.composites then
+    local tp = self:getType()
+    if tp == enum.enum_node_type.composites then
         isShowParent = true
         isShowChild = true
-    elseif self:getType() == enum.enum_node_type.conditionals then
+    elseif tp == enum.enum_node_type.conditionals then
         isShowParent = true
-    elseif self:getType() == enum.enum_node_type.action then
+    elseif tp == enum.enum_node_type.action then
         isShowParent = true
-    elseif self:getType() == enum.enum_node_type.root then
+    elseif tp == enum.enum_node_type.root then
         isShowChild = true
+    elseif tp == enum.enum_node_type.decorator then
+        isShowParent = true
     end
     -- parent 节点
     if isShowParent then

@@ -22,12 +22,6 @@ return {
         }
     },
     {
-        name = "is_frontcar", 
-        type = "conditionals", 
-        desc = "是否是前车", 
-        supposeType = "demo_traffic"
-    },
-    {
         name  = "is_front_car", 
         type = "conditionals", 
         desc = "是否有前车",

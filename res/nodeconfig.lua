@@ -188,6 +188,4 @@ for i, v in pairs(list) do
     requireConfig(v)
 end
 
-dump(nodeConfig, "-->>nodeConfig")
-
 return nodeConfig
