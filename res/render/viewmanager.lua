@@ -17,6 +17,8 @@ local viewManager = {
     nodeDropingLine = null,                 -- 拖动中的对象
     _isAllNodeSwallow = false,
 
+    isDropingNode = false,                  -- 是否正在拖动节点
+
     _viewParent = null,
     _lineParent = null,
     _tipParent = null,
@@ -61,6 +63,7 @@ function viewManager:init(config)
 
     self:setIsInit(true)
     self.isDropingLine = false
+    self.isDropingNode = false
 end
 -- 页面是否创建成功
 function viewManager:getIsInit()
@@ -123,6 +126,7 @@ function viewManager:reset()
     self.data.lineList = {}
 
     self.isDropingLine = false                  -- 是否正在拖动划线
+    self.isDropingNode = false
     self.dataRropingLine = null                 -- 拖动中的数据对象
     self.nodeDropingLine = null                 -- 拖动中的对象
     self._isAllNodeSwallow = false
