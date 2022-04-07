@@ -325,7 +325,10 @@ end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
     if keyPoint == enum.dropnode_key.parent then
-        if self:getType() == enum.enum_node_type.composites or self:getType() == enum.enum_node_type.conditionals then
+        if self:getType() == enum.enum_node_type.composites or
+            self:getType() == enum.enum_node_type.conditionals or
+            self:getType() == enum.enum_node_type.decorator
+        then
             -- 只能有一个父节点
             if #self:getData():getParentIdList() >= 1 then
                 return false
