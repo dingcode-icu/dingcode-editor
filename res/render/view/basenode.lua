@@ -335,6 +335,8 @@ function BaseNode:isCanDropStart(keyPoint)
         elseif self:getType() == enum.enum_node_type.action then
             -- 可以有多个父节点
             return true
+        else
+            return true
         end
     elseif keyPoint == enum.dropnode_key.child then
         if self:getType() == enum.enum_node_type.composites then
