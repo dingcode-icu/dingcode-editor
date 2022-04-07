@@ -35,11 +35,13 @@ local MULTI_KEY_MAP = {
         [cc.KeyBoardCode.KEY_0] = enum.evt_keyboard.imgui_delete_node,
         [cc.KeyBoardCode.KEY_Q] = enum.evt_keyboard.sys_exit,
         [cc.KeyBoardCode.KEY_S] = enum.evt_keyboard.sys_autosave,
+        [cc.KeyBoardCode.KEY_Z] = enum.evt_keyboard.sys_backhistory,
     },
     [cc.KeyBoardCode.KEY_HYPER] = {
         [cc.KeyBoardCode.KEY_0] = enum.evt_keyboard.imgui_delete_node,
         [cc.KeyBoardCode.KEY_Q] = enum.evt_keyboard.sys_exit,
         [cc.KeyBoardCode.KEY_S] = enum.evt_keyboard.sys_autosave,
+        [cc.KeyBoardCode.KEY_Z] = enum.evt_keyboard.sys_backhistory,
     }
 }
 

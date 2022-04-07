@@ -1,4 +1,5 @@
 local DataManager = require("data/datamanager")
+local json = require("lib/json")
 local Event = require("lib/event")
 local enum = enum
 local winWidth = cc.Director:getInstance():getWinSize().width
@@ -9,6 +10,9 @@ local viewManager = {
         viewList = {},                      -- 创建的数据
         lineList = {},                      -- 线
     },
+
+    historylist = {},                       -- 历史记录 ctrl z 使用
+
     isInit = false,                         -- 是否已经初始化
     strsavefilepath = "",                   -- 打开/保存的文件路径
 
@@ -24,7 +28,7 @@ local viewManager = {
     _tipParent = null,
 }
 ---初始化root view场景
-function viewManager:init(config)
+function viewManager:init(config, isNotResetHistory)
     if config and config.view then
         if config.view.viewList then
             for i, v in pairs(config.view.viewList) do
@@ -32,7 +36,7 @@ function viewManager:init(config)
                 local x = v.x
                 local y = v.y
                 local dataNode = DataManager:getDataForId(uuid)
-                self:createNode(dataNode, { x = x, y = y})
+                self:createNode(dataNode, { x = x, y = y}, isNotResetHistory)
             end
         end
         if config.view.lineList then
@@ -61,9 +65,15 @@ function viewManager:init(config)
         end
     end
 
+    if not isNotResetHistory then
+        self.historylist = {}
+        self:addHistoryToList()
+    end
     self:setIsInit(true)
     self.isDropingLine = false
     self.isDropingNode = false
+
+
 end
 -- 页面是否创建成功
 function viewManager:getIsInit()
@@ -115,7 +125,7 @@ function viewManager:get_alldata()
     return real
 end
 --- 销毁root view场景
-function viewManager:reset()
+function viewManager:reset(isNotResetHistory)
     for i, v in pairs(self.data.viewList) do
         v:destroy()
     end
@@ -124,7 +134,9 @@ function viewManager:reset()
     end
     self.data.viewList = {}
     self.data.lineList = {}
-
+    if not isNotResetHistory then
+        self.historylist = {}
+    end
     self.isDropingLine = false                  -- 是否正在拖动划线
     self.isDropingNode = false
     self.dataRropingLine = null                 -- 拖动中的数据对象
@@ -339,6 +351,8 @@ function viewManager:registerEvent()
     Event:addEventListener(enum.evt_keyboard.imgui_delete_node, function(event)
         local list = this.data.viewList
         local listNeedDelete = {}
+
+        local isDelete = false
         -- 删除页面node
         for i, v in pairs(list) do
             if v:isSelect() then
@@ -349,6 +363,8 @@ function viewManager:registerEvent()
                 DataManager:removeData(i)
 
                 table.insert(listNeedDelete, v)
+
+                isDelete = true
             end
         end
         -- 删除连线
@@ -360,13 +376,21 @@ function viewManager:registerEvent()
                 -- 删除连线
                 v:destroy()
                 list[i] = null
+
+                isDelete = true
             elseif v:isCantainSelf(listNeedDelete) then
                 -- 移除线的时候 移除对应维护的数据
                 this:removeDataFromDeleteLine(v)
                 -- 删除包含节点的连线
                 v:destroy()
                 list[i] = null
+
+                isDelete = true
             end
+        end
+
+        if isDelete then
+            this:addHistoryToList()
         end
     end)
     -- 移动节点
@@ -407,6 +431,10 @@ function viewManager:registerEvent()
         local menu_mainbar = require("imguix/menu/menu_mainbar")
         menu_mainbar:AutoSaveFile()
     end)
+    Event:addEventListener(enum.evt_keyboard.sys_backhistory, function(event)
+        -- 自动保存
+        this:backHistory()
+    end)
 end
 -- 退出程序
 function viewManager:exitGame()
@@ -414,7 +442,10 @@ function viewManager:exitGame()
 end
 function viewManager:unRegisterEvent()
     Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_delete_node)
-    Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_mode_node)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.imgui_move_node)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.sys_exit)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.sys_autosave)
+    Event:removeEventListenersByEvent(enum.evt_keyboard.sys_backhistory)
 end
 function viewManager:hide_imgui_menu_all()
     self:hide_imgui_menu_node()
@@ -463,7 +494,7 @@ function viewManager:initNodePos(node, posTab)
     end
 end
 
-function viewManager:createNode(dataNode, posTab)
+function viewManager:createNode(dataNode, posTab, isNotResetHistory)
 
     -- 隐藏菜单
     self:hide_imgui_menu_all()
@@ -490,6 +521,10 @@ function viewManager:createNode(dataNode, posTab)
             else
                 print("创建 view 失败, type = ", dataNode:getName())
             end
+            if not isNotResetHistory then
+                self:addHistoryToList()
+            end
+
         end, catch {
             function (err)
                 print("创建node 失败")
@@ -568,6 +603,8 @@ function viewManager:endDropingLine(endData)
         -- 维护连线数据
         nodeStart:getData():addDataToLineList(keyPointStart, endNodeData:getuuid(), keyPointEnd)
         endNodeData:getData():addDataToLineList(keyPointEnd, nodeStart:getuuid(), keyPointStart)
+
+        self:addHistoryToList()
     end
     -- 清除临时的连线
     self:cancelDropingLine()
@@ -654,6 +691,44 @@ function viewManager:resetAllDebugState()
             v:setDebugState(enum.debug_state.none)
         end
     end
+end
+
+-- 添加当前状态为历史记录
+function viewManager:addHistoryToList()
+
+    local dataToSave = DataManager:get_alldata()
+    local viewToSave = self:get_alldata()
+    --local treeToSave = DataManager:get_export_tree()
+    local jsonData =  {
+        data = dataToSave,
+        view = viewToSave,
+        --tree = treeToSave,
+    }
+
+    table.insert(self.historylist, jsonData)
+    if #self.historylist > 20 then
+        table.remove(self.historylist, 1)
+    end
+end
+
+-- 恢复上一步的历史记录
+function viewManager:backHistory()
+    local list = self.historylist
+    print(#self.historylist)
+    if #list <= 1 then
+        self:showTip("已恢复到最后一步历史记录")
+        return
+    end
+
+    table.remove(list)
+    local jsonData = list[#list]
+    -- 打开之前 先还原
+    DataManager:reset()
+    self:reset(true)
+    -- 重新初始化
+    DataManager:init(jsonData, true)
+
+    self:showTip("恢复上一步成功")
 end
 
 return viewManager
