@@ -56,6 +56,7 @@ enum = {
 
         sys_exit = "sys_exit",                                      -- 退出程序
         sys_autosave = "sys_autosave",                              -- 自动保存
+        sys_backhistory = "sys_backhistory",                        -- 回退上一步
     },
 
     -- 节点可拖动的方向

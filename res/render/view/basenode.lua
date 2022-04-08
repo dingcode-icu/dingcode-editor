@@ -626,6 +626,8 @@ function BaseNode:registerTouch()
             if this.isClickForTouch(touch) then
                 print("click node", this.data:getuuid())
                 this:ClickSelect()
+            else
+                ViewManager:addHistoryToList()
             end
             if not ViewManager.isDropingLine then
                 ViewManager:setAllNodeSwallowTouch(true)

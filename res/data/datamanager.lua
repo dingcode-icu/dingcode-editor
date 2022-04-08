@@ -7,7 +7,7 @@ local dataManager = {
     isInit = false,                         -- 是否已经初始化
 }
 
-function dataManager:init(config)
+function dataManager:init(config, isNotResetHistory)
     print("datamanager init")
     --dump(config)
     if config and config.data then
@@ -23,7 +23,7 @@ function dataManager:init(config)
     self.isInit = true
 
     local ViewManager = require("render/viewmanager")
-    ViewManager:init(config)
+    ViewManager:init(config, isNotResetHistory)
 end
 
 function dataManager:reset()
