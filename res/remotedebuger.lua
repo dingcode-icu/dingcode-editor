@@ -1,9 +1,9 @@
 local DataManager = require("data/datamanager")
 local ViewManager = require("render/viewmanager")
 
-local remotedebuger = {}
+local remove_debugger = {}
 
-function remotedebuger:init()
+function remove_debugger:init()
     ding.setOnRecviedCallback(function(strRecvied)
         print("recvied message: ", strRecvied)
         if strRecvied then
@@ -35,4 +35,4 @@ function remotedebuger:init()
     end)
 end
 
-return remotedebuger
+return remove_debugger
