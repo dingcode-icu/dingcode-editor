@@ -67,6 +67,12 @@ function tabMenuMainBar.render()
                         isReversedSelect = true,
                     })
                 end
+                if ImGui.MenuItem("详情页面") then
+                    Event:dispatchEvent({
+                        name = enum.evt_keyboard.imgui_menu_detail,
+                        isReversedSelect = true,
+                    })
+                end
                 ImGui.EndMenu()
             end
             if ImGui.BeginMenu("调试") then

@@ -66,6 +66,7 @@ end
 function tabInputNode.render()
     if tabInputNode.data._isShow then
         ImGui.SetNextWindowPos(tabInputNode.data._posX, tabInputNode.data._posY, ImGui.ImGuiCond.Always)
+        ImGui.SetNextWindowSize(800, 300, ImGui.ImGuiCond.Once)
         ImGui.Begin("tabInputNode", true, ImGui.ImGuiWindowFlags.NoTitleBar)
 
         -- 当前值

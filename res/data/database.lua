@@ -113,6 +113,10 @@ end
 function dataBase:getName()
     return self.data.config.name or ""
 end
+-- 获取描述
+function dataBase:getDesc()
+    return self.data.config.desc or ""
+end
 -- 获取输入的列表配置
 function dataBase:getListInputConfig()
     return self.data.config.input or {}

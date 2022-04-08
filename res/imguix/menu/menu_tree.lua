@@ -86,6 +86,7 @@ function tabNodeTree.render()
         tabNodeTree._btnIndex = 0
 
         ImGui.SetNextWindowPos(tabNodeTree.data._posX, tabNodeTree.data._posY, ImGui.ImGuiCond.Once)
+        ImGui.SetNextWindowSize(250, 600, ImGui.ImGuiCond.Once)
         ImGui.Begin("NodeTree")
 
         for i, v in pairs(DataManager:getList()) do

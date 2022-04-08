@@ -622,6 +622,12 @@ function BaseNode:registerTouch()
             if this.isClickForTouch(touch) then
                 print("click node", this.data:getuuid())
                 this:ClickSelect()
+                -- 刷新详情页
+                Event:dispatchEvent({
+                    name = enum.evt_keyboard.imgui_menu_detail,
+                    isRefresh = true,
+                    uuid = this:getuuid()
+                })
             else
                 ViewManager:addHistoryToList()
             end

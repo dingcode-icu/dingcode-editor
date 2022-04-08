@@ -63,6 +63,25 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_tree, function(event)
     end
 end)
 
+--节点的详情
+local menu_detail = require("imguix/menu/menu_detail")
+menu_detail:hide()
+Event:addEventListener(enum.evt_keyboard.imgui_menu_detail, function(event)
+    if event and event.isHide then
+        menu_detail:hide()
+    elseif event and event.isReversedSelect then
+        if menu_detail:isShow() then
+            menu_detail:hide()
+        else
+            menu_detail:show(event)
+        end
+    elseif event and event.isRefresh then
+        menu_detail:refresh(event)
+    else
+        menu_detail:show(event)
+    end
+end)
+
 
 
 
