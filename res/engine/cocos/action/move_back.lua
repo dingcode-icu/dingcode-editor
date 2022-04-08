@@ -7,11 +7,13 @@ return {
     input = {
         time = {
             direct = "left",
-            key = "input_float"
+            key = "input_float",
+            desc = "time"
         },
         dis = {
             direct = "left",
-            key = "input_float"
+            key = "input_float",
+            desc = "dis"
         }
     },
 }
