@@ -82,10 +82,39 @@ function tabNodeDetail.render()
                     ViewManager:toCenterForId(data:getuuid())
                 end
                 ImGui.SetWindowFontScale(1)
+                -- 分割线
+                ImGui.Separator();
+
+
+                -- 输入
+                ImGui.Text("input: ");
+                local listinput = data:getListInputConfig()
+                if listinput then
+                    for key, v in pairs(listinput) do
+                        ImGui.Text(v.desc .. ": ");
+                        local list = data:getListInputForId(key)
+                        if list and #list > 0 then
+                            for i, value in pairs(list) do
+                                ImGui.Text("" .. value)
+                            end
+                        end
+                    end
+                end
 
                 -- 分割线
                 ImGui.Separator();
 
+                -- 输出
+                ImGui.Text("output: ");
+                local listoutput = data:getListOutputConfig()
+                if listoutput then
+                    for key, v in pairs(listoutput) do
+                        ImGui.Text(v.desc .. ": ");
+                    end
+                end
+
+                -- 分割线
+                ImGui.Separator();
             end
         end
 
