@@ -572,6 +572,9 @@ function BaseNode:registerTouch()
         return false
     end
     listener.onTouchEnded = function(touch, event)
+        local touchStart = this._touchStart
+        this._touchStart = null
+        ViewManager.isDropingNode = false
 
         if ViewManager and ViewManager.isDropingLine then
 
@@ -622,7 +625,7 @@ function BaseNode:registerTouch()
         end
 
         local isClick = this.isTouchSelf(touch, event)
-        if isClick and this._touchStart then
+        if isClick and touchStart then
             if this.isClickForTouch(touch) then
                 print("click node", this.data:getuuid())
                 this:ClickSelect()
@@ -639,9 +642,6 @@ function BaseNode:registerTouch()
                 ViewManager:setAllNodeSwallowTouch(true)
             end
         end
-
-        this._touchStart = null
-        ViewManager.isDropingNode = false
 
         return isClick
     end
