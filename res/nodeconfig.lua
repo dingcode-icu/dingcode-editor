@@ -1,4 +1,4 @@
-local nodeConfig = {
+local node_config = {
     root = {
         entry = {
             name = "entry",
@@ -125,7 +125,15 @@ local nodeConfig = {
             name = "loop", 
             type = "decorator", 
             desc = "重复执行",
-            supposeType = "common"
+            supposeType = "common",
+            input = {
+                loop_cnt = {
+                    direct = "left",
+                    key = "input_float",
+                    numMax = 0,
+                    desc = "循环次数(-1为无限循环)",
+                },
+            },
         },
         inverter = {
             name = "inverter", 
@@ -167,10 +175,10 @@ local nodeConfig = {
 local function requireConfig(path)
     local data = require(path)
     local function add_node(data_)
-        if not nodeConfig[data_.type] then
-            nodeConfig[data_.type] = {}
+        if not node_config[data_.type] then
+            node_config[data_.type] = {}
         end
-        nodeConfig[data_.type][data_.name] = data_
+        node_config[data_.type][data_.name] = data_
     end
     if type(data) ~= "table" then return end
     --single
@@ -188,4 +196,4 @@ for i, v in pairs(list) do
     requireConfig(v)
 end
 
-return nodeConfig
+return node_config

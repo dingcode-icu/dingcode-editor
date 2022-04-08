@@ -1,14 +1,17 @@
 return {
-    name = "move_forward_3d",
+    name = "move_forward",
     type = "action",
 
     desc = "向前移动",
     supposeType = "common",
     input = {
-        in_int_1 = {
+        time = {
             direct = "left",
-            key = "speed",
-            numMax = 1,
+            key = "input_float"
+        },
+        dis ={
+            direct = "left",
+            key = "input_float"
         }
     },
 }

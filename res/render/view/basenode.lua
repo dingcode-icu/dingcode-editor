@@ -224,6 +224,7 @@ function BaseNode:initTreePoint()
         isShowChild = true
     elseif tp == enum.enum_node_type.decorator then
         isShowParent = true
+        isShowChild = true
     end
     -- parent 节点
     if isShowParent then
@@ -345,7 +346,10 @@ function BaseNode:isCanDropStart(keyPoint)
         if self:getType() == enum.enum_node_type.composites then
             -- 可以有多个子节点
             return true
-        elseif self:getType() == enum.enum_node_type.conditionals or self:getType() == enum.enum_node_type.root then
+        elseif self:getType() == enum.enum_node_type.conditionals or
+                self:getType() == enum.enum_node_type.root or
+                 self:getType() == enum.enum_node_type.decorator
+        then
             -- 只能有一个子节点
             if #self:getData():getChildIdList() >= 1 then
                 return false
