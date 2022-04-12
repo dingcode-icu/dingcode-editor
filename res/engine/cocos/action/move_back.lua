@@ -1,5 +1,5 @@
 return {
-    name = "move_back",
+    name = "move back",
     type = "action",
 
     desc = "向后移动",

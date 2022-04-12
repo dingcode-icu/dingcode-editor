@@ -22,7 +22,7 @@ return {
         }
     },
     {
-        name  = "is_front_car", 
+        name  = "is front car",
         type = "conditionals", 
         desc = "是否有前车",
         supposeType = "demo_traffic"

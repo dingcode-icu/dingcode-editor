@@ -1,5 +1,5 @@
 return {
-    name = "move_forward",
+    name = "move forward",
     type = "action",
 
     desc = "向前移动",
@@ -7,11 +7,13 @@ return {
     input = {
         time = {
             direct = "left",
-            key = "input_float"
+            key = "input_float",
+            desc = "time"
         },
-        dis ={
+        dis = {
             direct = "left",
-            key = "input_float"
+            key = "input_float",
+            desc = "dis"
         }
     },
 }

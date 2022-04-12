@@ -142,7 +142,7 @@ local node_config = {
             supposeType = "common"
         },
         return_failure = {
-            name = "return_failure", 
+            name = "return failure",
             type = "decorator", 
             desc = "一直返回失败", 
             supposeType = "common"
@@ -154,13 +154,13 @@ local node_config = {
             supposeType = "common"
         },
         util_failure = {
-            name = "util_failure", 
+            name = "until failure",
             type = "decorator", 
             desc = "一直执行直到返回失败", 
             supposeType = "common"
         },
         util_success = {
-            name = "util_success", 
+            name = "until success",
             type = "decorator", 
             desc = "一直执行直到返回成功", 
             supposeType = "common"
