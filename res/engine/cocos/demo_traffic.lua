@@ -3,13 +3,13 @@ return {
     --condition
     --================================
     {
-        name = "is_crossroads", 
+        name = "is crossing",
         type = "conditionals",
         desc = "是否在路口",
         supposeType = "demo_traffic"
     },
     {
-        name = "is_light_signal", 
+        name = "is light single",
         type = "conditionals", 
         desc = [[是否有灯信号(1-红灯，2-绿灯，3-黄灯)]],
         supposeType = "demo_traffic",
@@ -31,15 +31,20 @@ return {
     --action
     --================================
     {
-        name = "do_car_turnleft",
+        name = "slow down",
         type = "action", 
         desc ="左转", 
         supposeType = "demo_traffic"
     },
     {
-        name = "do_car_turnright",
+        name = "turn right",
         type = "action", 
         desc = "右转", 
+        supposeType = "demo_traffic"
+    },
+    {
+        name ="turn left",
+        type = "action",
         supposeType = "demo_traffic"
     }
 }

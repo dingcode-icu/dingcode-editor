@@ -15,19 +15,12 @@ local node_config = {
             },
             output = {},
         },
-        entrys = {
-            name = "entrys",
+        self_ = {
+            name = "self",
             type =  "root",
-            desc = "绑定多个渲染对象入口",
+            desc = "组建的绑定最想作为节点",
             supposeType = "common",
-            input = {
-                path = {
-                    direct = "left",
-                    key = "input_text",
-                    numMax = 0,
-                    desc = "输入名字,会做模糊匹配",
-                },
-            },
+            input = {},
             output = {},
         }
         
@@ -168,7 +161,48 @@ local node_config = {
         
     },
     conditionals = {},
-    action = {},
+    action = {
+        log = {
+            name = "log",
+            type = "action",
+            desc = "打印一个log",
+            supposeType = "common",
+            input = {
+                log = {
+                    direct = "left",
+                    key = "input_string",
+                    numMax = 0,
+                    desc = "要输出的日志",
+                },
+            },
+        },
+        wait = {
+            name = "wait",
+            type = "action",
+            desc = "等待一段时间",
+            input = {
+                dt = {
+                    direct = "left",
+                    key = "input_float",
+                    numMax = 0,
+                    desc = "要等待的时间",
+                },
+            },
+        },
+        send_event = {
+            name = "send event",
+            type = "action",
+            desc = "发送一个事件",
+            input = {
+                event = {
+                    direct = "left",
+                    key = "input_string",
+                    numMax = 0,
+                    desc = "要发送的事件名",
+                },
+            },
+        }
+    },
     --proj 
     demo_traffic = {}
 }
