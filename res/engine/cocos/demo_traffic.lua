@@ -33,7 +33,7 @@ return {
     {
         name = "slow down",
         type = "action", 
-        desc ="左转", 
+        desc ="减速慢行",
         supposeType = "demo_traffic"
     },
     {
@@ -45,6 +45,7 @@ return {
     {
         name ="turn left",
         type = "action",
+        desc = "左转",
         supposeType = "demo_traffic"
     }
 }
