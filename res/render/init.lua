@@ -3,6 +3,7 @@ local render = {}
 require("render/memory")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
+local http = require("http/http")
 local MEMORY = MEMORY
 local d = display
 local dir_inc = cc.Director:getInstance()
@@ -16,6 +17,7 @@ function root:ctor()
     self.view:setOnEnterCallback(function()
         render:init()
         ViewManager:initViewParent()
+        http:initConfig()
     end)
 end
 end

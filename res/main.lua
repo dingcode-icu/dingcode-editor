@@ -7,7 +7,7 @@ local function main()
     require("imguix/init"):init()
     require("render/init")
     require("remotedebuger"):init()
-
+    require("http/http"):init()
 end
 
 ---打印报错及堆栈

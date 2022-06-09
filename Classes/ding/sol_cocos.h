@@ -2,6 +2,7 @@
 
 #include <string>
 #include "cocos2d.h"
+#include "network/HttpClient.h"
 #include "platform/CCGLView.h"
 #include "ui/UIScale9Sprite.h"
 
@@ -224,6 +225,14 @@ inline void Init(sol::state_view& lua){
                     "KEY_DPAD_CENTER",EventKeyboard::KeyCode::KEY_DPAD_CENTER,
                     "KEY_ENTER",EventKeyboard::KeyCode::KEY_ENTER,
                      "KEY_PLAY",EventKeyboard::KeyCode::KEY_PLAY
+                    );
+
+    CC.create_named("HttpRequestType",
+                    "UNKNOWN", network::HttpRequest::Type::UNKNOWN,
+                    "DELETE", network::HttpRequest::Type::DELETE,
+                    "GET", network::HttpRequest::Type::GET,
+                    "POST", network::HttpRequest::Type::POST,
+                    "PUT", network::HttpRequest::Type::PUT
                     );
 
 #pragma endregion ENUM
@@ -613,6 +622,45 @@ inline void Init(sol::state_view& lua){
                                             )
                                             );
 #pragma endregion GLProgram
+
+
+#pragma region HttpRequest
+     CC.new_usertype<network::HttpRequest>("HttpRequest",
+                                sol::call_constructor, sol::constructors<network::HttpRequest*()>(),
+                                "setUrl", &network::HttpRequest::setUrl,
+                                "setRequestType", &network::HttpRequest::setRequestType,
+                                "setResponseCallback", sol::overload(
+                                            sol::resolve<void(const network::ccHttpRequestCallback&)>(&network::HttpRequest::setResponseCallback)
+                                            ),
+                                "setTag", &network::HttpRequest::setTag,
+                                "getTag", &network::HttpRequest::getTag,
+                                "retain", &network::HttpRequest::retain,
+                                "release", &network::HttpRequest::release,
+                                "setHeaders", &network::HttpRequest::setHeaders
+                                );
+     CC.new_usertype<network::HttpClient>("HttpClient",
+                                "getInstance", &network::HttpClient::getInstance,
+                                "send", &network::HttpClient::send
+                              );
+     CC.new_usertype<network::HttpResponse>("HttpResponse",
+                                "getResponseCode", &network::HttpResponse::getResponseCode,
+                                "getHttpRequest", &network::HttpResponse::getHttpRequest,
+                                "getResponseData", sol::overload(
+                                   [](network::HttpResponse& inc){
+                                        std::vector<char> *buffer = inc.getResponseData();
+                                        std::stringstream s;
+                                        s.str("");
+
+                                        for (const auto& iter : *buffer)
+                                        {
+                                            s << iter;
+                                        }
+
+                                        return s.str();
+                                   }),
+                                "isSucceed", &network::HttpResponse::isSucceed
+                              );
+#pragma endregion HttpRequest
 }
 }
 #endif
