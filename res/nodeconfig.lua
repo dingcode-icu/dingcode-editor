@@ -22,7 +22,7 @@ local node_config = {
             supposeType = "common",
             input = {},
             output = {},
-        }
+        },
         
     },
     composites = {
@@ -112,6 +112,19 @@ local node_config = {
                 },
             },
         },
+        child_node = {
+            name = "child_node",
+            type = "const",
+            desc ="根据path获取子节点",
+            supposeType ="common",
+            input = {
+                child_path = {
+                    direct = "left",
+                    key = "child_path",
+                    numMax = 1
+                }
+            }
+        }
     },
     decorator = {
         loop = {
@@ -160,7 +173,6 @@ local node_config = {
         }
         
     },
-    conditionals = {},
     action = {
         log = {
             name = "log",
