@@ -18,6 +18,8 @@ function http:httpGet(url, sucFunc, errFunc)
     request:setRequestType(cc.HttpRequestType.GET);
     request:setTag("getjson")
     request:setResponseCallback(function(sender, response)
+        -- 保留request的引用 避免在回调回来之前 释放掉
+        request = nil
         if not response:isSucceed() then
             print("http error ")
             if errFunc then
