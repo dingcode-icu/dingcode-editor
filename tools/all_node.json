@@ -1,0 +1,343 @@
+{
+    "root": {
+        "entry": {
+            "desc": "绑定单个渲染对象入口",
+            "output": [],
+            "type": "root",
+            "input": {
+                "path": {
+                    "direct": "left",
+                    "desc": "输入名字",
+                    "key": "input_text",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "entry"
+        },
+        "self_": {
+            "desc": "组建的绑定最想作为节点",
+            "output": [],
+            "type": "root",
+            "input": [],
+            "supposeType": "common",
+            "name": "self"
+        }
+    },
+    "composites": {
+        "sequence": {
+            "type": "composites",
+            "supposeType": "common",
+            "name": "sequence",
+            "desc": "顺序"
+        },
+        "selector": {
+            "type": "composites",
+            "supposeType": "common",
+            "name": "selector",
+            "desc": "选择"
+        },
+        "parallel": {
+            "type": "composites",
+            "supposeType": "common",
+            "name": "parallel",
+            "desc": "并行"
+        }
+    },
+    "decorator": {
+        "return_success": {
+            "type": "decorator",
+            "supposeType": "common",
+            "name": "return_success",
+            "desc": "一直返回成功"
+        },
+        "inverter": {
+            "type": "decorator",
+            "supposeType": "common",
+            "name": "inverter",
+            "desc": "取反"
+        },
+        "util_failure": {
+            "type": "decorator",
+            "supposeType": "common",
+            "name": "until failure",
+            "desc": "一直执行直到返回失败"
+        },
+        "return_failure": {
+            "type": "decorator",
+            "supposeType": "common",
+            "name": "return failure",
+            "desc": "一直返回失败"
+        },
+        "util_success": {
+            "type": "decorator",
+            "supposeType": "common",
+            "name": "until success",
+            "desc": "一直执行直到返回成功"
+        },
+        "loop": {
+            "desc": "重复执行",
+            "type": "decorator",
+            "input": {
+                "cnt": {
+                    "direct": "left",
+                    "desc": "循环次数(-1为无限循环)",
+                    "key": "input_int",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "loop"
+        }
+    },
+    "const": {
+        "float": {
+            "desc": "小数",
+            "output": {
+                "out_float_1": {
+                    "direct": "right",
+                    "desc": "输出",
+                    "key": "out_float",
+                    "numMax": 1
+                }
+            },
+            "type": "const",
+            "input": {
+                "input_float_1": {
+                    "direct": "left",
+                    "desc": "输入小数",
+                    "key": "input_float",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "float"
+        },
+        "child_node": {
+            "desc": "根据path获取子节点",
+            "type": "const",
+            "input": {
+                "child_path": {
+                    "direct": "left",
+                    "key": "child_path",
+                    "numMax": 1
+                }
+            },
+            "supposeType": "common",
+            "name": "child_node"
+        },
+        "text": {
+            "desc": "文本",
+            "output": {
+                "out_text_1": {
+                    "direct": "right",
+                    "desc": "输出",
+                    "key": "out_text",
+                    "numMax": 1
+                }
+            },
+            "type": "const",
+            "input": {
+                "input_text_1": {
+                    "direct": "left",
+                    "desc": "输入文本",
+                    "key": "input_text",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "text"
+        },
+        "int": {
+            "desc": "整数",
+            "output": {
+                "out_int_1": {
+                    "direct": "right",
+                    "desc": "输出",
+                    "key": "out_int",
+                    "numMax": 1
+                }
+            },
+            "type": "const",
+            "input": {
+                "input_int_1": {
+                    "direct": "left",
+                    "desc": "输入整数",
+                    "key": "input_int",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "int"
+        }
+    },
+    "action": {
+        "do_stopmove": {
+            "type": "action",
+            "supposeType": "demo_traffic",
+            "name": "do_stopmove",
+            "desc": "停止移动动作"
+        },
+        "move back": {
+            "desc": "向后移动",
+            "type": "action",
+            "input": {
+                "dis": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "dis"
+                },
+                "time": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "time"
+                }
+            },
+            "supposeType": "common",
+            "name": "move back"
+        },
+        "slow down": {
+            "type": "action",
+            "supposeType": "demo_traffic",
+            "name": "slow down",
+            "desc": "减速慢行"
+        },
+        "turn right": {
+            "type": "action",
+            "supposeType": "demo_traffic",
+            "name": "turn right",
+            "desc": "右转"
+        },
+        "move forward2d": {
+            "desc": "向转向的方向移动",
+            "type": "action",
+            "input": {
+                "dis": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "dis"
+                },
+                "time": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "time"
+                }
+            },
+            "supposeType": "dev_v6",
+            "name": "move forward2d"
+        },
+        "rotate to touch": {
+            "type": "action",
+            "supposeType": "dev_v6",
+            "name": "rotate to touch",
+            "desc": "转向到点击的方向"
+        },
+        "move forward": {
+            "desc": "向前移动",
+            "type": "action",
+            "input": {
+                "dis": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "dis"
+                },
+                "time": {
+                    "direct": "left",
+                    "key": "input_float",
+                    "desc": "time"
+                }
+            },
+            "supposeType": "common",
+            "name": "move forward"
+        },
+        "new fire bullet": {
+            "desc": "创建一个新的子弹",
+            "type": "action",
+            "input": {
+                "prefab": []
+            },
+            "supposeType": "dev_v6",
+            "name": "new fire bullet"
+        },
+        "turn left": {
+            "type": "action",
+            "supposeType": "demo_traffic",
+            "name": "turn left",
+            "desc": "左转"
+        },
+        "wait": {
+            "type": "action",
+            "input": {
+                "dt": {
+                    "direct": "left",
+                    "desc": "要等待的时间",
+                    "key": "input_float",
+                    "numMax": 0
+                }
+            },
+            "name": "wait",
+            "desc": "等待一段时间"
+        },
+        "send_event": {
+            "type": "action",
+            "input": {
+                "event": {
+                    "direct": "left",
+                    "desc": "要发送的事件名",
+                    "key": "input_string",
+                    "numMax": 0
+                }
+            },
+            "name": "send event",
+            "desc": "发送一个事件"
+        },
+        "log": {
+            "desc": "打印一个log",
+            "type": "action",
+            "input": {
+                "log": {
+                    "direct": "left",
+                    "desc": "要输出的日志",
+                    "key": "input_string",
+                    "numMax": 0
+                }
+            },
+            "supposeType": "common",
+            "name": "log"
+        }
+    },
+    "conditionals": {
+        "is light single": {
+            "desc": "是否有灯信号(1-红灯，2-绿灯，3-黄灯)",
+            "type": "conditionals",
+            "input": {
+                "in_int_1": {
+                    "direct": "left",
+                    "key": "in_int",
+                    "numMax": 1
+                }
+            },
+            "supposeType": "demo_traffic",
+            "name": "is light single"
+        },
+        "is front car": {
+            "type": "conditionals",
+            "supposeType": "demo_traffic",
+            "name": "is front car",
+            "desc": "是否有前车"
+        },
+        "is crossing": {
+            "type": "conditionals",
+            "supposeType": "demo_traffic",
+            "name": "is crossing",
+            "desc": "是否在路口"
+        },
+        "is in touch": {
+            "type": "conditionals",
+            "supposeType": "dev_v6",
+            "name": "is in touch",
+            "desc": "是否在点击范围内"
+        }
+    },
+    "demo_traffic": []
+}
