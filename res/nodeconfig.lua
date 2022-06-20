@@ -2,7 +2,7 @@ local node_config = {
     root = {
         entry = {
             name = "entry",
-            type =  "root",
+            type = "root",
             desc = "绑定单个渲染对象入口",
             supposeType = "common",
             input = {
@@ -17,13 +17,13 @@ local node_config = {
         },
         self_ = {
             name = "self",
-            type =  "root",
+            type = "root",
             desc = "组建的绑定最想作为节点",
             supposeType = "common",
             input = {},
             output = {},
         },
-        
+
     },
     composites = {
         sequence = {
@@ -115,8 +115,8 @@ local node_config = {
         child_node = {
             name = "child_node",
             type = "const",
-            desc ="根据path获取子节点",
-            supposeType ="common",
+            desc = "根据path获取子节点",
+            supposeType = "common",
             input = {
                 child_path = {
                     direct = "left",
@@ -128,8 +128,8 @@ local node_config = {
     },
     decorator = {
         loop = {
-            name = "loop", 
-            type = "decorator", 
+            name = "loop",
+            type = "decorator",
             desc = "重复执行",
             supposeType = "common",
             input = {
@@ -142,36 +142,36 @@ local node_config = {
             },
         },
         inverter = {
-            name = "inverter", 
-            type = "decorator", 
+            name = "inverter",
+            type = "decorator",
             desc = "取反",
             supposeType = "common"
         },
         return_failure = {
             name = "return failure",
-            type = "decorator", 
-            desc = "一直返回失败", 
+            type = "decorator",
+            desc = "一直返回失败",
             supposeType = "common"
         },
         return_success = {
-            name = "return_success", 
-            type = "decorator", 
-            desc = "一直返回成功", 
+            name = "return_success",
+            type = "decorator",
+            desc = "一直返回成功",
             supposeType = "common"
         },
         util_failure = {
             name = "until failure",
-            type = "decorator", 
-            desc = "一直执行直到返回失败", 
+            type = "decorator",
+            desc = "一直执行直到返回失败",
             supposeType = "common"
         },
         util_success = {
             name = "until success",
-            type = "decorator", 
-            desc = "一直执行直到返回成功", 
+            type = "decorator",
+            desc = "一直执行直到返回成功",
             supposeType = "common"
         }
-        
+
     },
     action = {
         log = {
@@ -226,7 +226,9 @@ local function requireConfig(path)
         end
         node_config[data_.type][data_.name] = data_
     end
-    if type(data) ~= "table" then return end
+    if type(data) ~= "table" then
+        return
+    end
     --single
     if data.type then
         dump(data, "--->>single")
