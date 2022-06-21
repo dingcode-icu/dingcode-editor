@@ -20,6 +20,7 @@ function http:httpGet(url, sucFunc, errFunc)
     request:setResponseCallback(function(sender, response)
         -- 保留request的引用 避免在回调回来之前 释放掉
         request = nil
+
         if not response:isSucceed() then
             print("http error ")
             if errFunc then
@@ -42,17 +43,52 @@ end
 
 function http:initConfig()
     print("===========================")
-    local url = "http://static.bbclient.icu:8081/update/version.manifest"
+    local url = "http://static.bbclient.icu:8083/api/dingcode/dnode"
     self:httpGet(url, function(strRespone)
         local data = json.decode(strRespone)
         if data then
-            if data.logic_node_list then
-                enum.logic_node_list = data.logic_node_list
+
+            if data.code ~= "0" and data.data then
+                print("http initConfig error")
+                print(data.msg)
+                return
             end
-            if data.list_node_type then
-                enum.list_node_type = data.list_node_type
+
+            --if data.logic_node_list then
+            --    enum.logic_node_list = data.logic_node_list
+            --end
+            --if data.list_node_type then
+            --    enum.list_node_type = data.list_node_type
+            --end
+            ---- 排序
+            --local logic_node_list = {}
+            --enum.logic_node_list = logic_node_list
+            --for i, v in pairs(enum.logic_node_type) do
+            --    logic_node_list[i] = {}
+            --    for name, data in pairs(v) do
+            --        table.insert(logic_node_list[i], name)
+            --    end
+            --    table.sort(logic_node_list[i])
+            --end
+
+            local logic_node_type = {}
+            enum.logic_node_type = logic_node_type
+            local logic_node_list = {}
+            enum.logic_node_list = logic_node_list
+
+            for i, v in ipairs(data.data) do
+                if v.graph_type then
+                    if not logic_node_type[v.graph_type] then
+                        logic_node_type[v.graph_type] = {}
+                    end
+                    v.type = v.graph_type
+                    v.desc = v.descrip
+                    v.supposeType = v.suppose_type
+
+                    logic_node_type[v.graph_type][v.name] = v
+                end
             end
-            -- 排序
+
             local logic_node_list = {}
             enum.logic_node_list = logic_node_list
             for i, v in pairs(enum.logic_node_type) do
