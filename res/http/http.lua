@@ -48,7 +48,7 @@ function http:initConfig()
         local data = json.decode(strRespone)
         if data then
 
-            if data.code ~= "0" or data.data then
+            if data.code ~= "0" or not data.data then
                 print("http initConfig error")
                 print(data.msg)
                 return
