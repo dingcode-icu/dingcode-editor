@@ -4,5 +4,5 @@ RELEASE =  {
     ---是否打开调试显示
     IS_BASENODE_DEBUGGRAPH = false,
 
-    ASYNC_TO_REMOTE = true
+    ASYNC_TO_REMOTE = false
 }

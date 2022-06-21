@@ -23,9 +23,19 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME dingcode_editor)
+set(APP_NAME dingcode-editor)
 
 project(${APP_NAME})
+
+set(WINDOWS ${WIN32})
+message(${CMAKE_SYSTEM_NAME})
+if (WINDOWS)
+    message(APP_NAME, "appname-----------------------------------")
+    message(APP_NAME, "appname-----------------------------------")
+    message(APP_NAME, "appname-----------------------------------")
+    message(APP_NAME, "appname-----------------------------------")
+    message(APP_NAME, "appname-----------------------------------")
+endif()
 
 if(NOT DEFINED BUILD_ENGINE_DONE)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
@@ -183,7 +193,6 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    message(${GAME_RES_FOLDER},"-->>>from")
     cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 

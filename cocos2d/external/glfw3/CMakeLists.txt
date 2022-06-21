@@ -18,6 +18,7 @@ if(LINUX)
   )
 elseif(WINDOWS)
   set_target_properties(${target_name} PROPERTIES
+              CC_DEPEND_DLLS "${CMAKE_CURRENT_SOURCE_DIR}/prebuilt/win32/glfw3.dll"
     IMPORTED_LOCATION "${platform_spec_path}/${lib_name}.lib"
   )
 else()

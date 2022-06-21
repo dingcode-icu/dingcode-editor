@@ -48,22 +48,24 @@ function tabMenuNode.render()
         ImGui.SetNextWindowPos(tabMenuNode.data._posX, tabMenuNode.data._posY, ImGui.ImGuiCond.Always)
         ImGui.Begin(Lang:Lang("menu_node", "node"), true, ImGui.ImGuiWindowFlags.NoTitleBar)
 
-        local listType = enum.list_node_type
-        for indexlist, strType in pairs(listType) do
-            local list = enum.logic_node_type[strType]
-            if ImGui.BeginMenu(strType) then
-                for i, name in pairs(enum.logic_node_list[strType]) do
-                    local data = list[name]
-                    local name = data.name
-                    local desc = data.desc or ""
-                    if ImGui.MenuItem(name, desc) then
-                        local dataTemp = DataManager:createData(data)
-                        if dataTemp then
-                            ViewManager:createNode(dataTemp)
+        local listType = enum.enum_node_type
+        for _, strType in pairs(listType) do
+            local list = enum.logic_node_list[strType]
+            if type(list) =="table" then
+                if ImGui.BeginMenu(strType) then
+                    for i, name in pairs(list) do
+                        local data = list[name]
+                        local name = data.name
+                        local desc = data.desc or ""
+                        if ImGui.MenuItem(name, desc) then
+                            local dataTemp = DataManager:createData(data)
+                            if dataTemp then
+                                ViewManager:createNode(dataTemp)
+                            end
                         end
                     end
+                    ImGui.EndMenu()
                 end
-                ImGui.EndMenu()
             end
         end
 

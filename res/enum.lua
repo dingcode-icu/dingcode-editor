@@ -1,14 +1,13 @@
 enum = {
     -- 创建的节点枚举
     enum_node_type = {
-        composites = "composites",
+        composites = "composite",
         decorator = "decorator",
-        conditionals = "conditionals",
+        conditionals = "conditional",
         action = "action",
         const = "const",
         root = "root",
     },
-    list_node_type = {"root", "composites", "decorator", "conditionals", "action", "const", "demo_traffic"},
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
 

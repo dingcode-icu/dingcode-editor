@@ -25,22 +25,22 @@ local node_config = {
         },
 
     },
-    composites = {
+    composite = {
         sequence = {
             name = "sequence",
-            type = "composites",
+            type = "composite",
             desc = "顺序",
             supposeType = "common",
         },
         selector = {
             name = "selector",
-            type = "composites",
+            type = "composite",
             desc = "选择",
             supposeType = "common",
         },
         parallel = {
             name = "parallel",
-            type = "composites",
+            type = "composite",
             desc = "并行",
             supposeType = "common",
         }
@@ -215,33 +215,6 @@ local node_config = {
             },
         }
     },
-    --proj 
-    demo_traffic = {}
 }
-local function requireConfig(path)
-    local data = require(path)
-    local function add_node(data_)
-        if not node_config[data_.type] then
-            node_config[data_.type] = {}
-        end
-        node_config[data_.type][data_.name] = data_
-    end
-    if type(data) ~= "table" then
-        return
-    end
-    --single
-    if data.type then
-        dump(data, "--->>single")
-        add_node(data)
-    end
-    --list
-    for _, c in ipairs(data) do
-        add_node(c)
-    end
-end
-local list = require("engine/cocos/all_config")
-for i, v in pairs(list) do
-    requireConfig(v)
-end
 
 return node_config

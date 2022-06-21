@@ -95,6 +95,7 @@ function(cocos_copy_target_dll cocos_target)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
     # remove repeat items
+    message(${all_depend_dlls})
     if(all_depend_dlls)
         list(REMOVE_DUPLICATES all_depend_dlls)
     endif()
