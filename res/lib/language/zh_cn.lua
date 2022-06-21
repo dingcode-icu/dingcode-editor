@@ -1,5 +1,6 @@
 return {
     menu_mainbar = {
+        --file
         file = "文件",
         new = "新建",
         proj = "项目",
@@ -7,9 +8,16 @@ return {
         export = "导出",
         save = "保存",
         quit = "退出",
+        --view
+        view = "界面",
+        show_treenodes = "树形结构",
+        show_node_info = "节点详情",
+        --node
+        node = "节点",
+        add_node ="添加节点",
+        fetch_node = "从远端同步"
+        --debug
 
-        setting = "设置",
-        settAudio = "音频设置",
     },
     menu_node = {
         node = "节点",

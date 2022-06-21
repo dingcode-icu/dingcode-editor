@@ -4,7 +4,7 @@ local json = require("lib/json")
 local DataManager = require("data/datamanager")
 local ViewManager = require("render/viewmanager")
 local imguix = require("imguix")
-
+local conf = require("imguix/config/conf_menu")
 --上方主菜单
 local tabMenuMainBar = {
     data = {
@@ -33,93 +33,103 @@ function tabMenuMainBar:isShow()
 end
 
 function tabMenuMainBar.render()
+    --调试菜单
+    local function append_debug()
+        if ImGui.BeginMenu("调试") then
+            if ImGui.MenuItem("重置") then
+                DataManager:reset()
+                ViewManager:reset()
+            end
+            if ImGui.MenuItem("打印 viewList") then
+                for i, v in pairs(ViewManager.data.viewList) do
+                    print(v.data:getuuid())
+                end
+            end
+            if ImGui.MenuItem("打印 dataList") then
+                dump(DataManager.data, nil, 8)
+            end
+
+            if ImGui.MenuItem("初始化parent节点") then
+
+                try {
+                    function()
+                    end, catch {
+                        function(err)
+                            print(err)
+                        end
+                    }
+                }
+
+            end
+
+            if ImGui.MenuItem("showDemo") then
+                print("test aaaaaa")
+                imguix:open_demo()
+            end
+
+            if ImGui.MenuItem("showToast") then
+                ding.showToast("message")
+            end
+            if ImGui.MenuItem("showTip") then
+                ViewManager:showTip("message")
+            end
+
+            ImGui.EndMenu()
+        end
+
+    end
+    --菜单响应事件
+    local func_map = {
+        --file
+        new = c_func(tabMenuMainBar, tabMenuMainBar.SaveFile, true),
+        import = c_func(tabMenuMainBar, tabMenuMainBar.OpenFile),
+        export = c_func(tabMenuMainBar, tabMenuMainBar.SaveFile),
+        save = c_func(tabMenuMainBar, tabMenuMainBar.AutoSaveFile),
+        quite = c_func(ViewManager, ViewManager.exitGame),
+        --view
+        show_treenodes = function()
+            Event:dispatchEvent({
+                name = enum.evt_keyboard.imgui_menu_tree,
+                isReversedSelect = true,
+            })
+
+        end,
+        show_node_info = function()
+            Event:dispatchEvent({
+                name = enum.evt_keyboard.imgui_menu_detail,
+                isReversedSelect = true,
+            })
+        end,
+        --node
+        add_node = function()  end,
+        fetch_node = function()   end
+    }
+    --插入子菜单
+    local function insert_child(children)
+        for _, c in ipairs(children) do
+            if (ImGui.MenuItem(Lang:Lang("menu_mainbar", c["ln_key"]))) then
+                local func = func_map[c["title"]]
+                if func then
+                    func()
+                else
+                    print("[error]not func menu func to execute!")
+                end
+            end
+        end
+    end
+
+    local conf_mainmenu = conf["menu_main"]
     if tabMenuMainBar.data._isShow then
         if ImGui.BeginMainMenuBar() then
-            if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "file")) then
-
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "new"), "") then
-                    tabMenuMainBar:SaveFile(true)
-                end
-
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "import"), "") then
-                    tabMenuMainBar:OpenFile()
-                end
-
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "export"), "") then
-                    tabMenuMainBar:SaveFile()
-                end
-
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "save"), "ctrl+S") then
-                    tabMenuMainBar:AutoSaveFile()
-                end
-
-                if ImGui.MenuItem(Lang:Lang("menu_mainbar", "quit"), "ctrl+Q") then
-                    ViewManager:exitGame()
-                end
-
-                ImGui.EndMenu()
-            end
-
-            if ImGui.BeginMenu(Lang:Lang("menu_mainbar", "setting")) then
-                if ImGui.MenuItem("树形结构") then
-                    Event:dispatchEvent({
-                        name = enum.evt_keyboard.imgui_menu_tree,
-                        isReversedSelect = true,
-                    })
-                end
-                if ImGui.MenuItem("详情页面") then
-                    Event:dispatchEvent({
-                        name = enum.evt_keyboard.imgui_menu_detail,
-                        isReversedSelect = true,
-                    })
-                end
-                ImGui.EndMenu()
-            end
-            if ImGui.BeginMenu("调试") then
-                if ImGui.MenuItem("重置") then
-                    DataManager:reset()
-                    ViewManager:reset()
-                end
-                if ImGui.MenuItem("打印 viewList") then
-                    for i, v in pairs(ViewManager.data.viewList) do
-                        print(v.data:getuuid())
+            for _, v in ipairs(conf_mainmenu) do
+                if ImGui.BeginMenu(Lang:Lang("menu_mainbar", v["ln_key"])) then
+                    if type(v["children"]) == "table" then
+                        insert_child(v["children"])
                     end
+                    ImGui.EndMenu()
                 end
-                if ImGui.MenuItem("打印 dataList") then
-                    dump(DataManager.data, nil, 8)
-                end
-
-                if ImGui.MenuItem("初始化parent节点") then
-
-                    try {
-                        function()
-                        end, catch {
-                            function (err)
-                                print(err)
-                            end
-                        }
-                    }
-
-                end
-
-                if ImGui.MenuItem("showDemo") then
-                    print("test aaaaaa")
-                    imguix:open_demo()
-                end
-
-                if ImGui.MenuItem("showToast") then
-                    ding.showToast("message")
-                end
-                if ImGui.MenuItem("showTip") then
-                    ViewManager:showTip("message")
-                end
-
-
-                ImGui.EndMenu()
             end
-
-
-
+            append_debug()
             ImGui.EndMainMenuBar()
         end
 
@@ -157,7 +167,7 @@ function tabMenuMainBar:OpenFileForPath(filePath)
 
                 ViewManager:showTip("打开成功, " .. filePath)
             end, catch {
-                function ()
+                function()
                     print("请选择正确的配置文件")
                     ViewManager:showTip("请选择正确的配置文件")
                 end
@@ -177,7 +187,7 @@ function tabMenuMainBar:SaveFile(isNew)
     if filePath and string.len(filePath) > 0 then
         local realFilePath = filePath
         if not string.ends(filePath, ".ding.json") then
-             realFilePath = filePath .. ".ding.json"
+            realFilePath = filePath .. ".ding.json"
         end
         try {
             function()
@@ -189,7 +199,7 @@ function tabMenuMainBar:SaveFile(isNew)
                 local dataToSave = DataManager:get_alldata()
                 local viewToSave = ViewManager:get_alldata()
                 local treeToSave = DataManager:get_export_tree()
-                local strData =  json.encode({
+                local strData = json.encode({
                     data = dataToSave,
                     view = viewToSave,
                     tree = treeToSave,
@@ -207,7 +217,7 @@ function tabMenuMainBar:SaveFile(isNew)
                 ViewManager:showTip("保存文件成功")
 
             end, catch {
-                function (err)
+                function(err)
                     print("保存文件出现错误")
                     print(err)
                     ViewManager:showTip("保存文件出错")
@@ -225,7 +235,7 @@ function tabMenuMainBar:AutoSaveFile()
         local dataToSave = DataManager:get_alldata()
         local viewToSave = ViewManager:get_alldata()
         local treeToSave = DataManager:get_export_tree()
-        local strData =  json.encode({
+        local strData = json.encode({
             data = dataToSave,
             view = viewToSave,
             tree = treeToSave,
@@ -241,11 +251,9 @@ function tabMenuMainBar:AutoSaveFile()
     end
 end
 
-
 if ImGuiDraw then
     print("注册 tabMenuMainBar")
     ImGuiDraw(tabMenuMainBar.render)
 end
-
 
 return tabMenuMainBar

@@ -3,104 +3,48 @@
 --- Created by mac.
 --- DateTime: 2022/6/9 2:34 下午
 ---
-local json = require("lib/json")
-local enum = enum
-
 local http = {}
 
 function http:init()
     print("init http")
+    self._host = "http://static.bbclient.icu:8083{path}"
 end
 
-function http:httpGet(url, sucFunc, errFunc)
+function http:_fetch(method_str, path, str_data, suc_cb)
+    local METHOD_MAP = {
+        get = cc.HttpRequestType.GET,
+        post = cc.HttpRequestType.POST
+    }
     local request = cc.HttpRequest();
-    request:setUrl(url);
-    request:setRequestType(cc.HttpRequestType.GET);
-    request:setTag("getjson")
-    request:setResponseCallback(function(sender, response)
+    request:setUrl(string.gsub(self._host, "{path}", path))
+    request:setRequestType(METHOD_MAP[method_str] or cc.HttpRequestType.GET)
+    if str_data then
+        request:setUserData(str_data)
+    end
+    request:setResponseCallback(function(sender, resp)
         -- 保留request的引用 避免在回调回来之前 释放掉
         request = nil
-
-        if not response:isSucceed() then
+        local ret = resp:getResponseData()
+        if not resp:isSucceed() then
             print("http error ")
-            if errFunc then
-                errFunc(response:getResponseCode())
-            end
+            ding.showToast(string.format("http error:code=%s, msg=%s", request:getResponseCode(), ret))
             return
         end
-        local strRespone = response:getResponseData()
-        --print(response:getResponseCode())
-        print(response:getHttpRequest():getTag())
         print("http get suc from url ==============")
         print(url)
-        print(strRespone)
-        if sucFunc then
-            sucFunc(strRespone)
+        print(ret)
+        if suc_cb then
+            suc_cb(ret)
         end
-    end);
+    end)
     cc.HttpClient:getInstance():send(request)
 end
 
-function http:initConfig()
-    print("===========================")
-    local url = "http://static.bbclient.icu:8083/api/dingcode/dnode"
-    self:httpGet(url, function(strRespone)
-        local data = json.decode(strRespone)
-        if data then
-
-            if data.code ~= "0" or not data.data then
-                print("http initConfig error")
-                print(data.msg)
-                return
-            end
-
-            --if data.logic_node_list then
-            --    enum.logic_node_list = data.logic_node_list
-            --end
-            --if data.list_node_type then
-            --    enum.list_node_type = data.list_node_type
-            --end
-            ---- 排序
-            --local logic_node_list = {}
-            --enum.logic_node_list = logic_node_list
-            --for i, v in pairs(enum.logic_node_type) do
-            --    logic_node_list[i] = {}
-            --    for name, data in pairs(v) do
-            --        table.insert(logic_node_list[i], name)
-            --    end
-            --    table.sort(logic_node_list[i])
-            --end
-
-            local logic_node_type = {}
-            enum.logic_node_type = logic_node_type
-            local logic_node_list = {}
-            enum.logic_node_list = logic_node_list
-
-            for i, v in ipairs(data.data) do
-                if v.graph_type then
-                    if not logic_node_type[v.graph_type] then
-                        logic_node_type[v.graph_type] = {}
-                    end
-                    v.type = v.graph_type
-                    v.desc = v.descrip
-                    v.supposeType = v.suppose_type
-
-                    logic_node_type[v.graph_type][v.name] = v
-                end
-            end
-
-            local logic_node_list = {}
-            enum.logic_node_list = logic_node_list
-            for i, v in pairs(enum.logic_node_type) do
-                logic_node_list[i] = {}
-                for name, data in pairs(v) do
-                    table.insert(logic_node_list[i], name)
-                end
-                table.sort(logic_node_list[i])
-            end
-        end
-
-    end)
+function http:get(path, suc_cb)
+    self:_fetch("get", path,nil, suc_cb)
 end
 
+function http:post(path, std_data, suc_cb)
+    self:_fetch("post",  path, std_data, suc_cb)
+end
 return http

@@ -632,6 +632,7 @@ inline void Init(sol::state_view& lua){
                                 "setResponseCallback", sol::overload(
                                             sol::resolve<void(const network::ccHttpRequestCallback&)>(&network::HttpRequest::setResponseCallback)
                                             ),
+                                "setUserData", &network::HttpRequest::setUserData,
                                 "setTag", &network::HttpRequest::setTag,
                                 "getTag", &network::HttpRequest::getTag,
                                 "retain", &network::HttpRequest::retain,

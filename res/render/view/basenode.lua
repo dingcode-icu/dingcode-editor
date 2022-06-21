@@ -146,7 +146,6 @@ function BaseNode:UnSelect()
 end
 -- 反选
 function BaseNode:ClickSelect()
-    print(self:isSelect(), "-->>isselect")
     if self:isSelect() then
         self:UnSelect()
     else
