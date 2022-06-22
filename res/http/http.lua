@@ -14,9 +14,17 @@ function http:_fetch(method_str, path, dic_data, suc_cb)
     }
     local request = cc.HttpRequest();
     request:setUrl(string.gsub(self._host, "{path}", path))
-    request:setRequestType(METHOD_MAP[method_str] or cc.HttpRequestType.GET)
+    local requestType = cc.HttpRequestType.GET
+    if method_str == "get" then
+        requestType = cc.HttpRequestType.GET
+    elseif method_str == "post" then
+        requestType = cc.HttpRequestType.POST
+    elseif method_str == "put" then
+        requestType = cc.HttpRequestType.PUT
+    end
+    request:setRequestType(requestType)
     if dic_data then
-        request:setUserData(json.encode(dic_data))
+        request:setRequestData(json.encode(dic_data))
     end
     request:setResponseCallback(function(sender, resp)
         -- 保留request的引用 避免在回调回来之前 释放掉

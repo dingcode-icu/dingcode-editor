@@ -632,7 +632,15 @@ inline void Init(sol::state_view& lua){
                                 "setResponseCallback", sol::overload(
                                             sol::resolve<void(const network::ccHttpRequestCallback&)>(&network::HttpRequest::setResponseCallback)
                                             ),
-                                "setUserData", &network::HttpRequest::setUserData,
+                                "setRequestData", sol::overload(
+                                   [](network::HttpRequest& inc, const std::string& text){
+                                       const char *p = text.c_str();
+                                       inc.setRequestData(p, strlen(p));
+
+                                       std::vector<std::string> header;
+                                        header.push_back("Content-Type:application/json;charset=utf-8");
+                                        inc.setHeaders(header);
+                                   }),
                                 "setTag", &network::HttpRequest::setTag,
                                 "getTag", &network::HttpRequest::getTag,
                                 "retain", &network::HttpRequest::retain,
