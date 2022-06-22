@@ -101,7 +101,13 @@ function tabMenuMainBar.render()
             })
         end,
         --node
-        add_node = function()  end,
+        add_node = function()
+                print("show addnode")
+             Event:dispatchEvent({
+                name = enum.evt_keyboard.imgui_popup_addnode,
+                isReversedSelect = true,
+            })
+        end,
         fetch_node = function()   end
     }
     --插入子菜单

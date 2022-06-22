@@ -2726,9 +2726,8 @@ namespace sol_ImGui
                                                   sol::resolve<bool(const std::string &, bool)>(BeginPopupModal),
                                                   sol::resolve<bool(const std::string &, bool, int)>(BeginPopupModal)));
         ImGui.set_function("EndPopup", EndPopup);
-        //ImGui.set_function("OpenPopup", sol::overload(
-        //                                    sol::resolve<void(const std::string &)>(OpenPopup),
-        //                                    sol::resolve<void(const std::string &, int)>(OpenPopup)));
+        ImGui.set_function("OpenPopup", sol::overload(
+                                            sol::resolve<void(const std::string &)>(OpenPopup)));
         //ImGui.set_function("OpenPopupContextItem", sol::overload(
         //                                               sol::resolve<bool()>(OpenPopupContextItem),
         //                                               sol::resolve<bool(const std::string &)>(OpenPopupContextItem),
@@ -2746,9 +2745,8 @@ namespace sol_ImGui
         //                                                sol::resolve<bool()>(BeginPopupContextVoid),
         //                                                sol::resolve<bool(const std::string &)>(BeginPopupContextVoid),
         //                                                sol::resolve<bool(const std::string &, int)>(BeginPopupContextVoid)));
-        //ImGui.set_function("IsPopupOpen", sol::overload(
-        //                                      sol::resolve<bool(const std::string &)>(IsPopupOpen),
-        //                                      sol::resolve<bool(const std::string &, int)>(IsPopupOpen)));
+        ImGui.set_function("IsPopupOpen", sol::overload(
+                                              sol::resolve<bool(const std::string &)>(IsPopupOpen)));
 #pragma endregion Popups, Modals
 
 #pragma region Columns

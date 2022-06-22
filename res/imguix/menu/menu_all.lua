@@ -82,7 +82,16 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_detail, function(event)
     end
 end)
 
-
+--节点的详情
+local popup_add = require("imguix/popup/add_dnode")
+popup_add:hide()
+Event:addEventListener(enum.evt_keyboard.imgui_popup_addnode, function(event)
+    if event and event.isHide then
+        popup_add:hide()
+    else
+        popup_add:show(event)
+    end
+end)
 
 
 

@@ -51,6 +51,7 @@ enum = {
         imgui_menu_detail = "imgui_menu_detail",                    -- 显示详情页面
         imgui_delete_node = "imgui_delete_node",                    -- 删除节点
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
+        imgui_popup_addnode = "imgui_popup_addnode",                -- 添加节点
 
         imgui_move_node_to_line = "imgui_move_node_to_line",        -- 移动节点 - 对应移动连线
 

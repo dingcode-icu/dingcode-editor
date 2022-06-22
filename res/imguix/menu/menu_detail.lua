@@ -1,5 +1,3 @@
-local Lang = require("lib/language/Lang")
-local enum = require("enum")
 local DataManager = require("data/datamanager")
 local ViewManager = require("render/viewmanager")
 

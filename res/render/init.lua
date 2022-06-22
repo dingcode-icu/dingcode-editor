@@ -17,7 +17,7 @@ function root:ctor()
     self.view:setOnEnterCallback(function()
         render:init()
         ViewManager:initViewParent()
-        Api:initConfig()
+        --Api:initConfig()
     end)
 end
 end
