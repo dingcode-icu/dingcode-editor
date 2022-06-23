@@ -1,6 +1,7 @@
 local _p = class("PopupAddNode")
 
 local Api = require("http/api")
+local ViewManager = require("render/viewmanager")
 
 function _p:ctor()
     self._pos_x = 0
@@ -16,6 +17,10 @@ end
 
 function _p:show()
     self.is_show = true
+end
+
+function _p:hide()
+    self.is_show = false
 end
 
 function _p:isShow()
@@ -68,12 +73,16 @@ function _p:render()
 
             ImGui.Separator()
             if (ImGui.Button("OK")) then
+                ViewManager:showTip("requesting to add...")
                 Api:addNode(self.name_, self.desc_, self.gType_, self.sType_, function()
+                    ViewManager:showTip("done!")
                     ding.showToast("add suc!")
                 end)
+                self:hide()
             end
             if (ImGui.Button("Cancel")) then
                 ImGui.CloseCurrentPopup()
+                self:hide()
             end
             ImGui.EndPopup()
         end
