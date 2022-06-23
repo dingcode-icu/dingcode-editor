@@ -28,6 +28,7 @@ dir_inc:runWithScene(sc.view)
 local SINGLE_KEY_MAP  = {
     [cc.KeyBoardCode.KEY_DELETE] = enum.evt_keyboard.imgui_delete_node,
     [cc.KeyBoardCode.KEY_KP_DELETE] = enum.evt_keyboard.imgui_delete_node,
+    [cc.KeyBoardCode.KEY_BACKSPACE] = enum.evt_keyboard.imgui_delete_node,
     [cc.KeyBoardCode.KEY_F5] = enum.evt_keyboard.dev_reload
 }
 
