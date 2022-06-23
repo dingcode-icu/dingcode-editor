@@ -24,21 +24,21 @@
             "name": "self"
         }
     },
-    "composites": {
+    "composite": {
         "sequence": {
-            "type": "composites",
+            "type": "composite",
             "supposeType": "common",
             "name": "sequence",
             "desc": "顺序"
         },
         "selector": {
-            "type": "composites",
+            "type": "composite",
             "supposeType": "common",
             "name": "selector",
             "desc": "选择"
         },
         "parallel": {
-            "type": "composites",
+            "type": "composite",
             "supposeType": "common",
             "name": "parallel",
             "desc": "并行"
