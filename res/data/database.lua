@@ -1,4 +1,5 @@
 local dataBase = class("DataBase", {})
+local json = require("lib/json")
 
 function dataBase:ctor(config)
 
@@ -119,10 +120,16 @@ function dataBase:getDesc()
 end
 -- 获取输入的列表配置
 function dataBase:getListInputConfig()
+    if type(self.data.config.input) == "string" then
+        self.data.config.input = json.decode(self.data.config.input)
+    end
     return self.data.config.input or {}
 end
 -- 获取输出的列表配置
 function dataBase:getListOutputConfig()
+    if type(self.data.config.output) == "string" then
+        self.data.config.output = json.decode(self.data.config.output)
+    end
     return self.data.config.output or {}
 end
 function dataBase:getConfigForKey(key)

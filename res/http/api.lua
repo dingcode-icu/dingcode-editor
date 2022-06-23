@@ -10,7 +10,7 @@ function Api:initConfig()
         local data = json.decode(resp)
         if data then
 
-            if data.code ~= "0" or not data.data then
+            if data.code ~= 0 or not data.data then
                 print("http initConfig error")
                 print(data.msg)
                 return
