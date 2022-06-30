@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 
-        glview = GLViewImpl::createWithRect("ding-editor", cocos2d::Rect(0, 0, SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT), 1.0, true);
+        glview = GLViewImpl::createWithRect("dingcode", cocos2d::Rect(0, 0, SCREEN_MIN_WIDTH, SCREEN_MIN_HEIGHT), 1.0, true);
         //设置窗口
         this->init_glview(glview);
         director->setOpenGLView(glview);

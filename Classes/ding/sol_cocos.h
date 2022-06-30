@@ -338,7 +338,6 @@ inline void Init(sol::state_view& lua){
     CC.new_usertype<Scene>("Scene",
                             sol::call_constructor, sol::constructors<Scene*()>(),
                             "create",&Scene::create,
-                            "createWithPhysics", &Scene::createWithPhysics,
                             "setOnEnterCallback", &Node::setOnEnterCallback,
                             sol::base_classes, sol::bases<Node>()
                                         );
