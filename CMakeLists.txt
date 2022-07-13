@@ -28,166 +28,110 @@ set(APP_NAME dingcode-editor)
 project(${APP_NAME})
 
 set(WINDOWS ${WIN32})
-if(NOT DEFINED BUILD_ENGINE_DONE)
+
+if (NOT DEFINED BUILD_ENGINE_DONE)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-
     include(CocosBuildSet)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+endif ()
 
 # record sources, headers, resources...
 set(GAME_SOURCE)
 set(GAME_HEADER)
-
 set(GAME_RES_FOLDER
-    "${CMAKE_CURRENT_SOURCE_DIR}/res"
-    )
-if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "res" FOLDERS ${GAME_RES_FOLDER})
-endif()
-
-#获取Classes目录下所有代码文件
-
-#IMGUI
-set(IMGUIEXT_H_CLASSES)
-file(GLOB_RECURSE IMGUIEXT_H_CLASSES Classes/ImGuiExt/**.h)
-set(IMGUIEXT_CPP_CLASSES)
-file(GLOB_RECURSE IMGUIEXT_CPP_CLASSES Classes/ImGuiExt/**.cpp Classes/ImGuiExt/**.mm)
-
-#DING
-set(DING_SRC_CLASSES)
-file(GLOB_RECURSE DING_SRC_CLASSES Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl)
-
-#LOGGER
-set(LOGGER_SRC_CLASSES)
-file(GLOB_RECURSE LOGGER_SRC_CLASSES Classes/logger/**.h Classes/logger/**.cc)
+        "${CMAKE_CURRENT_SOURCE_DIR}/res"
+        )
+#if (APPLE OR VS)
+#    cocos_mark_multi_resources(cc_common_res RES_TO "res" FOLDERS ${GAME_RES_FOLDER})
+#endif ()
 
 
-add_definitions(-DSOL_NO_EXCEPTIONS=0 -DSOL_IMGUI_IMPLEMENTATION=1 -DWIN32_LEAN_AND_MEAN=1)
-
+#[[
+-------------*---------------------------*-------------
+-------------*-获取Classes目录下所有代码文件-*-------------
+*/]]
+#ROOT
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
-        #ding
-        #svg
-        Classes/svg/nanosvg.h
-        Classes/svg/nanosvgrast.h
-        Classes/svg/SVGSprite.h
-        Classes/svg/SVGSpritePath.h
-        #imguiext
-        ${IMGUIEXT_H_CLASSES}
-     )
-
+        )
 list(APPEND GAME_SOURCE
         Classes/TEST.hpp
         Classes/AppDelegate.cpp
-        #ding
-        #sol
-        Classes/sol/config.hpp
-        Classes/sol/forward.hpp
-        Classes/sol/sol.hpp
-        #svg
-        Classes/svg/nanosvg.cpp
-        Classes/svg/SVGSprite.cpp
-        Classes/svg/SVGSpritePath.cpp
-        #imguiext
-        ${IMGUIEXT_CPP_CLASSES}
-     )
-
-if(ANDROID)
-    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME cpp_empty_test)
-    list(APPEND GAME_SOURCE
-         proj.android/app/jni/main.cpp
-         )
-elseif(LINUX)
-    list(APPEND GAME_SOURCE
-         proj.linux/main.cpp
-         )
-elseif(WINDOWS)
-    list(APPEND GAME_HEADER
-         proj.win32/main.h
-         )
-    list(APPEND GAME_SOURCE
-         proj.win32/main.cpp
-         ${cc_common_res}
-         )
-elseif(APPLE)
-    if(IOS)
-        list(APPEND GAME_HEADER
-             proj.ios/AppController.h
-             proj.ios/RootViewController.h
-             )
-        set(APP_UI_RES
-            proj.ios/LaunchScreen.storyboard
-            proj.ios/LaunchScreenBackground.png
-            proj.ios/Images.xcassets
-            )
-        list(APPEND GAME_SOURCE
-             proj.ios/main.m
-             proj.ios/AppController.mm
-             proj.ios/RootViewController.mm
-             ${APP_UI_RES}
-             )
-    elseif(MACOSX)
-        set(APP_UI_RES
-            proj.ios_mac/mac/Icon.icns
-            proj.ios_mac/mac/Info.plist
-            )
-        list(APPEND GAME_SOURCE
-             proj.ios_mac/mac/main.cpp
-             ${APP_UI_RES}
-             )
-    endif()
-    list(APPEND GAME_SOURCE ${cc_common_res})
-endif()
-
+        )
+#IMGUI
+set(IMGUIEXT_CLASSES_)
+file(GLOB_RECURSE IMGUIEXT_CLASSES_ Classes/ImGuiExt/**.h Classes/ImGuiExt/**.cpp Classes/ImGuiExt/**.mm)
+#DING
+set(DING_CLASSES_)
+file(GLOB_RECURSE DING_CLASSES_ Classes/ding/**.h Classes/ding/**.cpp Classes/ding/**.inl_)
+add_definitions(-DSOL_NO_EXCEPTIONS=0 -DSOL_IMGUI_IMPLEMENTATION=1 -DWIN32_LEAN_AND_MEAN=1)
+#LOGGER
+set(LOGGER_CLASSES_)
+file(GLOB_RECURSE LOGGER_CLASSES_ Classes/logger/**.h Classes/logger/**.cc)
+#SVG
+set(SVG_CLASSES_)
+file(GLOB_RECURSE SVG_CLASSES_ Classes/svg/**.h Classes/svg/**.cpp)
+#MOBILE FILES
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+include(MobileDevice)
+dingcode_platform_append(PLATFORM_CLASSES_ PLATFORM_RESOURCES_)
 set(all_code_files
-    ${GAME_HEADER}
-    ${GAME_SOURCE}
-        ${DING_SRC_CLASSES}
-        ${LOGGER_SRC_CLASSES}
-    )
+        ${IMGUIEXT_CLASSES_}
+        ${DING_CLASSES_}
+        ${LOGGER_CLASSES_}
+        ${SVG_CLASSES_}
+        ${GAME_HEADER}
+        ${GAME_SOURCE}
+        ${PLATFORM_CLASSES_}
+        ${PLATFORM_RESOURCES_}
+        )
 
-# mark app complie info
-if(NOT ANDROID)
+
+#[[
+-------------*----------------*-------------
+-------------*-run executable-*-------------
+*/]]
+if (NOT ANDROID)
     add_executable(${APP_NAME} ${all_code_files})
-else()
-    add_library(${APP_NAME} SHARED ${all_code_files})
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
-    target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
-endif()
+else ()
+    #only in android
+    #build cocos android dynamic libcocos.so
+    #output cocos lib
+    dingcode_android_link(${APP_NAME} ${all_code_files} ${ENGINE_BINARY_PATH})
+endif ()
 
 target_link_libraries(${APP_NAME} cocos2d)
 target_include_directories(${APP_NAME} PRIVATE Classes)
 target_include_directories(${APP_NAME} PRIVATE ${COCOS2DX_ROOT_PATH}/external/luajit/include)
-target_include_directories(${APP_NAME} PRIVATE third/libnfd/include)
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})
-if(APPLE)
+
+
+#[[
+-------------*----------------*-------------
+-------------*-third library -*-------------
+*/]]
+include(NaLibrary)
+dingcode_append_nfd()
+if (APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
-    if(MACOSX)
+    if (MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
-                              )
-        target_link_directories(${APP_NAME} PRIVATE third/libnfd/lib/mac)
-        target_link_libraries(${APP_NAME} libfd)
-    elseif(IOS)
+                MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+                )
+    elseif (IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
-    endif()
-elseif(WINDOWS)
+    endif ()
+elseif (WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
-    target_link_directories(${APP_NAME} PRIVATE third/libnfd/lib/win32)
-    target_link_libraries(${APP_NAME} nfd)
-endif()
+endif ()
 
-if(LINUX OR WINDOWS)
+if (LINUX OR WINDOWS)
     cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
-endif()
-
-
-if(MSVC)
+endif ()
+if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /bigobj")
-endif(MSVC)
+endif (MSVC)
