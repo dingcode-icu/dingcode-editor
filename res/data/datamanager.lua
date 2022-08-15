@@ -45,7 +45,7 @@ function dataManager:get_alldata()
         dataList={}
     }
     for i, v in pairs(self.data.dataList) do
-        real.dataList[i] = v:getData()
+        real.dataList[i] = table.clone(v:getData())
     end
     return real
 end
