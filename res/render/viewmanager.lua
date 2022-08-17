@@ -2,8 +2,8 @@ local DataManager = require("data/datamanager")
 local json = require("lib/json")
 local Event = require("lib/event")
 local enum = enum
-local winWidth = cc.Director:getInstance():getWinSize().width
-local winHeight = cc.Director:getInstance():getWinSize().height
+--local winWidth = cc.Director:getInstance():getWinSize().width
+--local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
     data = {
@@ -487,7 +487,7 @@ function viewManager:initNodePos(node, posTab)
         else
             local posMenu = menu_node:getMenuPos()
             --dump(posMenu)
-            local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, winHeight - posMenu.y))
+            local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, cc.Director:getInstance():getWinSize().height - posMenu.y))
             node:setPositionX(posLocal.x)
             node:setPositionY(posLocal.y)
         end
