@@ -63,6 +63,30 @@ function viewManager:init(config, isNotResetHistory)
                 end
             end
         end
+
+        if config.view.parentViewData then
+            if self._viewParent then
+                if config.view.parentViewData.parentPosX ~= nil then
+                    self._viewParent:setPositionX(config.view.parentViewData.parentPosX)
+                end
+                if config.view.parentViewData.parentPosY ~= nil then
+                    self._viewParent:setPositionY(config.view.parentViewData.parentPosY)
+                end
+                if config.view.parentViewData.parentScale ~= nil then
+                    self._viewParent:setScale(config.view.parentViewData.parentScale)
+                end
+                if config.view.parentViewData.parentAnchorX ~= nil and config.view.parentViewData.parentAnchorY ~= nil then
+                    self._viewParent:setAnchorPoint(cc.p(config.view.parentViewData.parentAnchorX,config.view.parentViewData.parentAnchorY))
+                end
+            end
+        else
+            if config.view.viewList then
+                for i, v in pairs(config.view.viewList) do
+                    self:toCenterForId(v.uuid)
+                    break
+                end
+            end
+        end
     end
 
     if not isNotResetHistory then
@@ -109,6 +133,7 @@ function viewManager:get_alldata()
     local real = {
         viewList = {},
         lineList = {},
+        parentViewData = {},
     }
     for i, v in pairs(self.data.viewList) do
         local tempData = {
@@ -121,6 +146,16 @@ function viewManager:get_alldata()
     for i, v in pairs(self.data.lineList) do
         local tempData = v:getDataToSave()
         real.lineList[v:getuuid()] = tempData
+    end
+    if self._viewParent then
+        real.parentViewData["parentPosX"] = self._viewParent:getPositionX()
+        real.parentViewData["parentPosY"] = self._viewParent:getPositionY()
+
+        real.parentViewData["parentScale"] = self._viewParent:getScale()
+
+        local posAnchor = self._viewParent:getAnchorPoint()
+        real.parentViewData["parentAnchorX"] = posAnchor.x
+        real.parentViewData["parentAnchorY"] = posAnchor.y
     end
     return real
 end
