@@ -49,7 +49,7 @@ function _p:render()
             ImGui.Text("节点类型:")
             local cur_index = 1
             local is_sel
-            local sel_items = table.keys(enum.enum_node_type)
+            local sel_items = table.values(enum.enum_node_type)
             if (ImGui.BeginCombo("##custom combo", self.gType_)) then
                 for i, v in ipairs(sel_items) do
                     is_sel = false
