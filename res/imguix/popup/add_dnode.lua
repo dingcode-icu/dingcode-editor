@@ -2,6 +2,7 @@ local _p = class("PopupAddNode")
 
 local Api = require("http/api")
 local ViewManager = require("render/viewmanager")
+local json = require("lib/json")
 
 function _p:ctor()
     self._pos_x = 0
@@ -177,7 +178,7 @@ function _p:render()
                 table.insert(self.output_list, {
                     outputKey = "",
                     direct = enum.node_direct.right,
-                    key = enum.dropnode_key.input_text,
+                    key = enum.dropnode_key.out_text,
                     desc = "",
                     numMax = 0,
                 })
@@ -232,7 +233,7 @@ function _p:render()
                             table.insert(sel_items_inputType, v)
                         end
                     end
-                    if (ImGui.BeginCombo("" .. "##output_" .. "outputType" .. curKey, curValue.key or enum.dropnode_key.input_text)) then
+                    if (ImGui.BeginCombo("" .. "##output_" .. "outputType" .. curKey, curValue.key or enum.dropnode_key.out_text)) then
                         for i, v in ipairs(sel_items_inputType) do
                             is_sel_inputType = false
                             if curValue.key == v then
@@ -270,13 +271,42 @@ function _p:render()
             ImGui.Separator()
             if (ImGui.Button("OK")) then
                 ViewManager:showTip("requesting to add...")
-                Api:addNode(self.name_, self.desc_, self.gType_, self.sType_, function()
+
+                local inputData = {}
+                for i, v in ipairs(self.input_list) do
+                    inputData[v.inputKey] = {
+                        direct = v.direct,
+                        key = v.key,
+                        desc = v.desc,
+                        numMax = v.numMax,
+                    }
+                end
+                local outputData = {}
+                for i, v in ipairs(self.output_list) do
+                    outputData[v.outputKey] = {
+                        direct = v.direct,
+                        key = v.key,
+                        desc = v.desc,
+                        numMax = v.numMax,
+                    }
+                end
+
+                local data = {
+                    name = self.name_,
+                    desc = self.desc_,
+                    gType = self.gType_,
+                    sType = self.sType_,
+                    input = json.encode(inputData),
+                    output = json.encode(outputData),
+                }
+                Api:addNode(data, function()
                     ViewManager:showTip("done!")
                     ding.showToast("add suc!")
                 end)
                 self:hide()
             end
             if (ImGui.Button("Cancel")) then
+
                 ImGui.CloseCurrentPopup()
                 self:hide()
             end
