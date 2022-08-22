@@ -50,12 +50,14 @@ end
 
 
 --添加节点
-function Api:addNode(name, desc, gType, sType, suc_cb)
+function Api:addNode(data, suc_cb)
     local data = {
-        name = name,
-        descrip = desc,
-        suppose_type = sType,
-        graph_type = gType
+        name = data.name,
+        descrip = data.desc,
+        suppose_type = data.sType,
+        graph_type = data.gType,
+        input = data.input or {},
+        output = data.output or {},
     }
     dump(data, '-->>>addnode')
     http:post("/api/dingcode/add", data, suc_cb)
