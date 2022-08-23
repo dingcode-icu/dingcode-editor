@@ -5,6 +5,7 @@ local DataManager = require("data/datamanager")
 local ViewManager = require("render/viewmanager")
 local imguix = require("imguix")
 local conf = require("imguix/config/conf_menu")
+local Api = require("http/api")
 --上方主菜单
 local tabMenuMainBar = {
     data = {
@@ -108,7 +109,9 @@ function tabMenuMainBar.render()
                 isReversedSelect = true,
             })
         end,
-        fetch_node = function()   end
+        fetch_node = function()
+            Api:initConfig()
+        end
     }
     --插入子菜单
     local function insert_child(children)
