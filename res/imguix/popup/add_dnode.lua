@@ -300,6 +300,7 @@ function _p:render()
                     output = json.encode(outputData),
                 }
                 Api:addNode(data, function()
+                    Api:initConfig()
                     ViewManager:showTip("done!")
                     ding.showToast("add suc!")
                 end)
