@@ -14,6 +14,7 @@ return {
         show_node_info = "节点详情",
         --node
         node = "节点",
+        screensup_node ="筛选节点",
         add_node ="添加节点",
         fetch_node = "从远端同步"
         --debug

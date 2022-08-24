@@ -56,6 +56,10 @@ return {
             ln_key = "node",
             children = {
                 {
+                    ln_key = "screensup_node",
+                    title = "screensup_node"
+                },
+                {
                     ln_key = "add_node",
                     title = "add_node"
                 },

@@ -11,6 +11,8 @@ enum = {
     logic_node_type = require("nodeconfig"),
     logic_node_list = null,                                         -- 排序过后的列表
 
+    show_suppose_type = {common = true},                     -- 显示的 supposeType 类型
+
     -- 可拖动节点的key类型
     dropnode_key = {
         parent = "parent",                      -- 父节点
@@ -52,6 +54,7 @@ enum = {
         imgui_delete_node = "imgui_delete_node",                    -- 删除节点
         imgui_move_node = "imgui_move_node",                        -- 批量移动节点
         imgui_popup_addnode = "imgui_popup_addnode",                -- 添加节点
+        imgui_menu_screensup = "imgui_menu_screensup",              -- 筛选节点页面
 
         imgui_move_node_to_line = "imgui_move_node_to_line",        -- 移动节点 - 对应移动连线
 

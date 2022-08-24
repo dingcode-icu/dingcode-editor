@@ -101,6 +101,12 @@ function tabMenuMainBar.render()
                 isReversedSelect = true,
             })
         end,
+        screensup_node = function()
+            Event:dispatchEvent({
+                name = enum.evt_keyboard.imgui_menu_screensup,
+                isReversedSelect = true,
+            })
+        end,
         --node
         add_node = function()
                 print("show addnode")
