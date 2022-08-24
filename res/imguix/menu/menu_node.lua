@@ -58,12 +58,16 @@ function tabMenuNode.render()
                         local data = enum.logic_node_type[strType][name]
                         local name = data.name
                         local desc = data.desc or ""
-                        if ImGui.MenuItem(name, desc) then
-                            local dataTemp = DataManager:createData(data)
-                            if dataTemp then
-                                ViewManager:createNode(dataTemp)
+                        local supposeType = data.supposeType or ""
+                        if enum.show_suppose_type and enum.show_suppose_type[supposeType] then
+                            if ImGui.MenuItem(name, desc) then
+                                local dataTemp = DataManager:createData(data)
+                                if dataTemp then
+                                    ViewManager:createNode(dataTemp)
+                                end
                             end
                         end
+
                     end
                 end
                 ImGui.EndMenu()

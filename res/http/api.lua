@@ -31,6 +31,11 @@ function Api:initConfig()
                     v.supposeType = v.suppose_type
 
                     logic_node_type[v.graph_type][v.name] = v
+
+                    if enum.show_suppose_type and v.supposeType ~= nil and enum.show_suppose_type[v.supposeType] == nil then
+                        enum.show_suppose_type[v.supposeType] = true
+                    end
+
                 end
             end
 
@@ -43,6 +48,7 @@ function Api:initConfig()
                 end
                 table.sort(logic_node_list[i])
             end
+
         end
 
     end)

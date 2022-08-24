@@ -82,7 +82,26 @@ Event:addEventListener(enum.evt_keyboard.imgui_menu_detail, function(event)
     end
 end)
 
---节点的详情
+--节点筛选
+local menu_screensup = require("imguix/menu/menu_screensup")
+menu_screensup:hide()
+Event:addEventListener(enum.evt_keyboard.imgui_menu_screensup, function(event)
+    if event and event.isHide then
+        menu_screensup:hide()
+    elseif event and event.isReversedSelect then
+        if menu_screensup:isShow() then
+            menu_screensup:hide()
+        else
+            menu_screensup:show(event)
+        end
+    elseif event and event.isRefresh then
+        menu_screensup:refresh(event)
+    else
+        menu_screensup:show(event)
+    end
+end)
+
+--新增节点
 local popup_add = require("imguix/popup/add_dnode")
 popup_add:hide()
 Event:addEventListener(enum.evt_keyboard.imgui_popup_addnode, function(event)
