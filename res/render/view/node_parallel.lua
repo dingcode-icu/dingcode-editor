@@ -10,7 +10,7 @@ function NodeParallel:ctor(data)
 end
 
 function NodeParallel:initView()
-    local node = cc.Sprite.create("texture/while.png")
+    local node = cc.Sprite.create("assets/texture/while.png")
     self.view:addChild(node)
     local size = node:getContentSize()
     node:setPositionX(size.width / 2)

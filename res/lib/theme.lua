@@ -3,7 +3,7 @@ local theme = {
 }
 
 function theme.texture(v)
-    return string.format("texture/theme/%s/%s", theme._cur, v)
+    return string.format("assets/texture/theme/%s/%s", theme._cur, v)
 end
 
 return theme

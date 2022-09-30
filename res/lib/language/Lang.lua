@@ -1,5 +1,5 @@
 -- 多语言 取配置 文件
-Lang = {
+_G.Lang = {
     data = {
         language = "zh_cn",
         config = {}
@@ -23,10 +23,10 @@ function Lang:Lang(args1, args2)
     return self.getConfig(dataConfig, args1, args2)
 end
 
---function Lang.Lang(args1, args2)
+-- function Lang.Lang(args1, args2)
 --    local dataConfig = Lang.data.config[self.data.language]
 --    return Lang.getConfig(dataConfig, args1, args2)
---end
+-- end
 
 function Lang.getConfig(dataConfig, args1, args2)
     if dataConfig then

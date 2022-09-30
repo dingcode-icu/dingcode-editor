@@ -16,13 +16,12 @@ end
 function NodeLine:initView()
     self:initEvent()
 
-    local nodeLinePoint = cc.Sprite.create("texture/linePoint.png")
+    local nodeLinePoint = cc.Sprite.create("assets/texture/linePoint.png")
     self.view:addChild(nodeLinePoint)
     self.nodeLinePoint = nodeLinePoint
 
     self:registerTouch()
 end
-
 
 function NodeLine:registerTouch()
     local this = self
@@ -67,11 +66,11 @@ function NodeLine.isTouchSelf(touch, event)
     return false
 end
 -- 是否在自己点击范围内
-function NodeLine.isTouchInsideNode(pTouch,node,nodeSize)
+function NodeLine.isTouchInsideNode(pTouch, node, nodeSize)
 
     local pos = pTouch:getLocation()
     local point = node:convertToNodeSpace(pos)
-    local x,y = point.x,point.y
+    local x, y = point.x, point.y
     if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
         return true
     end
@@ -86,9 +85,9 @@ end
 -- 初始化 选中节点
 function NodeLine:initSelectNode()
     if not self.nodeLinePointSelect then
-        local nodeLinePointSelect = cc.Sprite.create("texture/linePointSelect.png")
+        local nodeLinePointSelect = cc.Sprite.create("assets/texture/linePointSelect.png")
         self.nodeLinePoint:addChild(nodeLinePointSelect)
-        --local size = node:getContentSize()
+        -- local size = node:getContentSize()
         local sizeParent = self.nodeLinePoint:getContentSize()
         nodeLinePointSelect:setPositionX(sizeParent.width / 2)
         nodeLinePointSelect:setPositionY(sizeParent.height / 2)
@@ -170,7 +169,8 @@ function NodeLine:isCantainSelf(list)
     local nodeDataEnd = self.data.nodeDataEnd
 
     for i, v in pairs(list) do
-        if (nodeDataStart and v:getuuid() == nodeDataStart:getuuid()) or (nodeDataEnd and v:getuuid() == nodeDataEnd:getuuid()) then
+        if (nodeDataStart and v:getuuid() == nodeDataStart:getuuid()) or
+            (nodeDataEnd and v:getuuid() == nodeDataEnd:getuuid()) then
             return true
         end
     end
@@ -228,12 +228,15 @@ function NodeLine:upDrawSelf()
     end
 
     local t = 0.45
-    local pointX = math.pow(1 - t, 3) * pIn.x + 3 * math.pow(1 - t, 2) * t * (pIn.x + offX1 / 2) + 3 * (1 - t) * t * t * (pOut.x + offX2 / 2) + t * t * t * pOut.x;
-    local pointY = math.pow(1 - t, 3) * pIn.y + 3 * math.pow(1 - t, 2) * t * (pIn.y + offY1 / 2) + 3 * (1 - t) * t * t * (pOut.y + offY2 / 2) + t * t * t * pOut.y;
+    local pointX = math.pow(1 - t, 3) * pIn.x + 3 * math.pow(1 - t, 2) * t * (pIn.x + offX1 / 2) + 3 * (1 - t) * t * t *
+                       (pOut.x + offX2 / 2) + t * t * t * pOut.x;
+    local pointY = math.pow(1 - t, 3) * pIn.y + 3 * math.pow(1 - t, 2) * t * (pIn.y + offY1 / 2) + 3 * (1 - t) * t * t *
+                       (pOut.y + offY2 / 2) + t * t * t * pOut.y;
     self.nodeLinePoint:setPositionX(pointX)
     self.nodeLinePoint:setPositionY(pointY)
 
-    self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX1 / 2,pIn.y + offY1 / 2), cc.p(pOut.x + offX2 / 2,pOut.y + offY2 / 2), pOut, 30, cc.c4f(1, 1, 1, 1))
+    self.view:drawCubicBezier(pIn, cc.p(pIn.x + offX1 / 2, pIn.y + offY1 / 2),
+        cc.p(pOut.x + offX2 / 2, pOut.y + offY2 / 2), pOut, 30, cc.c4f(1, 1, 1, 1))
 end
 -- 获取 需要保存的连线数据
 function NodeLine:getDataToSave()
@@ -241,7 +244,7 @@ function NodeLine:getDataToSave()
         uuidStart = self.data.nodeDataStart:getuuid(),
         uuidEnd = self.data.nodeDataEnd:getuuid(),
         keyStart = self.data.keyStart,
-        keyEnd = self.data.keyEnd,
+        keyEnd = self.data.keyEnd
     }
 end
 

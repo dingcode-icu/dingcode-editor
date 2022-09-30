@@ -1,9 +1,9 @@
-local Api ={}
+local Api = {}
 local json = require("lib/json")
 local enum = enum
-local http = require("http/http")
+local http = require("net/http")
 
---初始化配置
+-- 初始化配置
 function Api:initConfig()
     print("===========================")
     http:get("/api/dingcode/dnode", function(resp)
@@ -54,8 +54,7 @@ function Api:initConfig()
     end)
 end
 
-
---添加节点
+-- 添加节点
 function Api:addNode(data, suc_cb)
     local data = {
         name = data.name,
@@ -63,11 +62,10 @@ function Api:addNode(data, suc_cb)
         suppose_type = data.sType,
         graph_type = data.gType,
         input = data.input or {},
-        output = data.output or {},
+        output = data.output or {}
     }
     dump(data, '-->>>addnode')
     http:post("/api/dingcode/add", data, suc_cb)
 end
-
 
 return Api

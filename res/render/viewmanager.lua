@@ -2,30 +2,30 @@ local DataManager = require("data/datamanager")
 local json = require("lib/json")
 local Event = require("lib/event")
 local enum = enum
---local winWidth = cc.Director:getInstance():getWinSize().width
---local winHeight = cc.Director:getInstance():getWinSize().height
+-- local winWidth = cc.Director:getInstance():getWinSize().width
+-- local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
     data = {
-        viewList = {},                      -- 创建的数据
-        lineList = {},                      -- 线
+        viewList = {}, -- 创建的数据
+        lineList = {} -- 线
     },
 
-    historylist = {},                       -- 历史记录 ctrl z 使用
+    historylist = {}, -- 历史记录 ctrl z 使用
 
-    isInit = false,                         -- 是否已经初始化
-    strsavefilepath = "",                   -- 打开/保存的文件路径
+    isInit = false, -- 是否已经初始化
+    strsavefilepath = "", -- 打开/保存的文件路径
 
-    isDropingLine = false,                  -- 是否正在拖动划线
-    dataRropingLine = null,                 -- 拖动中的数据对象
-    nodeDropingLine = null,                 -- 拖动中的对象
+    isDropingLine = false, -- 是否正在拖动划线
+    dataRropingLine = null, -- 拖动中的数据对象
+    nodeDropingLine = null, -- 拖动中的对象
     _isAllNodeSwallow = false,
 
-    isDropingNode = false,                  -- 是否正在拖动节点
+    isDropingNode = false, -- 是否正在拖动节点
 
     _viewParent = null,
     _lineParent = null,
-    _tipParent = null,
+    _tipParent = null
 }
 ---初始化root view场景
 function viewManager:init(config, isNotResetHistory)
@@ -36,7 +36,10 @@ function viewManager:init(config, isNotResetHistory)
                 local x = v.x
                 local y = v.y
                 local dataNode = DataManager:getDataForId(uuid)
-                self:createNode(dataNode, { x = x, y = y}, isNotResetHistory)
+                self:createNode(dataNode, {
+                    x = x,
+                    y = y
+                }, isNotResetHistory)
             end
         end
         if config.view.lineList then
@@ -56,7 +59,7 @@ function viewManager:init(config, isNotResetHistory)
                         keyStart = keyStart,
                         keyEnd = keyEnd,
                         dirOut = dirOut,
-                        dirIn = dirIn,
+                        dirIn = dirIn
                     }
                     local lineNode = self:createLineBezier(posStart, posEnd, data)
                     self.data.lineList[lineNode:getuuid()] = lineNode
@@ -76,7 +79,8 @@ function viewManager:init(config, isNotResetHistory)
                     self._viewParent:setScale(config.view.parentViewData.parentScale)
                 end
                 if config.view.parentViewData.parentAnchorX ~= nil and config.view.parentViewData.parentAnchorY ~= nil then
-                    self._viewParent:setAnchorPoint(cc.p(config.view.parentViewData.parentAnchorX,config.view.parentViewData.parentAnchorY))
+                    self._viewParent:setAnchorPoint(cc.p(config.view.parentViewData.parentAnchorX,
+                        config.view.parentViewData.parentAnchorY))
                 end
             end
         else
@@ -97,12 +101,11 @@ function viewManager:init(config, isNotResetHistory)
     self.isDropingLine = false
     self.isDropingNode = false
 
-
 end
 -- 页面是否创建成功
 function viewManager:getIsInit()
     if not self.isInit then
-        --print("请先 创建or打开 工程")
+        -- print("请先 创建or打开 工程")
     end
     return self.isInit
 end
@@ -112,7 +115,7 @@ function viewManager:setIsInit(isInit)
     if isInit then
         Event:dispatchEvent({
             name = enum.evt_keyboard.imgui_menu_start,
-            isHide = true,
+            isHide = true
         })
     end
 end
@@ -133,13 +136,13 @@ function viewManager:get_alldata()
     local real = {
         viewList = {},
         lineList = {},
-        parentViewData = {},
+        parentViewData = {}
     }
     for i, v in pairs(self.data.viewList) do
         local tempData = {
             uuid = v:getuuid(),
             x = v:getPositionX(),
-            y = v:getPositionY(),
+            y = v:getPositionY()
         }
         real.viewList[v:getuuid()] = tempData
     end
@@ -172,10 +175,10 @@ function viewManager:reset(isNotResetHistory)
     if not isNotResetHistory then
         self.historylist = {}
     end
-    self.isDropingLine = false                  -- 是否正在拖动划线
+    self.isDropingLine = false -- 是否正在拖动划线
     self.isDropingNode = false
-    self.dataRropingLine = null                 -- 拖动中的数据对象
-    self.nodeDropingLine = null                 -- 拖动中的对象
+    self.dataRropingLine = null -- 拖动中的数据对象
+    self.nodeDropingLine = null -- 拖动中的对象
     self._isAllNodeSwallow = false
 
     self:setIsInit(true)
@@ -187,10 +190,10 @@ function viewManager:initViewParent()
 end
 function viewManager:_initGraph()
     local root = cc.Node.create()
-    root:setContentSize(cc.size(10000,10000))
+    root:setContentSize(cc.size(10000, 10000))
     self._viewParent = root
 
-    local bg = ding.bgSprite("texture/grid.png", cc.rect(0, 0, display.width *100, display.height * 100))
+    local bg = ding.bgSprite("assets/texture/grid.png", cc.rect(0, 0, display.width * 100, display.height * 100))
     root:addChild(bg)
     root:setPositionX(display.width / 2)
     root:setPositionY(display.height / 2)
@@ -228,13 +231,13 @@ function viewManager:registerTouch()
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function()
         if not this:getIsInit() then
-             return true
+            return true
         end
         return true
     end
     listener.onTouchMoved = function(touch, event)
         if not this:getIsInit() then
-             return true
+            return true
         end
         if this.isDropingLine then
             this:upStartDropingline(touch:getLocation())
@@ -244,9 +247,9 @@ function viewManager:registerTouch()
     end
     listener.onTouchEnded = function(touch, event)
         if not this:getIsInit() then
-             return true
+            return true
         end
-        --local mouseType = event:getButton()
+        -- local mouseType = event:getButton()
         if this.isDropingLine then
             this:cancelDropingLine()
         end
@@ -258,9 +261,9 @@ function viewManager:registerTouch()
     end
     listener.onTouchCancelled = function()
         if not this:getIsInit() then
-             return true
+            return true
         end
-        --print("4")
+        -- print("4")
         if this.isDropingLine then
             this:cancelDropingLine()
         end
@@ -272,7 +275,7 @@ function viewManager:registerTouch()
     local listener = cc.EventListenerMouse:create();
     listener.onMouseDown = function(event)
         if not this:getIsInit() then
-             return true
+            return true
         end
         local mouseType = event:getMouseButton()
         if mouseType == 1 and this._viewParent then
@@ -283,7 +286,7 @@ function viewManager:registerTouch()
     end
     listener.onMouseMove = function(event)
         if not this:getIsInit() then
-             return true
+            return true
         end
         local mouseType = event:getMouseButton()
         if mouseType == 1 and this._viewParent then
@@ -296,11 +299,11 @@ function viewManager:registerTouch()
     end
     listener.onMouseUp = function(event)
         if not this:getIsInit() then
-             return true
+            return true
         end
         local mouseType = event:getMouseButton()
         if mouseType == 0 then
-            --print("左键点击")
+            -- print("左键点击")
             -- 关闭菜单会拦截菜单的点击
         elseif mouseType == 1 then
             -- print("右键点击")
@@ -310,7 +313,7 @@ function viewManager:registerTouch()
                 Event:dispatchEvent({
                     name = enum.evt_keyboard.imgui_menu_node,
                     posX = pos.x,
-                    posY = pos.y,
+                    posY = pos.y
                 })
             end
         end
@@ -319,10 +322,10 @@ function viewManager:registerTouch()
 
     listener.onMouseScroll = function(event)
         if not this:getIsInit() then
-             return true
+            return true
         end
         local menu_node = require("imguix/menu/menu_node")
-        --local menu_mainbar = require("imguix/menu/menu_mainbar")
+        -- local menu_mainbar = require("imguix/menu/menu_mainbar")
         if menu_node:isShow() then
             return
         end
@@ -332,23 +335,22 @@ function viewManager:registerTouch()
             local size = this._viewParent:getContentSize()
             local posLocal = this._viewParent:convertToNodeSpace(event:getLocation())
             local posAnchor = cc.p(posLocal.x / size.width, (posLocal.y) / size.height)
-            --print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
+            -- print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
             this.setAnchorOnly(this._viewParent, posAnchor)
-            
 
             local curScale = this._viewParent:getScale() + scrollY * 0.02
             if curScale < 0.3 then
                 curScale = 0.3
             end
             if curScale > 3 then
-                 curScale = 3
+                curScale = 3
             end
             this._viewParent:setScale(curScale)
 
         end
     end
     local eventDispatcher = node:getEventDispatcher()
-    --eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
+    -- eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
 end
 function viewManager.setAnchorOnly(node, pAnchor)
@@ -451,7 +453,7 @@ function viewManager:registerEvent()
         if #listNeedMove > 0 then
             Event:dispatchEvent({
                 name = enum.evt_keyboard.imgui_move_node_to_line,
-                list = listNeedMove,
+                list = listNeedMove
             })
         end
 
@@ -490,14 +492,14 @@ end
 function viewManager:hide_imgui_menu_node()
     Event:dispatchEvent({
         name = enum.evt_keyboard.imgui_menu_node,
-        isHide = true,
+        isHide = true
     })
 end
 -- 隐藏 弹出菜单
 function viewManager:hide_imgui_menu_input()
     Event:dispatchEvent({
         name = enum.evt_keyboard.imgui_menu_input,
-        isHide = true,
+        isHide = true
     })
 end
 -- 取消全部选中
@@ -507,7 +509,6 @@ function viewManager:unSelectAll()
         v:UnSelect()
     end
 end
-
 
 function viewManager:addToList(node)
     self.data.viewList[node.data:getuuid()] = node
@@ -521,8 +522,9 @@ function viewManager:initNodePos(node, posTab)
             node:setPositionY(posTab.y)
         else
             local posMenu = menu_node:getMenuPos()
-            --dump(posMenu)
-            local posLocal = self._viewParent:convertToNodeSpace(cc.p(posMenu.x, cc.Director:getInstance():getWinSize().height - posMenu.y))
+            -- dump(posMenu)
+            local posLocal = self._viewParent:convertToNodeSpace(
+                cc.p(posMenu.x, cc.Director:getInstance():getWinSize().height - posMenu.y))
             node:setPositionX(posLocal.x)
             node:setPositionY(posLocal.y)
         end
@@ -539,40 +541,36 @@ function viewManager:createNode(dataNode, posTab, isNotResetHistory)
         return
     end
     print("创建node， type = ", dataNode:getName())
-    try {
-        function()
-            local Node = null
-            if false then
-                Node = require ("res/render/view/node_sequence")
-            else
-                Node = require ("res/render/view/node_default")
-            end
-            if Node then
-                local node = Node.new(dataNode)
-                local viewNode = node.view
-                self._viewParent:addChild(viewNode)
-                self:initNodePos(viewNode, posTab)
-                self:addToList(node)
-            else
-                print("创建 view 失败, type = ", dataNode:getName())
-            end
-            if not isNotResetHistory then
-                self:addHistoryToList()
-            end
+    try {function()
+        local Node = null
+        if false then
+            Node = require("res/render/view/node_sequence")
+        else
+            Node = require("res/render/view/node_default")
+        end
+        if Node then
+            local node = Node.new(dataNode)
+            local viewNode = node.view
+            self._viewParent:addChild(viewNode)
+            self:initNodePos(viewNode, posTab)
+            self:addToList(node)
+        else
+            print("创建 view 失败, type = ", dataNode:getName())
+        end
+        if not isNotResetHistory then
+            self:addHistoryToList()
+        end
 
-        end, catch {
-            function (err)
-                print("创建node 失败")
-                print(err)
-            end
-        }
-    }
+    end, catch {function(err)
+        print("创建node 失败")
+        print(err)
+    end}}
 
 end
 -- 开始拖动连线
 function viewManager:startDropingLine(dropData)
-    self.isDropingLine = true                       -- 是否正在拖动划线
-    self.dataRropingLine = dropData                 -- 拖动中的对象
+    self.isDropingLine = true -- 是否正在拖动划线
+    self.dataRropingLine = dropData -- 拖动中的对象
 
 end
 -- 刷新拖动连线
@@ -585,7 +583,7 @@ function viewManager:upStartDropingline(posEnd)
             nodeDataStart = self.dataRropingLine.nodeStart,
             keyStart = self.dataRropingLine.keyPoint,
             pIn = self.dataRropingLine.posStart,
-            pOut = self.dataRropingLine.posEnd,
+            pOut = self.dataRropingLine.posEnd
         }
 
         self.nodeDropingLine = self:createLineBezier(posStart, posEnd, data)
@@ -630,7 +628,7 @@ function viewManager:endDropingLine(endData)
             keyStart = keyPointStart,
             keyEnd = keyPointEnd,
             dirOut = dirOut,
-            dirIn = dirIn,
+            dirIn = dirIn
         }
         -- 创建连线
         local lineNode = self:createLineBezier(posStart, posEnd, data)
@@ -658,7 +656,7 @@ function viewManager:createLineBezier(pIn, pOut, data)
         keyStart = data.keyStart,
         keyEnd = data.keyEnd,
         dirOut = data.dirOut,
-        dirIn = data.dirIn,
+        dirIn = data.dirIn
     })
     self._lineParent:addChild(node.view)
     node:upDrawSelf()
@@ -678,20 +676,20 @@ function viewManager:toCenterForId(id)
             local width = cc.Director:getInstance():getWinSize().width
             local height = cc.Director:getInstance():getWinSize().height
 
-            local offX =  width / 2 - posWorld.x
-            local offY =  height / 2 - posWorld.y
+            local offX = width / 2 - posWorld.x
+            local offY = height / 2 - posWorld.y
             local posOffLocal = self._viewParent:getParent():convertToNodeSpace(cc.p(offX, offY))
             self._viewParent:setPositionX(self._viewParent:getPositionX() + posOffLocal.x)
             self._viewParent:setPositionY(self._viewParent:getPositionY() + posOffLocal.y)
         end
 
-        --local mouseType = event:getMouseButton()
-        --if mouseType == 1 and this._viewParent then
+        -- local mouseType = event:getMouseButton()
+        -- if mouseType == 1 and this._viewParent then
         --    local pos = event:getLocation()
         --    local pStart = this._mouseStart
         --    this._viewParent:setPositionX(this._parPosStartX + pos.x - pStart.x)
         --    this._viewParent:setPositionY(this._parPosStartY - pos.y + pStart.y)
-        --end
+        -- end
     end
 end
 
@@ -700,12 +698,12 @@ function viewManager:showTip(message)
     local node = self._tipParent
 
     if not self._tipLab then
-        local lab = cc.Label.createWithTTF(message, "font/FZLanTYJW.TTF", 25)
+        local lab = cc.Label.createWithTTF(message, "assets/font/FZLanTYJW.TTF", 25)
         node:addChild(lab)
-        lab:setAnchorPoint(cc.p(0,0))
+        lab:setAnchorPoint(cc.p(0, 0))
         lab:setPositionX(20)
         lab:setPositionY(10)
-        lab:setColor(cc.c3b(255,255,255))
+        lab:setColor(cc.c3b(255, 255, 255))
         self._tipLab = lab
     else
         self._tipLab:setString(message)
@@ -733,11 +731,11 @@ function viewManager:addHistoryToList()
 
     local dataToSave = DataManager:get_alldata()
     local viewToSave = self:get_alldata()
-    --local treeToSave = DataManager:get_export_tree()
-    local jsonData =  {
+    -- local treeToSave = DataManager:get_export_tree()
+    local jsonData = {
         data = dataToSave,
-        view = viewToSave,
-        --tree = treeToSave,
+        view = viewToSave
+        -- tree = treeToSave,
     }
 
     table.insert(self.historylist, jsonData)

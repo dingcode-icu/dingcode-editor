@@ -15,11 +15,11 @@ function NodeInput:init()
     local parent = self.data.parent
     local key = self.data.key
 
-    local nodePoint = cc.Sprite.create("texture/point.png")
+    local nodePoint = cc.Sprite.create("assets/texture/point.png")
     local size = nodePoint:getContentSize()
     self:setContentSize(size)
 
-    local nodePointSelect = cc.Sprite.create("texture/linePoint.png")
+    local nodePointSelect = cc.Sprite.create("assets/texture/linePoint.png")
     nodePointSelect:setPositionX(size.width / 2)
     nodePointSelect:setPositionY(size.height / 2)
     self.view:addChild(nodePointSelect)

@@ -20,18 +20,18 @@ function NodeInput:init()
 
     local size = self.view:getContentSize()
 
-    local nodePoint = cc.Sprite.create("texture/point.png")
+    local nodePoint = cc.Sprite.create("assets/texture/point.png")
     self.view:addChild(nodePoint)
     nodePoint:setPositionX(size.width / 2)
     nodePoint:setPositionY(size.height / 2)
 
     if keyconfig and keyconfig.desc then
-        local lab = cc.Label.createWithTTF(keyconfig.desc, "font/FZLanTYJW.TTF", 15)
+        local lab = cc.Label.createWithTTF(keyconfig.desc, "assets/font/FZLanTYJW.TTF", 15)
         self.view:addChild(lab)
         lab:setAnchorPoint(cc.p(0, 0.5))
         lab:setPositionX(size.width)
         lab:setPositionY(size.height / 2)
-        lab:setColor(cc.c3b(0,255,0))
+        lab:setColor(cc.c3b(0, 255, 0))
         self._labValue = lab
     end
 
@@ -41,7 +41,7 @@ end
 function NodeInput:initWithData()
     local value = self:getValue()
     if value then
-       self:setValue(value, true)
+        self:setValue(value, true)
     end
 end
 

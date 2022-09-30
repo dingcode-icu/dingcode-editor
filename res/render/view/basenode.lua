@@ -9,47 +9,47 @@ local d = display
 local enum = enum
 local MEMORY = MEMORY
 
---枚举对应颜色
+-- 枚举对应颜色
 BaseNode.TYPE_COLOR = {
-    [enum.enum_node_type.composites] = cc.c3b(255,255,204),
-    [enum.enum_node_type.decorator] = cc.c3b(204,255,255),
-    [enum.enum_node_type.conditionals] = cc.c3b(255,204,204),
-    [enum.enum_node_type.action] = cc.c3b(153,204,204),
-    [enum.enum_node_type.const] = cc.c3b(0,204,204),
-    [enum.enum_node_type.root] = cc.c3b(0,204,204),
-    ["unknown"] = cc.c3b(255,255,255)
+    [enum.enum_node_type.composites] = cc.c3b(255, 255, 204),
+    [enum.enum_node_type.decorator] = cc.c3b(204, 255, 255),
+    [enum.enum_node_type.conditionals] = cc.c3b(255, 204, 204),
+    [enum.enum_node_type.action] = cc.c3b(153, 204, 204),
+    [enum.enum_node_type.const] = cc.c3b(0, 204, 204),
+    [enum.enum_node_type.root] = cc.c3b(0, 204, 204),
+    ["unknown"] = cc.c3b(255, 255, 255)
 }
 
-BaseNode.STATE ={
+BaseNode.STATE = {
     NORMAL = 1,
     SELECT = 2
 }
-local T_HEIGHT = 32  --字体大小
+local T_HEIGHT = 32 -- 字体大小
 
 function BaseNode:ctor(data)
     self.data = data
-    self.touchListener = null           -- 点击监听
-    self._state  = BaseNode.STATE.NORMAL -- 是否选中状态
+    self.touchListener = null -- 点击监听
+    self._state = BaseNode.STATE.NORMAL -- 是否选中状态
     self.listNodePoint = {}
-    self.listStatePoint = {}            --  点的可选状态是否显示
+    self.listStatePoint = {} --  点的可选状态是否显示
 
-    self.width = 0                       --节点的宽高
+    self.width = 0 -- 节点的宽高
     self.height = 0
     self.view = nil
-    self.sp_bg = nil                     --节点主要的背景，有选中鲜果 单独提出来
+    self.sp_bg = nil -- 节点主要的背景，有选中鲜果 单独提出来
     self:initDefaultView()
     self:registerTouch()
 end
 
 function BaseNode:ShowName()
     if self.view then
-        local lab = cc.Label.createWithTTF(self:getNameForType(), "font/FZLanTYJW.TTF", 15)
+        local lab = cc.Label.createWithTTF(self:getNameForType(), "assets/font/FZLanTYJW.TTF", 15)
         self.view:addChild(lab)
 
         local size = self.view:getContentSize()
         lab:setPositionX(size.width / 2)
         lab:setPositionY(size.height / 2)
-        lab:setColor(cc.c3b(0,255,0))
+        lab:setColor(cc.c3b(0, 255, 0))
     end
 end
 function BaseNode:getNameForType()
@@ -120,13 +120,13 @@ function BaseNode:destroy()
 end
 -- 是否选中
 function BaseNode:isSelect()
-    --print(BaseNode.STATE.SELECT)
+    -- print(BaseNode.STATE.SELECT)
     return self._state == BaseNode.STATE.SELECT
 end
 -- 初始化 选中节点
 function BaseNode:initSelectNode()
     if self._state == BaseNode.STATE.NORMAL then
-        local out_state =  ShaderMgr:getInc():getEffect("outline")
+        local out_state = ShaderMgr:getInc():getEffect("outline")
         self.sp_bg:setGLProgramState(out_state)
     end
 end
@@ -139,7 +139,8 @@ end
 function BaseNode:UnSelect()
     if self:isSelect() then
         print("load unselect")
-        local state = cc.GLProgramState.getOrCreateWithGLProgramName(cc.GLProgramStateE.SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)
+        local state = cc.GLProgramState.getOrCreateWithGLProgramName(cc.GLProgramStateE
+                                                                         .SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)
         self.sp_bg:setGLProgramState(state)
         self._state = BaseNode.STATE.NORMAL
     end
@@ -162,27 +163,26 @@ function BaseNode:initDefaultView()
         self:initView()
         return
     end
-    --root
+    -- root
     local root = cc.Node.create()
     self.view = root
     root:setAnchorPoint(cc.p(0.5, 0.5))
-    local w = string.len(self.data:getName()) *T_HEIGHT/2
+    local w = string.len(self.data:getName()) * T_HEIGHT / 2
     self.width = w < 120 and 120 or w
     self.height = 120
     self.color = BaseNode.TYPE_COLOR[self:getType()] or BaseNode.TYPE_COLOR["unknown"]
     root:setContentSize(cc.size(self.width, self.height))
-    --bg
+    -- bg
     local sp_bg = cc.Scale9Sprite.create(theme.texture("bg_frame.png"))
     sp_bg:setContentSize(cc.size(self.width, self.height))
     sp_bg:setOpacity(170)
     sp_bg:setPosition(self.width / 2, self.height / 2)
     self.sp_bg = sp_bg
 
-
-    --tittle
+    -- tittle
     local sp_tbg = cc.Scale9Sprite.create(theme.texture("bg_frame.png"))
     sp_tbg:setContentSize(cc.size(self.width, T_HEIGHT))
-    sp_tbg:setPosition(cc.p(self.width / 2,  self.height - T_HEIGHT / 2))
+    sp_tbg:setPosition(cc.p(self.width / 2, self.height - T_HEIGHT / 2))
     sp_tbg:setColor(self.color)
 
     local lab_title = d.labelL(self.data:getName(), d.DEFAULT_TTF_FONT, nil)
@@ -192,14 +192,13 @@ function BaseNode:initDefaultView()
     --[[dev]]
     if RELEASE.IS_BASENODE_DEBUGGRAPH then
         local lab_dev = d.labelL(self:getuuid(), d.DEFAULT_TTF_FONT, nil)
-        lab_dev:pos(self.width,  T_HEIGHT / 2)
+        lab_dev:pos(self.width, T_HEIGHT / 2)
         lab_dev:setFontSize(20)
         lab_dev:setColor(d.COLOR_YELLOW)
         sp_tbg:addChild(lab_dev)
     end
 
-
-    --point
+    -- point
     self:initTreePoint()
     root:addChild(sp_bg)
     sp_bg:addChild(sp_tbg)
@@ -236,7 +235,7 @@ function BaseNode:initTreePoint()
     -- child 节点
     if isShowChild then
         local sp_p = cc.Sprite.create(theme.texture("triangle.png"))
-        sp_p:setPosition(self.width / 2, - 8)
+        sp_p:setPosition(self.width / 2, -8)
         sp_p:setScale(1, -1)
         self.view:addChild(sp_p)
         self.listNodePoint[enum.dropnode_key.child] = sp_p
@@ -274,7 +273,9 @@ function BaseNode:selTreePoint(dk, iss)
 end
 function BaseNode:newNodePoint(data)
     local node = nil
-    if data.keyconfig and (data.keyconfig.key == enum.dropnode_key.input_int or data.keyconfig.key == enum.dropnode_key.input_float or data.keyconfig.key == enum.dropnode_key.input_text) then
+    if data.keyconfig and
+        (data.keyconfig.key == enum.dropnode_key.input_int or data.keyconfig.key == enum.dropnode_key.input_float or
+            data.keyconfig.key == enum.dropnode_key.input_text) then
         node = NodePointInput.new(data)
     else
         node = NodePointDefault.new(data)
@@ -290,7 +291,7 @@ function BaseNode:initInOutPoint()
             local data = {
                 parent = self,
                 key = key,
-                keyconfig = v,
+                keyconfig = v
             }
 
             local nodein = self:newNodePoint(data)
@@ -310,7 +311,7 @@ function BaseNode:initInOutPoint()
             local data = {
                 parent = self,
                 key = key,
-                keyconfig = v,
+                keyconfig = v
             }
 
             local nodein = self:newNodePoint(data)
@@ -325,10 +326,8 @@ end
 -- 是否可以开始拖动
 function BaseNode:isCanDropStart(keyPoint)
     if keyPoint == enum.dropnode_key.parent then
-        if self:getType() == enum.enum_node_type.composites or
-            self:getType() == enum.enum_node_type.conditionals or
-            self:getType() == enum.enum_node_type.decorator
-        then
+        if self:getType() == enum.enum_node_type.composites or self:getType() == enum.enum_node_type.conditionals or
+            self:getType() == enum.enum_node_type.decorator then
             -- 只能有一个父节点
             if #self:getData():getParentIdList() >= 1 then
                 return false
@@ -345,10 +344,8 @@ function BaseNode:isCanDropStart(keyPoint)
         if self:getType() == enum.enum_node_type.composites then
             -- 可以有多个子节点
             return true
-        elseif self:getType() == enum.enum_node_type.conditionals or
-                self:getType() == enum.enum_node_type.root or
-                 self:getType() == enum.enum_node_type.decorator
-        then
+        elseif self:getType() == enum.enum_node_type.conditionals or self:getType() == enum.enum_node_type.root or
+            self:getType() == enum.enum_node_type.decorator then
             -- 只能有一个子节点
             if #self:getData():getChildIdList() >= 1 then
                 return false
@@ -366,7 +363,7 @@ function BaseNode:isCanDropStart(keyPoint)
             local config = self:getData():getConfigForKey(keyPoint)
             if config then
                 if self:isKeyInList(v, config.key) then
-                    --判断数量是否可以拖动
+                    -- 判断数量是否可以拖动
                     if #self:getData():getLineIdList(keyPoint) < config.numMax then
                         -- 默认只能和一个连接
                         return true
@@ -410,7 +407,7 @@ function BaseNode:isCanDropIn(dropData, keyPointEnd)
     for i, v in pairs(enum.dropkey_canset) do
         -- 判断类型
         if self:isKeyInListNotSame(v, keyTypeStart, keyTypeEnd) then
-            --判断数量是否可以放
+            -- 判断数量是否可以放
             if self:isCanDropStart(keyPointEnd) then
                 -- 判断是否已经包含
                 if not nodeStart:getData():isContainForLineList(keyPointStart, nodeEnd:getuuid(), keyPointEnd) then
@@ -432,7 +429,8 @@ end
 function BaseNode:getDropPosForKey(key)
     if self.listNodePoint[key] then
         local dir = enum.node_direct.left
-        local pos = self.listNodePoint[key]:getParent():convertToWorldSpace(cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY()))
+        local pos = self.listNodePoint[key]:getParent():convertToWorldSpace(
+            cc.p(self.listNodePoint[key]:getPositionX(), self.listNodePoint[key]:getPositionY()))
         if key == enum.dropnode_key.parent then
             dir = enum.node_direct.top
         elseif key == enum.dropnode_key.child then
@@ -488,7 +486,7 @@ function BaseNode:registerTouch()
                             posEnd = posStart,
                             keyPoint = key,
                             nodeStart = this,
-                            dirIn = dirIn,
+                            dirIn = dirIn
                         }
                         ViewManager:startDropingLine(dropData)
                         return true
@@ -496,7 +494,6 @@ function BaseNode:registerTouch()
                 end
             end
         end
-
 
         local isTouch = this.isTouchSelf(touch, event)
         if isTouch and not ViewManager.isDropingNode then
@@ -520,7 +517,7 @@ function BaseNode:registerTouch()
                     if this.isTouchInsideNode(touch, nodePoint, size) then
                         local dropData = {
                             keyPoint = key,
-                            endNodeData = this,
+                            endNodeData = this
                         }
                         if ViewManager:isCanDropEnd(dropData) then
                             this:selTreePoint(key, true)
@@ -547,7 +544,7 @@ function BaseNode:registerTouch()
 
                 Event:dispatchEvent({
                     name = enum.evt_keyboard.imgui_move_node_to_line,
-                    list = {this},
+                    list = {this}
                 })
 
                 return true
@@ -563,7 +560,7 @@ function BaseNode:registerTouch()
                 Event:dispatchEvent({
                     name = enum.evt_keyboard.imgui_move_node,
                     offX = offX,
-                    offY = offY,
+                    offY = offY
                 })
                 return true
             end
@@ -587,7 +584,7 @@ function BaseNode:registerTouch()
                     if this.isTouchInsideNode(touch, nodePoint, size) then
                         local dropData = {
                             keyPoint = key,
-                            endNodeData = this,
+                            endNodeData = this
                         }
                         if ViewManager:isCanDropEnd(dropData) then
                             ViewManager:endDropingLine(dropData)
@@ -604,14 +601,15 @@ function BaseNode:registerTouch()
                 local size = nodePoint:getContentSize()
                 if this.isTouchInsideNode(touch, nodePoint, size) and nodePoint.getConfigKey then
                     local keyConfig = nodePoint:getConfigKey()
-                    if keyConfig == enum.dropnode_key.input_int or keyConfig == enum.dropnode_key.input_float or keyConfig == enum.dropnode_key.input_text then
+                    if keyConfig == enum.dropnode_key.input_int or keyConfig == enum.dropnode_key.input_float or
+                        keyConfig == enum.dropnode_key.input_text then
                         Event:dispatchEvent({
                             name = enum.evt_keyboard.imgui_menu_input,
                             finishFunc = function(lab)
                                 nodePoint:setValue(lab)
                             end,
                             typeinput = keyConfig,
-                            valueOld = nodePoint:getValue(),
+                            valueOld = nodePoint:getValue()
                         })
                     end
 
@@ -669,11 +667,11 @@ function BaseNode.isTouchSelf(touch, event)
     return false
 end
 -- 是否在自己点击范围内
-function BaseNode.isTouchInsideNode(pTouch,node,nodeSize)
+function BaseNode.isTouchInsideNode(pTouch, node, nodeSize)
 
     local pos = pTouch:getLocation()
     local point = node:convertToNodeSpace(pos)
-    local x,y = point.x,point.y
+    local x, y = point.x, point.y
     if x >= 0 and x <= nodeSize.width and y >= 0 and y <= nodeSize.height then
         return true
     end
@@ -688,12 +686,11 @@ function BaseNode.isClickForTouch(touch)
     return false
 end
 
-
 -- 设置 调试模式的状态
 function BaseNode:setDebugState(state)
 
     if not self.sprDebugState and state ~= enum.debug_state.none then
-        --local sp_p = cc.Sprite.create(theme.texture("running.png"))
+        -- local sp_p = cc.Sprite.create(theme.texture("running.png"))
         local sp_p = cc.Sprite.create()
         sp_p:setPosition(self.width / 2, self.height / 2)
         sp_p:setScale(0.4)
