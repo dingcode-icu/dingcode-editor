@@ -24,10 +24,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 set(APP_NAME dingcode-editor)
-
 project(${APP_NAME})
-
-set(WINDOWS ${WIN32})
 
 if (NOT DEFINED BUILD_ENGINE_DONE)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
@@ -42,10 +39,6 @@ set(GAME_HEADER)
 set(GAME_RES_FOLDER
         "${CMAKE_CURRENT_SOURCE_DIR}/res"
         )
-#if (APPLE OR VS)
-#    cocos_mark_multi_resources(cc_common_res RES_TO "res" FOLDERS ${GAME_RES_FOLDER})
-#endif ()
-
 
 #[[
 -------------*---------------------------*-------------

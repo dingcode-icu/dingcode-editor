@@ -17,7 +17,8 @@ function(dingcode_platform_append PLATFORM_CLASSES_ PLATFORM_RESOURCES_)
                 )
         list(APPEND VAR_RESOURCES
                 proj.win32/main.cpp
-                ${cc_common_res}
+                proj.win32/icon/icon.rc
+                proj.win32/icon/dico.ico
                 )
     elseif (APPLE)
         if (IOS)

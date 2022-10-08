@@ -1,9 +1,11 @@
 # encoding:utf8
 
 from enum import Enum
+from genericpath import isdir
 import os
 import sys
-import subprocess
+import shutil
+import logging
 
 
 class PublishType(Enum):
@@ -49,7 +51,7 @@ class Builder:
             cmake_ex=cmake_ex,
             path=self.__get_projpath()
         )
-        print(cmd, "--cmd")
+        logging.info(cmd)
         return os.system(cmd)
 
     def __cmake_build_win(self):
@@ -59,14 +61,21 @@ class Builder:
             publish_type=p,
             path=self.__get_cmakepath()
         )
-        print(cmd)
+        logging.info(cmd)
         return os.system(cmd)
 
     def run(self):
         print("build path ", self.__get_cmakepath())
+        p = "Debug" if self._publish_type == PublishType.Debug else "Release"
         # print(sys.platform, "-->>sys.platform ")
         self.__cmake_pre_win()
         self.__cmake_build_win()
+
+        r = os.path.join(self.__get_projpath(), "dist")
+        if os.path.isdir(r):
+            shutil.rmtree(r)
+        shutil.copytree(os.path.join(self.__get_cmakepath(),
+                        "bin", "dingcode-editor", p), r)
 
 
 if __name__ == "__main__":
