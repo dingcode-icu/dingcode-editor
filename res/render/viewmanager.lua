@@ -2,8 +2,6 @@ local DataManager = require("data/datamanager")
 local json = require("lib/json")
 local Event = require("lib/event")
 local enum = enum
--- local winWidth = cc.Director:getInstance():getWinSize().width
--- local winHeight = cc.Director:getInstance():getWinSize().height
 
 local viewManager = {
     data = {
@@ -226,7 +224,6 @@ function viewManager:registerTouch()
     local node = self._viewParent
     local this = self
     -- 注册 点击事件
-    print("register event touch")
     local listener = cc.EventListenerTouchOneByOne:create();
     listener:setSwallowTouches(true);
     listener.onTouchBegan = function()
@@ -255,15 +252,12 @@ function viewManager:registerTouch()
         end
         this:hide_imgui_menu_all()
         this:unSelectAll()
-        print("viewmanager touch end")
-
         return true
     end
     listener.onTouchCancelled = function()
         if not this:getIsInit() then
             return true
         end
-        -- print("4")
         if this.isDropingLine then
             this:cancelDropingLine()
         end
@@ -303,10 +297,7 @@ function viewManager:registerTouch()
         end
         local mouseType = event:getMouseButton()
         if mouseType == 0 then
-            -- print("左键点击")
-            -- 关闭菜单会拦截菜单的点击
         elseif mouseType == 1 then
-            -- print("右键点击")
             local pos = event:getLocation()
             local pStart = this._mouseStart
             if math.abs(pStart.x - pos.x) < 10 and math.abs(pStart.y - pos.y) < 10 then
@@ -335,7 +326,6 @@ function viewManager:registerTouch()
             local size = this._viewParent:getContentSize()
             local posLocal = this._viewParent:convertToNodeSpace(event:getLocation())
             local posAnchor = cc.p(posLocal.x / size.width, (posLocal.y) / size.height)
-            -- print(posAnchor.x, posAnchor.y, posLocal.x, posLocal.y, size.width, size.height)
             this.setAnchorOnly(this._viewParent, posAnchor)
 
             local curScale = this._viewParent:getScale() + scrollY * 0.02
@@ -350,7 +340,6 @@ function viewManager:registerTouch()
         end
     end
     local eventDispatcher = node:getEventDispatcher()
-    -- eventDispatcher:addEventListenerWithSceneGraphPriority(listener, node);
     eventDispatcher:addEventListenerWithFixedPriority(listener, 99);
 end
 function viewManager.setAnchorOnly(node, pAnchor)

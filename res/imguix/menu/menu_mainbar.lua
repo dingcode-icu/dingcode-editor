@@ -5,7 +5,7 @@ local DataManager = require("data/datamanager")
 local ViewManager = require("render/viewmanager")
 local imguix = require("imguix")
 local conf = require("imguix/config/conf_menu")
-local Api = require("http/api")
+local Api = require("net/api")
 --上方主菜单
 local tabMenuMainBar = {
     data = {
@@ -17,7 +17,7 @@ local tabMenuMainBar = {
 
 --显示菜单
 function tabMenuMainBar:show(args)
-    print("显示 tabMenuMainBar")
+--     print("显示 tabMenuMainBar")
     self.data._isShow = true
     if args then
 
@@ -255,8 +255,6 @@ function tabMenuMainBar:AutoSaveFile()
             view = viewToSave,
             tree = treeToSave,
         })
-        print("========== save file")
-        --print(strData)
         local strDesc = io.writefile(realFilePath, strData)
         -- 设置保存的路径
         ViewManager:setSaveFilePath(realFilePath)

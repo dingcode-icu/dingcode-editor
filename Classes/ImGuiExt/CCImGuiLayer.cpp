@@ -99,7 +99,7 @@ bool ImGuiLayer::init()
     setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR));
 #endif
 
-    auto fontPath = FileUtils::getInstance()->fullPathForFilename("font/FZLanTYJW.TTF");
+    auto fontPath = FileUtils::getInstance()->fullPathForFilename("assets/font/FZLanTYJW.TTF");
     io.Fonts->AddFontDefault();
     float fontSize = CCIMGUI::getInstance()->chineseFontSize;
     CCIMGUI::getInstance()->chineseFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon()); // io.Fonts->GetGlyphRangesChineseFull()

@@ -1,6 +1,6 @@
 local _p = class("PopupAddNode")
 
-local Api = require("http/api")
+local Api = require("net/api")
 local ViewManager = require("render/viewmanager")
 local json = require("lib/json")
 

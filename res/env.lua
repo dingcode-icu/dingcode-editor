@@ -19,8 +19,7 @@ function m.limit_global()
     -- limit _G kes 
     local lm = {
         __newindex = function(t, k, v)
-            print("k's count is", table.find(m.WHITE_KEYS, k), k)
-            if table.find(m.WHITE_KEYS, k) then
+            if table.nums(m.WHITE_KEYS, k) then
                 t[k] = v
                 return
             end

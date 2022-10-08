@@ -17,13 +17,13 @@ local function main()
     require("enum")
 
     require("release")
-    env.limit_global()
+--     env.limit_global()
     -- ui logic
     require("imguix/init"):init()
     require("render/init")
     require("net/http"):init()
 
-    -- TEST_()
+    TEST_()
 end
 
 ---打印报错及堆栈

@@ -20,9 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-]]
-
-local display = {}
+]] local display = {}
 
 local director = cc.Director:getInstance()
 local view = director:getOpenGLView()
@@ -77,70 +75,89 @@ local function setDesignResolution(r, framesize)
         elseif r.autoscale == "SHOW_ALL" then
             view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.SHOW_ALL)
         else
-            printError(string.format("display - invalid r.autoscale \"%s\"", r.autoscale))
+            print(string.format("[error]display - invalid r.autoscale \"%s\"", r.autoscale))
         end
     end
 end
 
 local function setConstants()
     local sizeInPixels = view:getFrameSize()
-    display.sizeInPixels = {width = sizeInPixels.width, height = sizeInPixels.height}
+    display.sizeInPixels = {
+        width = sizeInPixels.width,
+        height = sizeInPixels.height
+    }
 
     local viewsize = director:getWinSize()
     display.contentScaleFactor = director:getContentScaleFactor()
-    display.size               = {width = viewsize.width, height = viewsize.height}
-    display.width              = display.size.width
-    display.height             = display.size.height
-    display.cx                 = display.width / 2
-    display.cy                 = display.height / 2
-    display.c_left             = -display.width / 2
-    display.c_right            = display.width / 2
-    display.c_top              = display.height / 2
-    display.c_bottom           = -display.height / 2
-    display.left               = 0
-    display.right              = display.width
-    display.top                = display.height
-    display.bottom             = 0
-    display.center             = cc.p(display.cx, display.cy)
-    display.left_top           = cc.p(display.left, display.top)
-    display.left_bottom        = cc.p(display.left, display.bottom)
-    display.left_center        = cc.p(display.left, display.cy)
-    display.right_top          = cc.p(display.right, display.top)
-    display.right_bottom       = cc.p(display.right, display.bottom)
-    display.right_center       = cc.p(display.right, display.cy)
-    display.top_center         = cc.p(display.cx, display.top)
-    display.top_bottom         = cc.p(display.cx, display.bottom)
+    display.size = {
+        width = viewsize.width,
+        height = viewsize.height
+    }
+    display.width = display.size.width
+    display.height = display.size.height
+    display.cx = display.width / 2
+    display.cy = display.height / 2
+    display.c_left = -display.width / 2
+    display.c_right = display.width / 2
+    display.c_top = display.height / 2
+    display.c_bottom = -display.height / 2
+    display.left = 0
+    display.right = display.width
+    display.top = display.height
+    display.bottom = 0
+    display.center = cc.p(display.cx, display.cy)
+    display.left_top = cc.p(display.left, display.top)
+    display.left_bottom = cc.p(display.left, display.bottom)
+    display.left_center = cc.p(display.left, display.cy)
+    display.right_top = cc.p(display.right, display.top)
+    display.right_bottom = cc.p(display.right, display.bottom)
+    display.right_center = cc.p(display.right, display.cy)
+    display.top_center = cc.p(display.cx, display.top)
+    display.top_bottom = cc.p(display.cx, display.bottom)
 
-    printInfo(string.format("# display.sizeInPixels         = {width = %0.2f, height = %0.2f}", display.sizeInPixels.width, display.sizeInPixels.height))
-    printInfo(string.format("# display.size                 = {width = %0.2f, height = %0.2f}", display.size.width, display.size.height))
-    printInfo(string.format("# display.contentScaleFactor   = %0.2f", display.contentScaleFactor))
-    printInfo(string.format("# display.width                = %0.2f", display.width))
-    printInfo(string.format("# display.height               = %0.2f", display.height))
-    printInfo(string.format("# display.cx                   = %0.2f", display.cx))
-    printInfo(string.format("# display.cy                   = %0.2f", display.cy))
-    printInfo(string.format("# display.left                 = %0.2f", display.left))
-    printInfo(string.format("# display.right                = %0.2f", display.right))
-    printInfo(string.format("# display.top                  = %0.2f", display.top))
-    printInfo(string.format("# display.bottom               = %0.2f", display.bottom))
-    printInfo(string.format("# display.c_left               = %0.2f", display.c_left))
-    printInfo(string.format("# display.c_right              = %0.2f", display.c_right))
-    printInfo(string.format("# display.c_top                = %0.2f", display.c_top))
-    printInfo(string.format("# display.c_bottom             = %0.2f", display.c_bottom))
-    printInfo(string.format("# display.center               = {x = %0.2f, y = %0.2f}", display.center.x, display.center.y))
-    printInfo(string.format("# display.left_top             = {x = %0.2f, y = %0.2f}", display.left_top.x, display.left_top.y))
-    printInfo(string.format("# display.left_bottom          = {x = %0.2f, y = %0.2f}", display.left_bottom.x, display.left_bottom.y))
-    printInfo(string.format("# display.left_center          = {x = %0.2f, y = %0.2f}", display.left_center.x, display.left_center.y))
-    printInfo(string.format("# display.right_top            = {x = %0.2f, y = %0.2f}", display.right_top.x, display.right_top.y))
-    printInfo(string.format("# display.right_bottom         = {x = %0.2f, y = %0.2f}", display.right_bottom.x, display.right_bottom.y))
-    printInfo(string.format("# display.right_center         = {x = %0.2f, y = %0.2f}", display.right_center.x, display.right_center.y))
-    printInfo(string.format("# display.top_center           = {x = %0.2f, y = %0.2f}", display.top_center.x, display.top_center.y))
-    printInfo(string.format("# display.top_bottom           = {x = %0.2f, y = %0.2f}", display.top_bottom.x, display.top_bottom.y))
-    printInfo("#")
+    print(string.format("# display.sizeInPixels         = {width = %0.2f, height = %0.2f}",
+        display.sizeInPixels.width, display.sizeInPixels.height))
+    print(string.format("# display.size                 = {width = %0.2f, height = %0.2f}", display.size.width,
+        display.size.height))
+    print(string.format("# display.contentScaleFactor   = %0.2f", display.contentScaleFactor))
+    print(string.format("# display.width                = %0.2f", display.width))
+    print(string.format("# display.height               = %0.2f", display.height))
+    print(string.format("# display.cx                   = %0.2f", display.cx))
+    print(string.format("# display.cy                   = %0.2f", display.cy))
+    print(string.format("# display.left                 = %0.2f", display.left))
+    print(string.format("# display.right                = %0.2f", display.right))
+    print(string.format("# display.top                  = %0.2f", display.top))
+    print(string.format("# display.bottom               = %0.2f", display.bottom))
+    print(string.format("# display.c_left               = %0.2f", display.c_left))
+    print(string.format("# display.c_right              = %0.2f", display.c_right))
+    print(string.format("# display.c_top                = %0.2f", display.c_top))
+    print(string.format("# display.c_bottom             = %0.2f", display.c_bottom))
+    print(string.format("# display.center               = {x = %0.2f, y = %0.2f}", display.center.x,
+        display.center.y))
+    print(string.format("# display.left_top             = {x = %0.2f, y = %0.2f}", display.left_top.x,
+        display.left_top.y))
+    print(string.format("# display.left_bottom          = {x = %0.2f, y = %0.2f}", display.left_bottom.x,
+        display.left_bottom.y))
+    print(string.format("# display.left_center          = {x = %0.2f, y = %0.2f}", display.left_center.x,
+        display.left_center.y))
+    print(string.format("# display.right_top            = {x = %0.2f, y = %0.2f}", display.right_top.x,
+        display.right_top.y))
+    print(string.format("# display.right_bottom         = {x = %0.2f, y = %0.2f}", display.right_bottom.x,
+        display.right_bottom.y))
+    print(string.format("# display.right_center         = {x = %0.2f, y = %0.2f}", display.right_center.x,
+        display.right_center.y))
+    print(string.format("# display.top_center           = {x = %0.2f, y = %0.2f}", display.top_center.x,
+        display.top_center.y))
+    print(string.format("# display.top_bottom           = {x = %0.2f, y = %0.2f}", display.top_bottom.x,
+        display.top_bottom.y))
+    print("#")
 end
 
 setConstants()
 function display.setAutoScale(configs)
-    if type(configs) ~= "table" then return end
+    if type(configs) ~= "table" then
+        return
+    end
 
     checkResolution(configs)
     if type(configs.callback) == "function" then
@@ -153,8 +170,9 @@ function display.setAutoScale(configs)
 
     setDesignResolution(configs, framesize)
 
-    printInfo(string.format("# design resolution size       = {width = %0.2f, height = %0.2f}", configs.width, configs.height))
-    printInfo(string.format("# design resolution autoscale  = %s", configs.autoscale))
+    print(string.format("# design resolution size       = {width = %0.2f, height = %0.2f}", configs.width,
+        configs.height))
+    print(string.format("# design resolution autoscale  = %s", configs.autoscale))
     setConstants()
 end
 
@@ -164,33 +182,31 @@ end
 
 display.COLOR_WHITE = cc.c3b(255, 255, 255)
 display.COLOR_BLACK = cc.c3b(0, 0, 0)
-display.COLOR_RED   = cc.c3b(255, 0, 0)
+display.COLOR_RED = cc.c3b(255, 0, 0)
 display.COLOR_GREEN = cc.c3b(0, 255, 0)
-display.COLOR_BLUE  = cc.c3b(0, 0, 255)
+display.COLOR_BLUE = cc.c3b(0, 0, 255)
 
-display.AUTO_SIZE      = 0
-display.FIXED_SIZE     = 1
-display.LEFT_TO_RIGHT  = 0
-display.RIGHT_TO_LEFT  = 1
-display.TOP_TO_BOTTOM  = 2
-display.BOTTOM_TO_TOP  = 3
+display.AUTO_SIZE = 0
+display.FIXED_SIZE = 1
+display.LEFT_TO_RIGHT = 0
+display.RIGHT_TO_LEFT = 1
+display.TOP_TO_BOTTOM = 2
+display.BOTTOM_TO_TOP = 3
 
-display.CENTER        = cc.p(0.5, 0.5)
-display.LEFT_TOP      = cc.p(0, 1)
-display.LEFT_BOTTOM   = cc.p(0, 0)
-display.LEFT_CENTER   = cc.p(0, 0.5)
-display.RIGHT_TOP     = cc.p(1, 1)
-display.RIGHT_BOTTOM  = cc.p(1, 0)
-display.RIGHT_CENTER  = cc.p(1, 0.5)
-display.CENTER_TOP    = cc.p(0.5, 1)
+display.CENTER = cc.p(0.5, 0.5)
+display.LEFT_TOP = cc.p(0, 1)
+display.LEFT_BOTTOM = cc.p(0, 0)
+display.LEFT_CENTER = cc.p(0, 0.5)
+display.RIGHT_TOP = cc.p(1, 1)
+display.RIGHT_BOTTOM = cc.p(1, 0)
+display.RIGHT_CENTER = cc.p(1, 0.5)
+display.CENTER_TOP = cc.p(0.5, 1)
 display.CENTER_BOTTOM = cc.p(0.5, 0)
-
 
 display.TEXTURES_PIXEL_FORMAT = {}
 
-display.DEFAULT_TTF_FONT        = "Arial"
-display.DEFAULT_TTF_FONT_SIZE   = 32
-
+display.DEFAULT_TTF_FONT = "Arial"
+display.DEFAULT_TTF_FONT_SIZE = 32
 
 local PARAMS_EMPTY = {}
 local RECT_ZERO = cc.rect(0, 0, 0, 0)
@@ -373,8 +389,12 @@ function display.newSprite(source, x, y, params)
     end
 
     if sprite then
-        if x and y then sprite:setPosition(x, y) end
-        if params.size then sprite:setContentSize(params.size) end
+        if x and y then
+            sprite:setPosition(x, y)
+        end
+        if params.size then
+            sprite:setContentSize(params.size)
+        end
     else
         error(string.format("display.newSprite() - create sprite failure, source \"%s\"", tostring(source)), 0)
     end
@@ -424,8 +444,7 @@ local function newAnimation(frames, time)
     local count = #frames
     assert(count > 0, "display.newAnimation() - invalid frames")
     time = time or 1.0 / count
-    return cc.Animation:createWithSpriteFrames(frames, time),
-           cc.Sprite:createWithSpriteFrame(frames[1])
+    return cc.Animation:createWithSpriteFrames(frames, time), cc.Sprite:createWithSpriteFrame(frames[1])
 end
 
 function display.newAnimation(...)

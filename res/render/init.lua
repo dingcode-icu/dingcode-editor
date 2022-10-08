@@ -3,7 +3,7 @@ local render = {}
 require("render/memory")
 local Event = require("lib/event")
 local ViewManager = require("render/viewmanager")
-local Api = require("http/api")
+local Api = require("net/api")
 local MEMORY = MEMORY
 local d = display
 local dir_inc = cc.Director:getInstance()

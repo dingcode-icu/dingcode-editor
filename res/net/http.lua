@@ -2,6 +2,10 @@ local http = {}
 
 local json = require("lib/json")
 
+local function http_log(...)
+    print(string.format("[http] %s", table.concat({...}, " | ")))
+end
+
 function http:init()
     print("init http")
     self._host = "http://static.bbclient.icu:8083{path}"
@@ -13,7 +17,9 @@ function http:_fetch(method_str, path, dic_data, suc_cb)
         post = cc.HttpRequestType.POST
     }
     local request = cc.HttpRequest();
-    request:setUrl(string.gsub(self._host, "{path}", path))
+    local url = string.gsub(self._host, "{path}", path)
+    http_log("request -->>> ", url)
+    request:setUrl(url)
     local requestType = cc.HttpRequestType.GET
     if method_str == "get" then
         requestType = cc.HttpRequestType.GET
@@ -35,9 +41,7 @@ function http:_fetch(method_str, path, dic_data, suc_cb)
             ding.showToast(string.format("http error:code=%s, msg=%s", request:getResponseCode(), ret))
             return
         end
-        print("http get suc from url ==============")
-        print(url)
-        print(ret)
+        http_log("response <<<-- ", ret)
         if suc_cb then
             suc_cb(ret)
         end
