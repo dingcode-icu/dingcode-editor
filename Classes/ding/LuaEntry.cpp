@@ -167,7 +167,7 @@ namespace dan {
             auto scene = Director::getInstance()->getRunningScene();
             scene->addChild(node);
 
-            auto bg = Sprite::create("texture/bgtoast.png");
+            auto bg = Sprite::create("assets/texture/bgtoast.png");
             node->addChild(bg);
             auto lab = Label::createWithTTF(desc, "font/FZLanTYJW.TTF", 30);
             node->addChild(lab);
