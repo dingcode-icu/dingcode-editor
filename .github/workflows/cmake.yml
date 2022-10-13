@@ -25,11 +25,11 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         cmake -B ${{github.workspace}}\build ^
-                -A Win32 -Thost=x64 ^
-                -DCMAKE_JOB_POOLS=pool-linking=1;pool-compilation=2 ^
-                -DCMAKE_JOB_POOL_COMPILE:STRING=pool-compilation ^
-                -DCMAKE_JOB_POOL_LINK:STRING=pool-linking ^
-                -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -A Win32 -Thost=x64 ^
+          -DCMAKE_JOB_POOLS=pool-linking=1;pool-compilation=2 ^
+          -DCMAKE_JOB_POOL_COMPILE:STRING=pool-compilation ^
+          -DCMAKE_JOB_POOL_LINK:STRING=pool-linking ^
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
       # Build your program with the given configuration
