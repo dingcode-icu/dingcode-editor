@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{005889E4-672A-36FA-9293-47C61B84DD49}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>dingcode-editor</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\public_work\dingcode_editor\bin\dingcode-editor\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dingcode-editor.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dingcode-editor</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\public_work\dingcode_editor\Classes;D:\public_work\dingcode_editor\third\libnfd\include;D:\public_work\dingcode_editor\third\sol\include;D:\public_work\dingcode_editor\cocos2d;D:\public_work\dingcode_editor\cocos2d\cocos;D:\public_work\dingcode_editor\cocos2d\extensions;D:\public_work\dingcode_editor\cocos2d\cocos\platform;D:\public_work\dingcode_editor\cocos2d\cocos\base;D:\public_work\dingcode_editor\cocos2d\cocos\editor-support;D:\public_work\dingcode_editor\cocos2d\cocos\audio\include;D:\public_work\dingcode_editor\cocos2d\cocos\platform\win32;D:\public_work\dingcode_editor\cocos2d\external\tinyxml2\.;D:\public_work\dingcode_editor\cocos2d\external\xxhash\.;D:\public_work\dingcode_editor\cocos2d\external\xxtea\.;D:\public_work\dingcode_editor\cocos2d\external\clipper\.;D:\public_work\dingcode_editor\cocos2d\external\edtaa3func\.;D:\public_work\dingcode_editor\cocos2d\external\ConvertUTF\.;D:\public_work\dingcode_editor\cocos2d\external\poly2tri\..;D:\public_work\dingcode_editor\cocos2d\external\md5\..;D:\public_work\dingcode_editor\cocos2d\external\unzip\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "D:/public_work/dingcode_editor/cocos2d/external/luajit/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/freetype2/include/win32/freetype2" /external:I "D:/public_work/dingcode_editor/cocos2d/external/jpeg/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/uv/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/openssl/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/tiff/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/curl/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/png/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/sqlite3/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/win32-specific/gles/include/OGLES" /external:I "D:/public_work/dingcode_editor/cocos2d/external/win32-specific/icon/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/win32-specific/MP3Decoder/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/win32-specific/OggDecoder/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/win32-specific/OpenalSoft/include" /external:I "D:/public_work/dingcode_editor/cocos2d/external/glfw3/include/win32" /external:I "D:/public_work/dingcode_editor/cocos2d/external/zlib/../win32-specific/zlib/include" /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;SOL_NO_EXCEPTIONS=0;SOL_IMGUI_IMPLEMENTATION=1;WIN32_LEAN_AND_MEAN=1;COCOS2D_DEBUG=1;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;SOL_NO_EXCEPTIONS=0;SOL_IMGUI_IMPLEMENTATION=1;WIN32_LEAN_AND_MEAN=1;COCOS2D_DEBUG=1;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\public_work\dingcode_editor\Classes;D:\public_work\dingcode_editor\third\libnfd\include;D:\public_work\dingcode_editor\third\sol\include;D:\public_work\dingcode_editor\cocos2d;D:\public_work\dingcode_editor\cocos2d\cocos;D:\public_work\dingcode_editor\cocos2d\extensions;D:\public_work\dingcode_editor\cocos2d\cocos\platform;D:\public_work\dingcode_editor\cocos2d\cocos\base;D:\public_work\dingcode_editor\cocos2d\cocos\editor-support;D:\public_work\dingcode_editor\cocos2d\cocos\audio\include;D:\public_work\dingcode_editor\cocos2d\cocos\platform\win32;D:\public_work\dingcode_editor\cocos2d\external\tinyxml2\.;D:\public_work\dingcode_editor\cocos2d\external\xxhash\.;D:\public_work\dingcode_editor\cocos2d\external\xxtea\.;D:\public_work\dingcode_editor\cocos2d\external\clipper\.;D:\public_work\dingcode_editor\cocos2d\external\edtaa3func\.;D:\public_work\dingcode_editor\cocos2d\external\ConvertUTF\.;D:\public_work\dingcode_editor\cocos2d\external\poly2tri\..;D:\public_work\dingcode_editor\cocos2d\external\md5\..;D:\public_work\dingcode_editor\cocos2d\external\unzip\.;D:\public_work\dingcode_editor\cocos2d\external\luajit\include;D:\public_work\dingcode_editor\cocos2d\external\freetype2\include\win32\freetype2;D:\public_work\dingcode_editor\cocos2d\external\jpeg\include\win32;D:\public_work\dingcode_editor\cocos2d\external\uv\include;D:\public_work\dingcode_editor\cocos2d\external\openssl\include\win32;D:\public_work\dingcode_editor\cocos2d\external\tiff\include\win32;D:\public_work\dingcode_editor\cocos2d\external\curl\include\win32;D:\public_work\dingcode_editor\cocos2d\external\png\include\win32;D:\public_work\dingcode_editor\cocos2d\external\sqlite3\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\gles\include\OGLES;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\icon\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\MP3Decoder\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OggDecoder\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OpenalSoft\include;D:\public_work\dingcode_editor\cocos2d\external\glfw3\include\win32;D:\public_work\dingcode_editor\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\public_work\dingcode_editor\Classes;D:\public_work\dingcode_editor\third\libnfd\include;D:\public_work\dingcode_editor\third\sol\include;D:\public_work\dingcode_editor\cocos2d;D:\public_work\dingcode_editor\cocos2d\cocos;D:\public_work\dingcode_editor\cocos2d\extensions;D:\public_work\dingcode_editor\cocos2d\cocos\platform;D:\public_work\dingcode_editor\cocos2d\cocos\base;D:\public_work\dingcode_editor\cocos2d\cocos\editor-support;D:\public_work\dingcode_editor\cocos2d\cocos\audio\include;D:\public_work\dingcode_editor\cocos2d\cocos\platform\win32;D:\public_work\dingcode_editor\cocos2d\external\tinyxml2\.;D:\public_work\dingcode_editor\cocos2d\external\xxhash\.;D:\public_work\dingcode_editor\cocos2d\external\xxtea\.;D:\public_work\dingcode_editor\cocos2d\external\clipper\.;D:\public_work\dingcode_editor\cocos2d\external\edtaa3func\.;D:\public_work\dingcode_editor\cocos2d\external\ConvertUTF\.;D:\public_work\dingcode_editor\cocos2d\external\poly2tri\..;D:\public_work\dingcode_editor\cocos2d\external\md5\..;D:\public_work\dingcode_editor\cocos2d\external\unzip\.;D:\public_work\dingcode_editor\cocos2d\external\luajit\include;D:\public_work\dingcode_editor\cocos2d\external\freetype2\include\win32\freetype2;D:\public_work\dingcode_editor\cocos2d\external\jpeg\include\win32;D:\public_work\dingcode_editor\cocos2d\external\uv\include;D:\public_work\dingcode_editor\cocos2d\external\openssl\include\win32;D:\public_work\dingcode_editor\cocos2d\external\tiff\include\win32;D:\public_work\dingcode_editor\cocos2d\external\curl\include\win32;D:\public_work\dingcode_editor\cocos2d\external\png\include\win32;D:\public_work\dingcode_editor\cocos2d\external\sqlite3\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\gles\include\OGLES;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\icon\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\MP3Decoder\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OggDecoder\include;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OpenalSoft\include;D:\public_work\dingcode_editor\cocos2d\external\glfw3\include\win32;D:\public_work\dingcode_editor\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>lib\Debug\cocos2d.lib;nfd.lib;lib\Debug\external.lib;cocos2d\external\freetype2\prebuilt\win32\freetype.lib;cocos2d\external\jpeg\prebuilt\win32\libjpeg.lib;cocos2d\external\uv\prebuilt\win32\uv_a.lib;cocos2d\external\openssl\prebuilt\win32\libssl.lib;cocos2d\external\openssl\prebuilt\win32\libcrypto.lib;cocos2d\external\tiff\prebuilt\win32\libtiff.lib;lib\Debug\ext_tinyxml2.lib;lib\Debug\ext_xxhash.lib;lib\Debug\ext_xxtea.lib;lib\Debug\ext_clipper.lib;lib\Debug\ext_edtaa3func.lib;lib\Debug\ext_convertUTF.lib;lib\Debug\ext_poly2tri.lib;lib\Debug\ext_md5.lib;cocos2d\external\luajit\prebuilt\win32\lua51.lib;cocos2d\external\curl\prebuilt\win32\libcurl.lib;cocos2d\external\png\prebuilt\win32\libpng.lib;cocos2d\external\sqlite3\libraries\win32\sqlite3.lib;cocos2d\external\win32-specific\gles\prebuilt\glew32.lib;cocos2d\external\win32-specific\icon\prebuilt\libiconv.lib;cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.lib;cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.lib;cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.lib;cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.lib;cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.lib;cocos2d\external\glfw3\prebuilt\win32\glfw3.lib;cocos2d\external\zlib\..\win32-specific\zlib\prebuilt\libzlib.lib;lib\Debug\ext_unzip.lib;ws2_32.lib;userenv.lib;psapi.lib;winmm.lib;Version.lib;Iphlpapi.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:/public_work/dingcode_editor/third/libnfd/lib/win32;D:/public_work/dingcode_editor/third/libnfd/lib/win32/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/public_work/dingcode_editor/Debug/dingcode-editor.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/public_work/dingcode_editor/bin/dingcode-editor/Debug/dingcode-editor.pdb</ProgramDataBaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\public_work\dingcode_editor\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/public_work/dingcode_editor/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\dtool\cmake-3.24.0-rc2-windows-x86_64\bin\cmake.exe -SD:/public_work/dingcode_editor -BD:/public_work/dingcode_editor --check-stamp-file D:/public_work/dingcode_editor/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeCInformation.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeParseArguments.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeRCInformation.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-C.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-C.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows.cmake;D:\dtool\cmake-3.24.0-rc2-windows-x86_64\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;D:\public_work\dingcode_editor\CMakeFiles\3.24.0-rc2\CMakeCCompiler.cmake;D:\public_work\dingcode_editor\CMakeFiles\3.24.0-rc2\CMakeCXXCompiler.cmake;D:\public_work\dingcode_editor\CMakeFiles\3.24.0-rc2\CMakeRCCompiler.cmake;D:\public_work\dingcode_editor\CMakeFiles\3.24.0-rc2\CMakeSystem.cmake;D:\public_work\dingcode_editor\MobileDevice.cmake;D:\public_work\dingcode_editor\NaLibrary.cmake;D:\public_work\dingcode_editor\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\public_work\dingcode_editor\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\public_work\dingcode_editor\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\public_work\dingcode_editor\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\public_work\dingcode_editor\cocos2d\external\curl\prebuilt\win32\libcurl.dll;D:\public_work\dingcode_editor\cocos2d\external\glfw3\prebuilt\win32\glfw3.dll;D:\public_work\dingcode_editor\cocos2d\external\luajit\prebuilt\win32\lua51.dll;D:\public_work\dingcode_editor\cocos2d\external\openssl\prebuilt\win32\libcrypto-1_1.dll;D:\public_work\dingcode_editor\cocos2d\external\openssl\prebuilt\win32\libssl-1_1.dll;D:\public_work\dingcode_editor\cocos2d\external\sqlite3\libraries\win32\sqlite3.dll;D:\public_work\dingcode_editor\cocos2d\external\uv\prebuilt\win32\uv.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\gles\prebuilt\glew32.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\icon\prebuilt\iconv.dll;D:\public_work\dingcode_editor\cocos2d\external\win32-specific\zlib\prebuilt\zlib1.dll;D:\public_work\dingcode_editor\res\assets\font\FZLanTYJW.TTF;D:\public_work\dingcode_editor\res\assets\font\cfk.ttf;D:\public_work\dingcode_editor\res\assets\shader\default.vert;D:\public_work\dingcode_editor\res\assets\shader\sp_outline.frag;D:\public_work\dingcode_editor\res\assets\texture\bgtoast.png;D:\public_work\dingcode_editor\res\assets\texture\grid.png;D:\public_work\dingcode_editor\res\assets\texture\linePoint.png;D:\public_work\dingcode_editor\res\assets\texture\linePointSelect.png;D:\public_work\dingcode_editor\res\assets\texture\point.png;D:\public_work\dingcode_editor\res\assets\texture\select.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\bg_frame.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\circle.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\end.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\fail.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\running.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\select.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\success.png;D:\public_work\dingcode_editor\res\assets\texture\theme\default\triangle.png;D:\public_work\dingcode_editor\res\assets\texture\while.png;D:\public_work\dingcode_editor\res\data\database.lua;D:\public_work\dingcode_editor\res\data\datamanager.lua;D:\public_work\dingcode_editor\res\enum.lua;D:\public_work\dingcode_editor\res\env.lua;D:\public_work\dingcode_editor\res\imguix\config\conf_menu.lua;D:\public_work\dingcode_editor\res\imguix\fileutils.lua;D:\public_work\dingcode_editor\res\imguix\init.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_all.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_detail.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_input.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_mainbar.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_node.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_screensup.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_start.lua;D:\public_work\dingcode_editor\res\imguix\menu\menu_tree.lua;D:\public_work\dingcode_editor\res\imguix\popup\add_dnode.lua;D:\public_work\dingcode_editor\res\lib\display.lua;D:\public_work\dingcode_editor\res\lib\display_ex.lua;D:\public_work\dingcode_editor\res\lib\event.lua;D:\public_work\dingcode_editor\res\lib\extends\node_ex.lua;D:\public_work\dingcode_editor\res\lib\extends\sprite_ex.lua;D:\public_work\dingcode_editor\res\lib\inc\shader_inc.lua;D:\public_work\dingcode_editor\res\lib\init.lua;D:\public_work\dingcode_editor\res\lib\json.lua;D:\public_work\dingcode_editor\res\lib\language\Lang.lua;D:\public_work\dingcode_editor\res\lib\language\zh_cn.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\g_ex.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\init.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\io_ex.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\math_ex.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\string_ex.lua;D:\public_work\dingcode_editor\res\lib\lua_ex\table_ex.lua;D:\public_work\dingcode_editor\res\lib\lua_ex_bak.lua;D:\public_work\dingcode_editor\res\lib\theme.lua;D:\public_work\dingcode_editor\res\main.lua;D:\public_work\dingcode_editor\res\net\api.lua;D:\public_work\dingcode_editor\res\net\http.lua;D:\public_work\dingcode_editor\res\nodeconfig.lua;D:\public_work\dingcode_editor\res\release.lua;D:\public_work\dingcode_editor\res\remotedebuger.lua;D:\public_work\dingcode_editor\res\render\common\base_nodepoint.lua;D:\public_work\dingcode_editor\res\render\common\nodeline.lua;D:\public_work\dingcode_editor\res\render\common\nodepoint_default.lua;D:\public_work\dingcode_editor\res\render\common\nodepointinput.lua;D:\public_work\dingcode_editor\res\render\init.lua;D:\public_work\dingcode_editor\res\render\memory.lua;D:\public_work\dingcode_editor\res\render\view\basenode.lua;D:\public_work\dingcode_editor\res\render\view\node_default.lua;D:\public_work\dingcode_editor\res\render\view\node_parallel.lua;D:\public_work\dingcode_editor\res\render\view\node_selector.lua;D:\public_work\dingcode_editor\res\render\view\node_sequence.lua;D:\public_work\dingcode_editor\res\render\viewmanager.lua;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\public_work\dingcode_editor\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCIMGUI.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCIMGUI.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCImGuiLayer.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCImGuiLayer.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imconfig.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_demo.cpp" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_draw.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_internal.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_widgets.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_rectpack.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_textedit.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_truetype.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\misc\cpp\imgui_stdlib.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\misc\cpp\imgui_stdlib.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_cocos2dx.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_cocos2dx.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_glfw.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_glfw.mm" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_opengl2.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_opengl2.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_lua.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\sol_imgui.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\AppSetting.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\AppSetting.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\Core.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\LuaEntry.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\LuaEntry.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\common\SmartSingleton.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\common\StringUtil.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\common\StringUtil.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\guid\guid.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\guid\guid.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sol_cocos.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\sys\FileDialogUtils.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sys\FileDialogUtils.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\sys\RemoteDebuger.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sys\RemoteDebuger.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\logger\easylogging++.cc" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\logger\easylogging++.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\SVGSprite.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\SVGSprite.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\SVGSpritePath.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\SVGSpritePath.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\nanosvg.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\nanosvg.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\nanosvgrast.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\AppDelegate.h" />
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\TEST.hpp" />
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\AppDelegate.cpp" />
+    <ClInclude Include="D:\public_work\dingcode_editor\proj.win32\main.h" />
+    <ClCompile Include="D:\public_work\dingcode_editor\proj.win32\main.cpp" />
+    <ResourceCompile Include="D:\public_work\dingcode_editor\proj.win32\icon\icon.rc" />
+    <None Include="D:\public_work\dingcode_editor\proj.win32\icon\dico.ico">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\public_work\dingcode_editor\ZERO_CHECK.proj">
+      <Project>{63E349A6-3E7D-3CEB-87A8-EC2E6AA8AB85}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\cocos\core\cocos2d.vcxproj">
+      <Project>{655C8E4E-CC3D-3F61-85C9-9E4DE9427133}</Project>
+      <Name>cocos2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\clipper\ext_clipper.vcxproj">
+      <Project>{39179BCE-E9C0-3C2E-9371-4DE185F52083}</Project>
+      <Name>ext_clipper</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\ConvertUTF\ext_convertUTF.vcxproj">
+      <Project>{00D04690-9030-309D-845C-B71A62381EB0}</Project>
+      <Name>ext_convertUTF</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\edtaa3func\ext_edtaa3func.vcxproj">
+      <Project>{5E56B689-F154-30CF-BCCB-5806C6DC0647}</Project>
+      <Name>ext_edtaa3func</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\md5\ext_md5.vcxproj">
+      <Project>{F8FDA002-27D8-34C9-91C2-28B0FA6F0A30}</Project>
+      <Name>ext_md5</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\poly2tri\ext_poly2tri.vcxproj">
+      <Project>{33B80268-22EA-3F69-801C-63CA0CD894DD}</Project>
+      <Name>ext_poly2tri</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\tinyxml2\ext_tinyxml2.vcxproj">
+      <Project>{51D3331C-171D-3D5F-B82E-07D0B254DFB4}</Project>
+      <Name>ext_tinyxml2</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\unzip\ext_unzip.vcxproj">
+      <Project>{3162F4D4-0E65-3A63-8029-B2C6F6A067E1}</Project>
+      <Name>ext_unzip</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\xxhash\ext_xxhash.vcxproj">
+      <Project>{C105C944-F10A-3567-B354-E97DC407FC9E}</Project>
+      <Name>ext_xxhash</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\xxtea\ext_xxtea.vcxproj">
+      <Project>{E353B7C4-0FE4-3655-9A7D-C89DDE2581D8}</Project>
+      <Name>ext_xxtea</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\public_work\dingcode_editor\engine\external\external.vcxproj">
+      <Project>{1A15AA23-3747-3663-B8D8-1C85A62998D5}</Project>
+      <Name>external</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -17,7 +17,9 @@ proj.win32/.vs/
 #==============cmake===============
 cmake-build-*/
 dist/
-
+CMakeFiles/
+engine/
+CMakeCache.txt
 #==============ide===============
 .idea/
 .vscode/

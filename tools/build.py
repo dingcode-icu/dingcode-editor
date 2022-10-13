@@ -45,7 +45,10 @@ class Builder:
 
     def __cmake_pre_win(self) -> int:
         cmake_ex = "-DCMAKE_BUILD_TYPE=Release" if self._publish_type == PublishType.Release else ""
-        cmd = '''{cmake_bin} -G "Visual Studio 17 2022" -A Win32 -B {proj_path} {cmake_ex} {path}'''.format(
+        cmd = '''{cmake_bin} -G "Visual Studio 17 2022" -Thost=x64 ^\
+            -DCMAKE_JOB_POOLS=pool-linking=1;pool-compilation=2 ^
+            -DCMAKE_JOB_POOL_COMPILE:STRING=pool-compilation ^
+            -DCMAKE_JOB_POOL_LINK:STRING=pool-linking ^-A Win32 -B {proj_path} {cmake_ex} {path}'''.format(
             cmake_bin=self.__get_cmake(),
             proj_path=self.__get_cmakepath(),
             cmake_ex=cmake_ex,

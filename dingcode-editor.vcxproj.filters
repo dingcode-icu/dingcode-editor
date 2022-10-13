@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCIMGUI.cpp">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCImGuiLayer.cpp">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui.cpp">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_demo.cpp">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_draw.cpp">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>Source Files\Classes\ImGuiExt\imgui\misc\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_cocos2dx.cpp">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_glfw.mm">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_opengl2.cpp">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_lua.cpp">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\AppSetting.cpp">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\LuaEntry.cpp">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\common\StringUtil.cpp">
+      <Filter>Source Files\Classes\ding\common</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\guid\guid.cpp">
+      <Filter>Source Files\Classes\ding\guid</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\sys\FileDialogUtils.cpp">
+      <Filter>Source Files\Classes\ding\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\ding\sys\RemoteDebuger.cpp">
+      <Filter>Source Files\Classes\ding\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\logger\easylogging++.cc">
+      <Filter>Source Files\Classes\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\SVGSprite.cpp">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\SVGSpritePath.cpp">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\svg\nanosvg.cpp">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\Classes\AppDelegate.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\public_work\dingcode_editor\proj.win32\main.cpp">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCIMGUI.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\CCImGuiLayer.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imconfig.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imgui_internal.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_rectpack.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_textedit.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\imstb_truetype.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui\misc\cpp\imgui_stdlib.h">
+      <Filter>Source Files\Classes\ImGuiExt\imgui\misc\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_cocos2dx.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_glfw.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\imgui_impl_opengl2.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ImGuiExt\sol_imgui.h">
+      <Filter>Source Files\Classes\ImGuiExt</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\AppSetting.h">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\Core.h">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\LuaEntry.h">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\common\SmartSingleton.h">
+      <Filter>Source Files\Classes\ding\common</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\common\StringUtil.h">
+      <Filter>Source Files\Classes\ding\common</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\guid\guid.h">
+      <Filter>Source Files\Classes\ding\guid</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sol_cocos.h">
+      <Filter>Source Files\Classes\ding</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sys\FileDialogUtils.h">
+      <Filter>Source Files\Classes\ding\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\ding\sys\RemoteDebuger.h">
+      <Filter>Source Files\Classes\ding\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\logger\easylogging++.h">
+      <Filter>Source Files\Classes\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\SVGSprite.h">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\SVGSpritePath.h">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\nanosvg.h">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\svg\nanosvgrast.h">
+      <Filter>Source Files\Classes\svg</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\AppDelegate.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\Classes\TEST.hpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\public_work\dingcode_editor\proj.win32\main.h">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\public_work\dingcode_editor\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\public_work\dingcode_editor\proj.win32\icon\dico.ico">
+      <Filter>Source Files\proj.win32\icon</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D:\public_work\dingcode_editor\proj.win32\icon\icon.rc">
+      <Filter>Source Files\proj.win32\icon</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D5FADB38-F9B0-35B2-A036-96DF637937DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{8624648D-9317-3555-9902-DB4344965E45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ImGuiExt">
+      <UniqueIdentifier>{BF8239FE-E37A-3BDC-A021-8DE7B8AAE2CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ImGuiExt\imgui">
+      <UniqueIdentifier>{12669081-C59F-3B8F-A183-CA5252D0D423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ImGuiExt\imgui\misc">
+      <UniqueIdentifier>{F63DBC4B-E2E2-3EF2-89EE-3C1A0A623758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ImGuiExt\imgui\misc\cpp">
+      <UniqueIdentifier>{8C3579F8-D77D-345B-8A98-377802A2CC77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ding">
+      <UniqueIdentifier>{E7FCA107-851E-3C95-91B9-F6FFE82BF379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ding\common">
+      <UniqueIdentifier>{0C6C0DCD-62C5-3EF8-9685-F15A4C0D2054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ding\guid">
+      <UniqueIdentifier>{89B80597-DBE9-363A-ADF1-6E9ABB7B49C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ding\sys">
+      <UniqueIdentifier>{CCB5923F-0C13-31F0-B625-6DC1BE0A05DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\logger">
+      <UniqueIdentifier>{C9462858-38A7-326C-BD1A-A8E2AA2464A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\svg">
+      <UniqueIdentifier>{331D52BA-0694-3AA8-81DC-39C688597230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proj.win32">
+      <UniqueIdentifier>{86FA639E-067E-3883-ABDD-CC28688B87A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proj.win32\icon">
+      <UniqueIdentifier>{C17CCC05-712D-316B-A37E-3065303FB9E9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
