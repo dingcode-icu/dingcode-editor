@@ -1639,7 +1639,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -1658,7 +1658,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1678,7 +1678,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -1697,7 +1697,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1717,7 +1717,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -1736,7 +1736,7 @@
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
