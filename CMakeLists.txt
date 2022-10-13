@@ -126,9 +126,5 @@ if (LINUX OR WINDOWS)
     cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif ()
 if (MSVC)
-<<<<<<< HEAD
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /Zm1000 /bigobj")
-=======
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /Zm3000 /bigobj")
->>>>>>> 61fdbe74dd828ef91522ad0a660354b1d6a430c4
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /bigobj")
 endif (MSVC)
