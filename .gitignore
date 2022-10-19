@@ -23,6 +23,7 @@ dist/
 CMakeFiles/
 engine/
 CMakeCache.txt
+cmake_install.cmake
 #==============ide===============
 .idea/
 .vscode/
