@@ -12,7 +12,10 @@ proj.win32/imguix.sdf
 proj.win32/imguix.v12.suo
 Debug.win32
 proj.win32/.vs/
-
+*.sln
+*.vcxproj
+*.filters
+*.proj
 
 #==============cmake===============
 cmake-build-*/

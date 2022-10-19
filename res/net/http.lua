@@ -1,59 +1,55 @@
 local http = {}
+--[[
+http dylib by rust
+
+github:
+https://github.com/dwbmio/r_extern
+
+target:
+i686-pc-windows-msvc
+]]
+local ffi = require("ffi")
+local c = ffi.cdef [[
+   //test
+   int add(int a);
+   //http
+   void http_set_host(const char* b);
+   void http_set_timeout(int a);
+   const char* http_get(const char* b);
+   const char* http_post(const char* b, const char* d);
+]]
+
 
 local json = require("lib/json")
+local c= ffi.load("res/net/r_extern")
 
 local function http_log(...)
     print(string.format("[http] %s", table.concat({...}, " | ")))
 end
 
 function http:init()
-    print("init http")
-    self._host = "http://static.bbclient.icu:8083{path}"
-end
-
-function http:_fetch(method_str, path, dic_data, suc_cb)
-    local METHOD_MAP = {
-        get = cc.HttpRequestType.GET,
-        post = cc.HttpRequestType.POST
-    }
-    local request = cc.HttpRequest();
-    local url = string.gsub(self._host, "{path}", path)
-    http_log("request -->>> ", url)
-    request:setUrl(url)
-    local requestType = cc.HttpRequestType.GET
-    if method_str == "get" then
-        requestType = cc.HttpRequestType.GET
-    elseif method_str == "post" then
-        requestType = cc.HttpRequestType.POST
-    elseif method_str == "put" then
-        requestType = cc.HttpRequestType.PUT
-    end
-    request:setRequestType(requestType)
-    if dic_data then
-        request:setRequestData(json.encode(dic_data))
-    end
-    request:setResponseCallback(function(sender, resp)
-        -- 保留request的引用 避免在回调回来之前 释放掉
-        request = nil
-        local ret = resp:getResponseData()
-        if not resp:isSucceed() then
-            print("http error ")
-            ding.showToast(string.format("http error:code=%s, msg=%s", request:getResponseCode(), ret))
-            return
-        end
-        http_log("response <<<-- ", ret)
-        if suc_cb then
-            suc_cb(ret)
-        end
-    end)
-    cc.HttpClient:getInstance():send(request)
+    http_log("init http")
+    c.http_set_host("http://static.bbclient.icu:8083")
+    c.http_set_timeout(5)
 end
 
 function http:get(path, suc_cb)
-    self:_fetch("get", path,nil, suc_cb)
+    local ret = c.http_get(path)
+    local l_str = string.split(ffi.string(ret), "|")
+    if #l_str > 1 and l_str[1] == "true" then
+        suc_cb(l_str[2])
+    else
+        http_log("[lua-http]http get <%s>failed! resp->\n<%s>",path, l_str[1])
+    end
 end
 
 function http:post(path, dic_data, suc_cb)
-    self:_fetch("post",  path, dic_data, suc_cb)
+    local ret = c.http_post(path, json.encode(dic_data))
+    local l_str = string.split(ffi.string(ret), "|")
+    if #l_str > 1 and l_str[1] == "true" then
+        suc_cb(l_str[2])
+    else
+        http_log("http get <%s>failed! resp->\n<%s>",path, l_str[1])
+    end
 end
 return http
