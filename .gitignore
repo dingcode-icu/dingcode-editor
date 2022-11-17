@@ -24,6 +24,7 @@ CMakeFiles/
 engine/
 CMakeCache.txt
 cmake_install.cmake
+build/
 #==============ide===============
 .idea/
 .vscode/
