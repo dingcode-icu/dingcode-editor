@@ -1,12 +1,17 @@
-add_requires("winmm")
 add_requires("opengl")
 
-target("cocos2d_lib")
+
+--debug 
+set_allowedplats("windows")
+add_defines("_WINDOWS")
+--debug 
+
+target("cocos2d")
     set_kind("shared")
-    --compiler
+    --compiler-set
     set_languages("c99", "cxx11")
     
-    
+    --global-set
     --TODO：check msvc version 
     --cocos编译默认描述
     --[[
@@ -33,12 +38,16 @@ target("cocos2d_lib")
                 PUBLIC _EXPORT_DLL_
                 PUBLIC _USEGUIDLL
                 PUBLIC _USREXDLL
-                PUBLIC _USRSTUDIODLL
                 PUBLIC _USE3DDLL
+                PUBLIC _USRSTUDIODLL
             )
     endif()
     ]]
+    --===========files===========
     
+    add_includedirs("cocos")
+    add_headerfiles("cocos/2d/*.h")
+    add_files("cocos/2d/*.cpp")
     
 
 
