@@ -1,4 +1,4 @@
-add_requires("opengl")
+add_requires("glew")
 
 
 --debug 
@@ -43,8 +43,7 @@ target("cocos2d")
             )
     endif()
     ]]
-    --===========files===========
-    
+    --===========files=========== 
     add_includedirs("cocos")
     add_headerfiles("cocos/2d/*.h")
     add_files("cocos/2d/*.cpp")
