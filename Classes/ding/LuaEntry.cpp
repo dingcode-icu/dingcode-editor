@@ -169,7 +169,7 @@ namespace dan {
 
             auto bg = Sprite::create("assets/texture/bgtoast.png");
             node->addChild(bg);
-            auto lab = Label::createWithTTF(desc, "font/FZLanTYJW.TTF", 30);
+            auto lab = Label::createWithTTF(desc, "assets/font/FZLanTYJW.TTF", 30);
             node->addChild(lab);
             lab->setColor(Color3B::BLACK);
             auto labsize = lab->getContentSize();

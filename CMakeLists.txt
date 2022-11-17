@@ -108,6 +108,7 @@ setup_cocos_app_config(${APP_NAME})
 */]]
 include(NaLibrary)
 dingcode_append_nfd()
+dingcode_append_sol()
 if (APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if (MACOSX)

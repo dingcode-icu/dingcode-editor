@@ -12,3 +12,9 @@ function(dingcode_append_nfd)
 endfunction()
 
 
+
+
+function(dingcode_append_sol)
+    target_include_directories(${APP_NAME} PRIVATE third/sol/include)
+endfunction()
+
