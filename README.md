@@ -1,1 +1,6 @@
-<https://dingcode-icu.github.io/dingcode-doc/#/>
+**Discard!!**
+
+<mark>Move to </mark>
+
+<https://github.com/dingcode-icu/dingcode-editor-gd>
+
